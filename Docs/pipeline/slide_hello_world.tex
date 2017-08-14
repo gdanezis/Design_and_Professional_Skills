@@ -1,0 +1,57 @@
+\documentclass{beamer}
+\usepackage{minted}
+\usemintedstyle{pastie}
+
+\usepackage{xcolor}
+
+\begin{document}
+
+%\title{Simple Beamer Class}   
+%\author{Sascha Frank} 
+\date{\today} 
+
+\frame{
+\frametitle{Style guide for code fragments} 
+
+A simple Python program:
+
+	\inputminted[
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{hello_world.py}
+
+The test of the simple Python program:
+
+	\inputminted[
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{test_hello_world.py}
+
+}
+
+\frame{
+\frametitle{Style guide for code fragments } 
+
+A simple Python program, with a docstring test:
+
+	\inputminted[
+		highlightlines={6-7},
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{hello_world_doc.py}
+
+}
+
+\end{document}
