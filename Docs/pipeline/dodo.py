@@ -18,7 +18,7 @@ def task_test():
 def task_build():
     """build cmd """
     return {
-        'actions': ['pdflatex -shell-escape slide_hello_world',],
+        'actions': ['pdflatex -shell-escape slide_hello_world ; bibtex slide_hello_world ; pdflatex -shell-escape slide_hello_world',],
         'file_dep': ["testreport.txt", "hello_world.py", 
                      "test_hello_world.py",
                      "hello_world_doc.py", 

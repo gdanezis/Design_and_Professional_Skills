@@ -12,8 +12,11 @@
 \usepackage{xcolor}
 \usepackage{url}
 
+\usepackage{natbib}
+\usepackage{bibentry}
 
 \begin{document}
+\nobibliography*
 
 \date{\today} 
 
@@ -99,5 +102,15 @@ test_hello_world.py::test_hello_world PASSED
 \end{verbatim}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Inline references}
+
+\bibentry{kernighan1999practice}
+
+\end{frame}
+
+\bibliographystyle{alpha}
+\nobibliography{references}
 
 \end{document}
