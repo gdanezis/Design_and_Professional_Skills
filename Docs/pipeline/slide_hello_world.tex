@@ -1,14 +1,28 @@
 \documentclass{beamer}
-\usepackage{minted}
-\usemintedstyle{pastie}
+\usetheme{ucl}
+\setbeamercolor{banner}{bg=brightblue}
+\setbeamersize{description width=2em}
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
 
+\usepackage[T1]{fontenc} % Turn £ into $
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+\usepackage{verbatim}
 \usepackage{xcolor}
+\usepackage{url}
+
 
 \begin{document}
 
-%\title{Simple Beamer Class}   
-%\author{Sascha Frank} 
 \date{\today} 
+
+\frame{
+\frametitle{Install the UCL beamer style}
+
+Get it at \url{https://github.com/UCL/ucl-beamer}
+
+}
 
 \frame{
 \frametitle{Style guide for code fragments} 
@@ -16,6 +30,7 @@
 A simple Python program:
 
 	\inputminted[
+		xleftmargin=1.4em,
 		frame=lines,
 		framesep=2mm,
 		%baselinestretch=1.2,
@@ -27,6 +42,7 @@ A simple Python program:
 The test of the simple Python program:
 
 	\inputminted[
+		xleftmargin=1.4em,
 		frame=lines,
 		framesep=2mm,
 		%baselinestretch=1.2,
@@ -43,6 +59,7 @@ The test of the simple Python program:
 A simple Python program, with a docstring test:
 
 	\inputminted[
+		xleftmargin=1.4em,
 		highlightlines={6-7},
 		frame=lines,
 		framesep=2mm,
@@ -53,5 +70,34 @@ A simple Python program, with a docstring test:
 	]{python}{hello_world_doc.py}
 
 }
+
+\begin{frame}[fragile]
+\frametitle{Verbatim environments} 
+
+How to run tests:
+\begin{minted}{bash}
+$ pytest -vs --doctest-modules
+\end{minted}
+
+\vspace{5mm}
+
+The example of a Verbatim fragment:
+\scriptsize %change the font size. You can \scriptsize to get a smaller font.
+\begin{verbatim}
+============================= test session starts =============================
+platform win32 -- Python 3.5.3, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- 
+c:\users\george\appdata\local\programs\python\python35\python.exe
+cachedir: .cache
+rootdir: C:\Users\george\Desktop\projects\Design_and_Professional_Skills\
+Docs\pipeline, inifile:
+collecting ... collected 2 items
+
+hello_world_doc.py::hello_world_doc.hello_world PASSED
+test_hello_world.py::test_hello_world PASSED
+
+========================== 2 passed in 0.26 seconds ===========================
+\end{verbatim}
+
+\end{frame}
 
 \end{document}

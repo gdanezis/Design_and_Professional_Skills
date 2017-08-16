@@ -30,7 +30,7 @@ def task_build():
 def task_cleanup():
     """cleanup cmd"""
     return {
-        'actions': ['rm *.aux *.log *.nav *.out *.snm *.toc',],
+        'actions': ['rm *.aux *.log *.nav *.out *.snm *.toc *.vrb',],
         'file_dep': ["slide_hello_world.pdf"],
         'verbosity': 2,
         }
