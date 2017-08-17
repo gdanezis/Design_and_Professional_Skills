@@ -39,6 +39,7 @@
 
  3. _Introduction to Data Structures and Algorithms._
       * Understanding arrays (Python Lists.)
+        * Tuples and lists.
         * Iteration on sequences, for loops.
       * _A sequential search algorithm and its unit tests._
          * Bisection search on a sorted array.
@@ -46,6 +47,7 @@
       * _The quicksort algorithm and its unit tests_
          * Sorting Algorithms, stable sorting. 
          * Understanding recursion.
+         * Divide and conquer strategy.
          * A recursive implementation of quicksort.
          * The asymptotic cost of quicksort.
          * Average-case versus worse case analysis.
@@ -79,6 +81,7 @@
          * Mutable and immutable data structures.
          * The filter, map and fold functions -- Python shorthands.
          * Packaging, Comments, and documentation.
+         * Iterator pattern, and Python generators.
        * _Object Oriented design._
          * Access control, Encapsulation, Reflection
          * Generic programming.
@@ -107,6 +110,7 @@
          * Building a decision Forrest.
          * Performing classification.
          * Testing and evaluation of machine learning algorithms.
+       * (Stacks, Queues, Priority Queues).
 
  5. _Development Practices._
        * _Development Processes_
@@ -148,6 +152,8 @@
          * Matrix and adjacency lists.
          * (Basic Graph algorithms: ...)
          * Routing with the A* algorithm.
+         * Dynamic algorithms. Greedy algorithms.
+         * A Simple pub database, with comments and ratings.
        * _Representations: XML, JSON and binary data (MSGPACK)_
          * A Pub map application using openstreetmap.
          * Visitor pattern and iterative XML parsing.
@@ -156,18 +162,29 @@
          * Plotting an interactive map with pubs as an PNG image: Model-View-Controller concepts.
        * _Demo or die: The MIT Media Lab doctrine._
 
- 7. Networking and Concurrency.
+ 7. _Web Technologies, Security and Usability._
        * _Basics of client Server technologies._
          * HTML, CSS, JS, and all that.
          * Modern back-end architectures: MVC, and micro-services.
          * The Python Flask framework.
-       * Building a web app: Rating Pubs.
+       * _Building a web app: Rating Pubs._
+         * Testing web applications, with Selenium.
          * Capturing user input.
          * Malformed input and security concerns.
          * Cross side scripting, and insecure inputs.
          * Solution: sanitization. 
+       * _Security in Computer Systems._
+         * Computer Misuse and Cybercrime.
+         * Basic concepts of software security and information security.
+         * Professional obligations to produce safe & secure systems.
+         * Testing for Security
+       * _User interfaces and User Interactions._
+         * How can you tell that your system is usable?
+         * UX and Design.
+         * Techniques to test usability of a system.
+         * Accesibility and human dignity in design.
 
- 8. XXX
+ 8. _Concurrency, Correctness and Performance._
  9. XXX
 
 
