@@ -10,7 +10,7 @@
       * _What is Computer Science and Software Engineering._
         * Programming languages and Python 3 
         * Importance of rapid prototyping.
-        * Basic setups of tools: Editors, command lines, pyhton and pytest.
+        * Basic setups of tools: Editors, command lines, python and pytest.
         * Where to find documentation.
         * Interactive python console and executing python programs.
       * _"Hello World" and unit tests._
@@ -36,10 +36,14 @@
       * _Understanding functions._
         * Passing by reference or value.
         * Pure functions, side effects, declarative programming.
+        * Tactics for debugging, and testing functions.
+        * Defining interfaces and respecting them.
 
  3. _Introduction to Data Structures and Algorithms._
       * Understanding arrays (Python Lists.)
         * Tuples and lists.
+        * Mutable and immutable data structures.
+        * Records and tuples, and Pyhton's NamedTuples.
         * Iteration on sequences, for loops.
       * _A sequential search algorithm and its unit tests._
          * Bisection search on a sorted array.
@@ -90,9 +94,9 @@
        * _Trees and maintaining sorted structures._
          * What are Trees in Computer Science.
          * Tree invariants.
-         * Constructing trees.
-         * Recursion, and drawing tree algorithms, with latex / tikz.
-         * Sorted trees, and insert operation.
+         * Constructing binary trees -- the OOP approach.
+         * Recursion, and drawing tree algorithms, with tikz.
+         * Search, Insert & delete operations.
          * Search in trees: depth-first, breath-first.
          * Abstract interfaces, and encapsulation.
          * The problem of balancing trees, and advanced tree structures.
@@ -110,14 +114,21 @@
          * Building a decision Forrest.
          * Performing classification.
          * Testing and evaluation of machine learning algorithms.
-       * (Stacks, Queues, Priority Queues).
 
  5. _Development Practices._
        * _Development Processes_
          * Traditional Waterfall, and Spiral methodologies.
          * Problems with traditional methodologies.
-         * Agile development and practices.
+         * Agile development.
          * DevOps practices.
+       * _Agile development and practices._
+         * Composition of an Agile team.
+         * User stories and cost.
+         * Sprints and velocity.
+         * Pair programming.
+         * Documentation and version control.
+         * Continuous integration, TDD, and `Done Done'.
+         * Counter-indications for agile.
        * _Building a data science processing pipeline_
          * CSV data.
          * Numpy and numerical libraries.
@@ -145,46 +156,81 @@
  6. _Data and Databases._
        * _`Data belongs to the Database'_
          * Modern database systems.
-         * Relational databases and SQL.
-         * Object relational mappers, and advantages over own objects.
+         * Relational databases and SQL -- using Python & sqlite directly.
+         * SQL as an example of a declarative (4GL) language.
+         * Object relational mappers, and advantages over custom objects.
          * SQLAlchemy in Python.
-       * _Graphs and their representations._
-         * Matrix and adjacency lists.
-         * (Basic Graph algorithms: ...)
-         * Routing with the A* algorithm.
-         * Dynamic algorithms. Greedy algorithms.
-         * A Simple pub database, with comments and ratings.
-       * _Representations: XML, JSON and binary data (MSGPACK)_
-         * A Pub map application using openstreetmap.
+         * The ACID properties, and the no-SQL movement.
+       * _A Pub search application: Data Representations and serialization._ 
+         * XML, JSON and binary data (MSGPACK)
+         * Using openstreetmap datasets.
          * Visitor pattern and iterative XML parsing.
          * A simple KD-tree implementation, Longitude, Latitude and GIS systems.
          * Introducing interactive graphics with pygame.
          * Plotting an interactive map with pubs as an PNG image: Model-View-Controller concepts.
        * _Demo or die: The MIT Media Lab doctrine._
+         * Beautiful engineering: text & typography, design, visualization, interaction.
+       * _The open data movement_
+         * Open datasets governance and licensing.
+         * Sources of open data.
+         * Reproducibility of research.
+         * Auditability of decision making.
+         * Blockchains and Smart contracts.
+         * Tensions with privacy.
+
 
  7. _Web Technologies, Security and Usability._
        * _Basics of client Server technologies._
-         * HTML, CSS, JS, and all that.
+         * HTML, CSS, JS, and web client technologies.
          * Modern back-end architectures: MVC, and micro-services.
-         * The Python Flask framework.
+         * Cookies and other client state.
+         * The Python Flask micro-services framework.
        * _Building a web app: Rating Pubs._
+         * Capturing user input through forms.
+         * Displaying information using SVG.
          * Testing web applications, with Selenium.
-         * Capturing user input.
+         * Measuring the performance of a network service.         
          * Malformed input and security concerns.
-         * Cross side scripting, and insecure inputs.
+         * Cross side scripting, and untrusted input.
          * Solution: sanitization. 
        * _Security in Computer Systems._
          * Computer Misuse and Cybercrime.
-         * Basic concepts of software security and information security.
-         * Professional obligations to produce safe & secure systems.
+         * Basic concepts of software security and information security. s
+         * Security policy, threat model, security mechanisms. 
+         * Access control, Cryptography and sanitization.
+         * Key attacks: CWE top-20 / OWASP top-10.
+         * Exploiting and attack.
          * Testing for Security
+         * Professional obligations to produce safe & secure systems.
        * _User interfaces and User Interactions._
          * How can you tell that your system is usable?
          * UX and Design.
          * Techniques to test usability of a system.
          * Accesibility and human dignity in design.
 
- 8. _Concurrency, Correctness and Performance._
- 9. XXX
+ 8. _Concurrency, Scalability and Performance._
+       * _Representing and processing graphs._
+         * Matrix vs adjacency list representation.
+         * Summary statistics of graphs.
+         * Finding connected components.
+         * Searching, and finding paths: depth/breath first search.
+         * The A* algorithm.
+       * _Understanding performance bottle necks._
+         * Finding shortest paths between pubs & unit tests.
+         * Measuring the impact of blocking I/O.
+         * Ensuring we do not block on I/O. The `reactor' pattern.
+         * CPU Bottlenecks. Using the multiprocessing package.
+         * Mention network bottlenecks, and their detection.
+       * _Using a data-center._
+         * SSH access to remote machines.
+         * Automation & DevOps with Python fabric.
+         * Distributing the computation: code and data.
+         * Requesting computations, and fetching results.
+         * Is that always quicker?  
+       * _Power, and saving power._
+         * Introducing the RaspberryPi Zero W.
+         * Understanding power consumption.
+         * Sustainability and computing.
+
 
 
