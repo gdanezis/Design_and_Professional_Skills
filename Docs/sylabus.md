@@ -114,6 +114,9 @@
          * Building a decision Forrest.
          * Performing classification.
          * Testing and evaluation of machine learning algorithms.
+       * _Ethics and machine learning_.
+         * Algorithmic bias and discrimination.
+         * Autonomous robots & harm.
 
  5. _Development Practices._
        * _Development Processes_
@@ -195,13 +198,14 @@
          * Solution: sanitization. 
        * _Security in Computer Systems._
          * Computer Misuse and Cybercrime.
-         * Basic concepts of software security and information security. s
+         * Basic concepts of software security and information security.
          * Security policy, threat model, security mechanisms. 
          * Access control, Cryptography and sanitization.
          * Key attacks: CWE top-20 / OWASP top-10.
          * Exploiting and attack.
-         * Testing for Security
+         * Testing for Security: fuzzing, red teams.
          * Professional obligations to produce safe & secure systems.
+         * Computer misuse and abuse.
        * _User interfaces and User Interactions._
          * How can you tell that your system is usable?
          * UX and Design.
@@ -227,6 +231,11 @@
          * Distributing the computation: code and data.
          * Requesting computations, and fetching results.
          * Is that always quicker?  
+       * _Binding to low-level code_
+         * Compilers, linkers and object code libraries.
+         * Introducing CFFI, with an example.
+         * Binding C or Rust code to Python.
+         * Test & Evaluate performance.
        * _Power, and saving power._
          * Introducing the RaspberryPi Zero W.
          * Understanding power consumption.
