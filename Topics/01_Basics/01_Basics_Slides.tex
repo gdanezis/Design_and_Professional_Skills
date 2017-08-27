@@ -1,0 +1,264 @@
+\documentclass{beamer}
+\usetheme{ucl}
+\setbeamercolor{banner}{bg=brightblue}
+\setbeamersize{description width=2em}
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
+
+\usepackage[T1]{fontenc} % Turn £ into $
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+\usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{natbib}
+\usepackage{bibentry}
+
+\begin{document}
+\nobibliography*
+
+\author{Prof.\ George Danezis}
+\title{Basics of Computer Programming \\ \& Software Engineering.}
+\subtitle{ENGS102P: Design and Professional Skills }
+\institute{University College London, UK}
+\date{Term 1, 2017}
+
+\frame{
+\maketitle
+
+
+
+}
+
+\frame{
+\frametitle{What is Computer Science \& Software Enginnering?}
+} 
+
+\frame{
+\frametitle{Programming and \& languages.} 
+}
+
+\frame{
+\frametitle{Why Python?} 
+}
+
+\frame{
+\frametitle{Using Python interactively.} 
+}
+
+
+\frame{
+\frametitle{The `Hello World!' program in Python.} 
+}
+
+\frame{
+\frametitle{The `Hello World!' program in Python.} 
+
+A simple Python program:
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/hello_world.py}
+}
+
+\begin{frame}
+\frametitle{How do we know a program does what it should?}
+\end{frame}
+
+\frame{
+\frametitle{Testing the `Hello World!' program.} 
+
+The test of the simple Python program:
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/test_hello_world.py}
+
+}
+
+\frame{
+\frametitle{Testing the `Hello World!' program } 
+
+A simple Python program, with a docstring test:
+
+	\inputminted[
+		xleftmargin=1.4em,
+		highlightlines={6-7},
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize, 
+		linenos
+	]{python}{src/hello_world_doc.py}
+
+}
+
+\begin{frame}
+
+\frametitle{Calculations following Euclid's algorithm for GCD.} 
+
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/interactive_euclid.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Assignments, values, operations.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Value types, and integers.}
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Controlling the execution of programs.} 
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Automatic program control for Euclid's algorithm.} 
+
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_euclid.py}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Loops, and the while control structure.} 
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Conditional execution with the if control structure.} 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Euclid as a function} 
+
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Re-using code through functions.}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The DRY principle.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Euclid as a function and unit test} 
+
+	\inputminted[
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_test.py}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{What makes a good test?}
+\end{frame}
+
+\begin{frame}
+\frametitle{The practice of refactoring.}
+\end{frame}
+
+\begin{frame}
+\frametitle{The `happy path', errors and exceptions.}
+\end{frame}
+
+
+% ---------------------------------
+
+\begin{frame}[fragile]
+\frametitle{Verbatim environments} 
+
+How to run tests:
+\begin{minted}{bash}
+$ pytest -vs --doctest-modules
+\end{minted}
+
+\vspace{5mm}  
+
+The example of a Verbatim fragment:
+\scriptsize %change the font size. You can \scriptsize to get a smaller font.
+\begin{verbatim}
+============================= test session starts =============================
+platform win32 -- Python 3.5.3, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- 
+c:\users\george\appdata\local\programs\python\python35\python.exe
+cachedir: .cache
+rootdir: C:\Users\george\Desktop\projects\Design_and_Professional_Skills\
+Docs\pipeline, inifile:
+collecting ... collected 2 items
+
+hello_world_doc.py::hello_world_doc.hello_world PASSED
+test_hello_world.py::test_hello_world PASSED
+
+========================== 2 passed in 0.26 seconds ===========================
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Inline references}
+
+\bibentry{kernighan1999practice}
+
+\end{frame}
+
+\bibliographystyle{alpha}
+\nobibliography{references}
+
+\end{document}
