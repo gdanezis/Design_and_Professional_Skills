@@ -11,4 +11,5 @@ def GCD(a,b):
 def test_euclid(): 
     ax = 42                 # Create test case 
     bx = 30                 # from simple example.
-    assert GCD(ax,bx) == 6  # Turn test print, into assert
+    r = GCD(ax,bx)          # Turn test print,
+    assert r == 6           # into assert.

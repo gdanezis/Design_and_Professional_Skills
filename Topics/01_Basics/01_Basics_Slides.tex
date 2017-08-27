@@ -212,11 +212,68 @@ A simple Python program, with a docstring test:
 \end{frame}
 
 \begin{frame}
-\frametitle{The practice of refactoring.}
+\frametitle{When to write the test?}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{The `happy path', errors and exceptions.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Raising an exception upon error.} 
+
+	\inputminted[
+		firstline=1,
+		lastline=10,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_exc.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How to test \& handle exceptions.}
+
+	\inputminted[
+		firstline=18,
+		lastline=28,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_exc.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Idiomatic pytest.}
+
+	\inputminted[
+		firstline=30,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_exc.py}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{The practice of refactoring.}
 \end{frame}
 
 
