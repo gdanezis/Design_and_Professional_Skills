@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass{beamer} % [aspectratio=169]
 \usetheme{ucl}
 \setbeamercolor{banner}{bg=brightblue}
 \setbeamersize{description width=2em}
@@ -15,8 +15,16 @@
 \usepackage{natbib}
 \usepackage{bibentry}
 
-\begin{document}
-\nobibliography*
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
 
 \author{Prof.\ George Danezis}
 \title{Basics of Computer Programming \\ \& Software Engineering.}
@@ -24,12 +32,16 @@
 \institute{University College London, UK}
 \date{Term 1, 2017}
 
+
+\begin{document}
+\nobibliography*
+
+
 \frame{
-\maketitle
-
-
-
+\titlepage
 }
+
+\section{Introduction}
 
 \frame{
 \frametitle{What is Computer Science \& Software Enginnering?}
@@ -46,7 +58,6 @@
 \frame{
 \frametitle{Using Python interactively.} 
 }
-
 
 \frame{
 \frametitle{The `Hello World!' program in Python.} 
@@ -107,6 +118,17 @@ A simple Python program, with a docstring test:
 
 }
 
+\section{Algorithms \& Python}
+
+\begin{frame}
+\frametitle{What is an `algorithm'.} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Euclid's algorithm for computing the GCD.} 
+\end{frame}
+
+
 \begin{frame}
 
 \frametitle{Calculations following Euclid's algorithm for GCD.} 
@@ -130,6 +152,10 @@ A simple Python program, with a docstring test:
 
 \begin{frame}
 \frametitle{Value types, and integers.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Types \& Programming Languages.}
 \end{frame}
 
 
@@ -186,6 +212,10 @@ A simple Python program, with a docstring test:
 \frametitle{Re-using code through functions.}
 \end{frame}
 
+\begin{frame}
+\frametitle{The `scope' of variables.}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{The DRY principle.}
@@ -224,6 +254,7 @@ A simple Python program, with a docstring test:
 \frametitle{Raising an exception upon error.} 
 
 	\inputminted[
+		highlightlines={3-4},
 		firstline=1,
 		lastline=10,
 		xleftmargin=1.4em,
@@ -241,7 +272,173 @@ A simple Python program, with a docstring test:
 \frametitle{How to test \& handle exceptions.}
 
 	\inputminted[
+		firstline=19,
+		lastline=29,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_exc.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The try / except / finally control structure.}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Detect errors at a low level, handle them at a high level.}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Idiomatic pytest.}
+
+	\inputminted[
+		firstline=31,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid_exc.py}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The practice of refactoring.}
+\end{frame}
+
+\section{Algorithmic complexity}
+
+\begin{frame}
+\frametitle{How many iterations does the GCD algorithm take?}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Euclid's algorithm using modulo operation (\%).}
+
+	\inputminted[
+		lastline=14,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mod_function_euclid_exc.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Cost of modulo and multiple assignment?}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Understanding the int type.}
+\end{frame}
+
+\section{Algorithms on `real' numbers}
+
+\begin{frame}
+\frametitle{The float type and float variables}
+\end{frame}
+
+\begin{frame}
+\frametitle{How to test a square root function.}
+
+	\inputminted[
+		lastline=14,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/sqrt_dummy.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Heron's method for computing square roots}
+\end{frame}
+
+\begin{frame}
+\frametitle{Heron's method.}
+
+	\inputminted[
 		firstline=18,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/sqrt.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The problem of termination \& infinite loops.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Will Heron's method terminate?}
+
+Lemma 1. Heron's approximation to the square root bounds the square root from above. Namely, $\forall x, g. \qquad \frac{1}{2}(g + \frac{x}{g}) \geq \sqrt{x}$.
+Proof. $\Rightarrow g^2 - 2g\sqrt{x}+(\sqrt{x})^2 \geq 0$ 
+$\Rightarrow (\sqrt{x} - g)^2 \geq 0$. QED.
+
+Theorem 1. Subsequent approximations $g_{i+1} = \frac{1}{2} (g_i + \frac{x}{g_i})$ approximate $\sqrt{x}$ increasingly better. Namely, $|g_{i+1} - \sqrt{x}| < |g_{i} - \sqrt{x}|$. (Where $g_0 = \frac{1}{2}(x + 1)$).
+Proof. (Due to lemma 1.) 
+$\Rightarrow g_{i+1} - \sqrt{x} < g_{i} - \sqrt{x}$
+$\Rightarrow g_{i+1} < g_{i}$
+$\Rightarrow \frac{1}{2} (g_i + \frac{x}{g_i}) < g_{i}$
+$\Rightarrow g_i^2 + (\sqrt{x})^2 < 2g_i^2$
+$\Rightarrow 0 < g_i^2 - (\sqrt{x})^2$
+$\Rightarrow 0 < (g_i - \sqrt{x})(g_i + \sqrt{x})$. True by lemma 1. QED.
+\end{frame}
+
+\begin{frame}
+\frametitle{Ensure progress.}
+
+	\inputminted[
+		firstline=31,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/sqrt_assert.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Check invariants within your program.}
+
+Different from runtime exceptions.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Understanding float precision.}
+
+	\inputminted[
+		firstline=12,
 		lastline=28,
 		xleftmargin=1.4em,
 		frame=lines,
@@ -250,34 +447,21 @@ A simple Python program, with a docstring test:
 		% bgcolor=lightgray,
 		fontsize=\footnotesize,
 		linenos
-	]{python}{src/subtraction_function_euclid_exc.py}
+	]{python}{src/sqrt_assert.py}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Idiomatic pytest.}
+\frametitle{Always prefer built in functions and standard libraries.}
 
-	\inputminted[
-		firstline=30,
-		xleftmargin=1.4em,
-		frame=lines,
-		framesep=2mm,
-		%baselinestretch=1.2,
-		% bgcolor=lightgray,
-		fontsize=\footnotesize,
-		linenos
-	]{python}{src/subtraction_function_euclid_exc.py}
+Do \mint{python}{x ** 0.5}
 
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{The practice of refactoring.}
 \end{frame}
 
 
 % ---------------------------------
+
+\section{Cruft}
 
 \begin{frame}[fragile]
 \frametitle{Verbatim environments} 
