@@ -8,12 +8,15 @@
 \usepackage{minted}
 \usemintedstyle{emacs}
 
-\usepackage{verbatim}
+\usepackage{fancyvrb}
 \usepackage{xcolor}
 \usepackage{url}
 
 \usepackage{natbib}
 \usepackage{bibentry}
+\usepackage{url}
+
+\newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
 
 \AtBeginSection[]{
   \begin{frame}
@@ -44,29 +47,125 @@
 \section{Introduction}
 
 \frame{
-\frametitle{What is Computer Science \& Software Enginnering?}
+\frametitle{Introducing ENGS102P.}
+
+The ENGS102P `Design and Professional Skills' course has 3 objectives:
+\begin{itemize}
+\item Teach the basics of \emc{programming in Python}.
+\item Introduce basic \emc{Computer Science} concepts.
+\item Accustom you to basic \emc{Software Engineering} practices.
+\item Expose you to key \emc{ethical and social debates} surrounding computing.
+\end{itemize}
+
+} 
+
+
+\frame{
+\frametitle{What is Computer Science \& Software Engineering?}
+
+Computer Science:
+\begin{itemize}
+\item Studies the nature of \emc{information, computation, complexity} of algorithms, and their \emc{correctness}.
+\item Deep mathematical foundations, including logic, algebra and probability theory.
+\end{itemize}
+
+Software Engineering:
+\begin{itemize}
+\item Studies how teams can repeatably \emc{build high quality, correct, usable and efficient software}, to meet \emc{people's needs}.
+\item Programming is a foundational and important part of it.
+\end{itemize}
+
+The two are interlinked, and we will study them together.
 } 
 
 \frame{
-\frametitle{Programming and \& languages.} 
+\frametitle{Programming \& languages (I).}
+
+Programming \& Programmability: 
+\begin{itemize}
+	\item A device is programmable if it allows a programmer (developer, engineer) to \emc{alter its behavior}. This is the act of programming.
+	\item We usually think of a device as programmable, when the \emc{program itself takes the form or information}, rather than physical modification.
+	\item A computer is the \emc{ultimate programmable device}, and can execute all computations. Simpler ones include video recording devices, microwave ovens, and alarm clocks.
+	\item \emc{Programming is specializing} a device to solve \emc{a problem that people have}.
+\end{itemize}
 }
+
+\frame{
+\frametitle{Programming \& languages (II).}
+
+Programming Languages:
+\begin{itemize}
+	\item The \emc{information describing the program} (code), is expressed in a programming language.
+	\item \emc{Trivial} programming languages: button presses to program an alarm clock. They are very \emc{low-level ways}, and lead to errors and inflexibility.
+	\item Full computers are programmed in \emc{higher-level formal languages}. Programmers may express their intent directly, build complex abstractions, and compose programs from smaller fragments.
+	\item Programming languages are formal languages but also \emc{human languages}. Programmers, use them to \emc{express and communicate their intent}.
+\end{itemize}
+
+}
+
 
 \frame{
 \frametitle{Why Python?} 
+\begin{itemize}
+	\item \emc{Real-world}, widely used programming language (5th in TIOBE ranking.)
+	\item \emc{Multi-paradigm}: scripting, procedural, functional elements, object oriented, generics.
+	\item Extensive \emc{eco-system} of tools and libraries. Great documentation.
+	\item Significant \emc{industrial uses}.
+	\item \emc{High-productivity}, and perfect for rapid prototyping.
+\end{itemize}
+
+Other languages you might want to learn:
+\begin{itemize}
+\item Lower-level: Rust (Hip!), C++, \emc{C}.
+\item Static typing: Go (Hip!), \emc{Java}, C\#.
+\item Web: Javascript (Hip!).
+\item Functional: \emc{Haskell}, Scala (Hip!)
+\end{itemize}
+
 }
 
-\frame{
+\begin{frame}[fragile]
 \frametitle{Using Python interactively.} 
-}
+
+\begin{itemize}
+	\item Install Python (\url{https://www.python.org/about/gettingstarted/})
+	\item Open a command line console, and run the Python interpreter.
+	\item Type your fist command: \mint{Python}{print("Hello World!")}
+	\item You should see it executing!
+
+\begin{Verbatim}[fontsize=\footnotesize]
+george$ python3
+Python 3.5.2 (default, Nov 17 2016, 17:05:23) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print("Hello World!")
+Hello World!
+>>>
+\end{Verbatim}
+
+\end{itemize}
+
+\end{frame}
+
 
 \frame{
-\frametitle{The `Hello World!' program in Python.} 
+\frametitle{Key resources and tools.} 
+
+The interactive interpreter is only good for one-liners, and quick experimentation. We will need:
+\begin{itemize}
+	\item \emc{Code editor}: atom (hip!), Sublime (hip last year!), Visual Studio Code. Must haves: Good syntax highlighting, good handling of files \& folders, whitespace, looks very cool.
+	\item Browser with \emc{Python Documentation}: \url{https://docs.python.org/3/}. (including \emc{Python tutorial} and \emc{Library reference}.)
+	\item \emc{Command line} \& learn how to use it. \url{https://www.lynda.com/Linux-tutorials/Learn-Linux-Command-Line-Basics/435539-2.html}
+	\item Q\&A in browser: \emc{Stack Overflow}. \url{https://stackoverflow.com/}
+\end{itemize}
+Make sure you \emc{enjoy your working environment}. Think of the \emc{ergonomics} of your physical environment, and \emc{keep fit}!
+
 }
 
-\frame{
+\begin{frame}[fragile]
 \frametitle{The `Hello World!' program in Python.} 
 
-A simple Python program:
+Programs live in files. A simple Python program:
 
 	\inputminted[
 		xleftmargin=1.4em,
@@ -77,16 +176,52 @@ A simple Python program:
 		fontsize=\footnotesize,
 		linenos
 	]{python}{src/hello_world.py}
-}
+
+Execute your first program, by running:
+\begin{Verbatim}
+$ python3 hello_world.py
+Hello World!
+\end{Verbatim}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Comments and Whitespace.}
+
+Comments are not executed by Python, but form part of your program.
+\begin{itemize}
+\item Comments \emc{communicate intent} to your future self and others.
+\item Express in comments concepts you cannot directly express in code.
+\item Prefer to express concepts directly in code!
+\item Keep comments local to the relevant code.
+\item Do not overcomment, and avoid duplicate, redundant or wrong comments. Every line of comment will have to be maintained in the future.
+\end{itemize}
+
+Python is \emc{sensitive to indentation} using whitespace. Use 3 or 4 spaces (not a tab) to indent blocks of code. More about this later \ldots.
+
+\end{frame}
 
 \begin{frame}
 \frametitle{How do we know a program does what it should?}
+
+\emc{Correctness is most important problem} in software engineering and computer science!
+
+\emc{Testing} is the most important technique to gain confidence a program does what it should:
+\begin{itemize}
+	\item Test every 2-5 lines of code you write.
+	\item Think how to \emc{test every snippet of code} just before, while, or just after you write it.
+	\item Use a mature \emc{tool for testing} your programs. We will use \texttt{pytest}. \url{https://docs.pytest.org/}.
+	\item Shortcomings of testing: \emc{lack of completeness}.
+\end{itemize}
+
+Complimentary techniques for ensuring program correctness include \emc{formal verification}. Those are more expensive, but necessary to reason about very complex problems.
+
 \end{frame}
 
 \frame{
 \frametitle{Testing the `Hello World!' program.} 
 
-The test of the simple Python program:
+\emc{Tests are snippets of code} executing parts of your program. Eg.\ the test of the simple Python program is:
 
 	\inputminted[
 		xleftmargin=1.4em,
@@ -98,12 +233,15 @@ The test of the simple Python program:
 		linenos
 	]{python}{src/test_hello_world.py}
 
+We run the \emc{test suit}, by executing \texttt{pytest test\_hello\_world.py} on the command line.
+
+
 }
 
 \frame{
-\frametitle{Testing the `Hello World!' program } 
+\frametitle{Code documentation and its tests. } 
 
-A simple Python program, with a docstring test:
+\emc{Code documentation} is not executed, but forms part of the program. It is useful to your future self, or others that want to use part of your program. Hence, \emc{document reusable units of code}.
 
 	\inputminted[
 		xleftmargin=1.4em,
@@ -115,6 +253,49 @@ A simple Python program, with a docstring test:
 		fontsize=\footnotesize, 
 		linenos
 	]{python}{src/hello_world_doc.py}
+
+You must \emc{test code in documentation}. Through \texttt{pytest -vs --doctest-modules test\_hello\_world.py}.
+
+}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Example of a successful test run. }
+
+Executing \texttt{pytest} runs all tests in functions named \texttt{test\_*} and documentation strings.
+
+\begin{Verbatim}[fontsize=\scriptsize]
+$ pytest -vs --doctest-modules src/*hello*.py
+============================= test session starts =============================
+platform win32 -- Python 3.5.3, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- c:\users\george\appdata\local\programs\python\python35\python.exe
+cachedir: .cache
+rootdir: C:\Users\george\Desktop\projects\Design_and_Professional_Skills\Topics\01_Basics, inifile:
+collecting ... collected 3 items
+
+src/test_hello_world.py::test_hello_world PASSED
+src/hello_world_doc.py::hello_world_doc.hello_world PASSED
+src/test_hello_world.py::test_hello_world PASSED
+
+========================== 3 passed in 0.03 seconds ===========================
+\end{Verbatim}
+
+\end{frame}
+
+\frame{
+\frametitle{Summary and next steps.}
+
+The rhythm-of-the-programming-business:
+\begin{itemize}
+	\item \emc{Think} of the problem $\rightarrow$ \emc{Code} feature (2-5 lines) $\rightarrow$ \emc{Write test} for feature $\rightarrow$ Run \emc{all} tests $\rightarrow$ Fix until \emc{all tests pass} $\rightarrow$ Think \ldots
+	\item Working programmers \emc{run tests a few times per minute}.
+	\item Testing practice imposes an \emc{incremental approach} to software building.
+	\item Professional standards: aspire to deliver programs with \emc{zero bugs}. 
+	Remember that \emc{`bugs' may cost millions or even kill}.
+\end{itemize}
+
+\vspace{5mm}
+Still to cover: functions and function calls (\texttt{def}, \texttt{()}), modules (\texttt{from}, \texttt{import}) and a lot more python \ldots
 
 }
 
