@@ -7,7 +7,7 @@ v = a - b     # v == 12
 a = v
 
 # Now, b > a, pick b
-b = b - a     # v == 18
+b = b - a     # b == 18
 
 # Stll, b > a, pick b
 b = b - a     # b == 6
