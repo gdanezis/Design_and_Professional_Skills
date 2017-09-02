@@ -217,6 +217,21 @@ Python is \emc{sensitive to indentation} using whitespace. Use 3 or 4 spaces (no
 
 \emc{Correctness is most important problem} in software engineering and computer science!
 
+\vspace{3mm}
+\emc{Testing is the key technique} to produce high quality, correct programs. It is an activity that is continuous, and performed in parallel with programming.
+
+\vspace{3mm}
+Complimentary techniques for ensuring program correctness include \emc{formal verification}. Those are more expensive, but necessary to reason about very complex problems.
+
+\vspace{3mm}
+Finally, formal periodic \emc{code reviews}, or continuous reflection through \emc{pair programming} also improve quality.
+
+\end{frame}
+
+
+\frame{
+\frametitle{Test Code Continuously.} 
+
 \emc{Testing} is the most important technique to gain confidence a program does what it should:
 \begin{itemize}
 	\item Unit Test every 2-5 lines of code you write. Think how to \emc{test every snippet of code} just before, while, or just after you write it.
@@ -225,9 +240,7 @@ Python is \emc{sensitive to indentation} using whitespace. Use 3 or 4 spaces (no
 	\item Shortcomings of testing: \emc{lack of completeness}.
 \end{itemize}
 
-Complimentary techniques for ensuring program correctness include \emc{formal verification}. Those are more expensive, but necessary to reason about very complex problems.
-
-\end{frame}
+}
 
 \frame{
 \frametitle{Testing the `Hello World!' program.} 
@@ -415,13 +428,21 @@ Eg.\ \mint{python}{a = 42} assigns $42$ to the named variable \texttt{a}.
 
 
 \begin{frame}
-\frametitle{Types \& Programming Languages.}
+\frametitle{Types \& Programming Languages. (I)}
 
 Python is a strongly typed and dynamically typed language. 
 \begin{itemize}
 \item \emc{Strongly typed}: Every variable, or expression has a \emc{type} associated with it. All expressions in our example program are of type \emc{int} representing integers. Only operations supported by this type can be performed on variables or expressions of that type.
-\item \emc{Dynamically typed}: While the program runs the types of objects are tracked, and operations are checked before being applied to ensure they are permitted. In contract \emc{statically typed} languages run this check before the program executes.
+\item \emc{Dynamically typed}: While the program runs the types of objects are tracked, and operations are checked before being applied to ensure they are permitted. 
 \end{itemize}
+
+\vspace{5mm}
+In contract \emc{statically typed} languages run this check before the program executes. However, to decide \emc{type-safety} before execution they \emc{lose expressiveness} or require \emc{type annotations}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Types \& Programming Languages. (II)}
 
 \begin{block}{Types and formal methods}
 Type systems are the most popular \emc{formal methods} that aid program correctness. They ensure only permissible operations are executed eliminate a large number of potential trivial bugs. But are \emc{not a substitute for testing} or further \emc{verification} for correctness.
@@ -440,15 +461,27 @@ The type \emc{int} is primitive, in that the Python language itself knows about 
 \item The function \texttt{int(x)} returns the integer representation of \texttt{x} (if it exists).
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Primitive and user-defined types} 
+
+Python supports out-of-the-box a number of types, including integers, complex numbers, real numbers (\texttt{float}), truth values (\texttt{bool}), strings of characters (\texttt{str}), and many data structures.
+
 \vspace{5mm}
 A \emc{full list of all supported operations} can be found in the documentation for all primitive types. \emc{Study it} carefully. \url{https://docs.python.org/3/library/stdtypes.html}.
+
+
+\begin{block}{User-defined types and abstraction}
+High-level programming languages allow programmers to define their own types, associated with their own data and permitted operations. This is a key feature that makes programming in such languages expressive---and closer to the intent of the programmer---and free of the need to reflect in very low-level types, minimizing mistakes.
+\end{block}
 
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Controlling the execution of programs.} 
 
-So far we have used Python as a glorified calculator. 
+So far we have used Python as a \emc{glorified calculator}. 
 
 \vspace{2mm}
 We had to interpret ourselves the algorithmic commands relating to doing \emc{different operations depending on conditions}, and \emc{repeating operations until a condition occurs}.
