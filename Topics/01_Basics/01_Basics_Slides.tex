@@ -484,13 +484,13 @@ High-level programming languages allow programmers to define their own types, as
 So far we have used Python as a \emc{glorified calculator}. 
 
 \vspace{2mm}
-We had to interpret ourselves the algorithmic commands relating to doing \emc{different operations depending on conditions}, and \emc{repeating operations until a condition occurs}.
+We had to interpret ourselves the algorithmic commands relating to doing \emc{different operations depending on conditions}, and \emc{repeating operations while a condition holds}.
 
 \vspace{2mm}
 \begin{itemize}
 	\item \emc{Conditional execution} of commands can be achieved by using the \texttt{if ... then ...} control structure taking the form:
 \begin{Verbatim}[fontsize=\scriptsize]
-if (condition):
+if condition:
     block of statements 1.
 else:
     block of statements 2.
@@ -498,20 +498,19 @@ else:
 
 	\item \emc{Repeated execution} while a condition holds may be achieved thorugh the \texttt{while ... } control structure taking the form:
 \begin{Verbatim}[fontsize=\scriptsize]
-while (condition):
+while condition:
     block of statements 1.
 \end{Verbatim}
-
 
 \end{itemize}
 
 \end{frame}
 
-
 \begin{frame}
 
 \frametitle{Automatic program control for Euclid's algorithm.} 
 
+Refactoring the euclid algorithm to take advantage of \texttt{while} and \texttt{if} control structures.
 
 	\inputminted[
 		xleftmargin=1.4em,
@@ -525,21 +524,86 @@ while (condition):
 
 \end{frame}
 
+
 \begin{frame}
 
-\frametitle{Loops, and the while control structure.} 
+\frametitle{Conditions and the \texttt{bool} type.} 
+
+What is the nature of conditions in Pyhton programs?
+\begin{itemize}
+\item Conditions are just \emc{expressions}, that return a result of type \emc{bool}.
+\item A variable of type \texttt{bool} takes one of two values, \emc{True} or \emc{False}.
+\item A number of arithmetic operators return a boolean, incl. \texttt{==} for equality, \texttt{<} less than, \texttt{>} greater than, \texttt{!=} not equal, etc.
+\item The \texttt{bool(x)} function interpets \texttt{x} as a boolean if possible.
+\item Booleans may be linked together through `\emc{and}', `\emc{or}' and `\emc{not}'.
+\item Those \emc{lazily} evaluate the expressions until its value is determined.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Loops, and the \texttt{while} control structure.} 
+
+	\inputminted[
+		firstline= 5,
+		lastline=9,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_euclid.py}
+
+Keep re-executing a block until a condition stops holding.
+\begin{itemize}
+	\item Upon encountering a \texttt{while} the program \emc{evaluates} the condition.
+	\item If the condition is \emc{True} it starts executing the statements in the block.
+	\item When the block ends, it \emc{continues} back to the \texttt{while} (line 5).
+	\item if \emc{False} it skips the block and \emc{breaks} to line 10.
+	\item You can explicitely use \texttt{continue} and \texttt{break} in the program.
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 
-\frametitle{Conditional execution with the if control structure.} 
+\frametitle{Conditional execution with the \texttt{if} control structure.} 
+
+	\inputminted[
+		firstline= 6,
+		lastline=9,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_euclid.py}
+
+Execute a block, or another, depending on a condition.
+\begin{itemize}
+	\item Upon encountering an \texttt{if} the program \emc{evaluates} the condition.
+	\item If \emc{True} it executes the first block (line 7).
+	\item Else, if \emc{False}, it executes the second block (line 9)
+\end{itemize}
+
+\begin{block}{How are blocks defined?}
+In Python blocks are defined as a set of statements with the same degree of indentation 
+(whitespace). Use 3 or 4 spaces to group blocks together, and do not use any tabs.
+\end{block}
+
 \end{frame}
 
-
+	
 \begin{frame}
 \frametitle{Euclid as a function} 
 
-
+Refactor Euclid's algorithm as a function with two parameters.
 	\inputminted[
 		xleftmargin=1.4em,
 		frame=lines,
@@ -553,21 +617,111 @@ while (condition):
 \end{frame}
 
 \begin{frame}
-\frametitle{Re-using code through functions.}
+\frametitle{Re-using code through functions. (I)}
+
+Functions allow us to \emc{define blocks of code}, and \emc{reuse} them without copying them.
+
+	\inputminted[
+		firstline=1,
+		lastline=1,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid.py}
+
+
+\begin{itemize}
+	\item Declare a function through the keyword \texttt{def} followed by a \emc{function name}, and a list of \emc{named parameters} in brackets.
+	\item The names parameters are \emc{available within the block} (body) of the function, but not outside (\emc{variable scope}).
+	\item The \emc{return} statement \emc{exits} the function, and may \emc{return a value}.	
+\end{itemize}
+
+	\inputminted[
+		firstline=8,
+		lastline=8,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid.py}
+
+
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Re-using code through functions (II).}
+
+You may call a function, pass to it different parameters, and get the result.
+
+	\inputminted[
+		firstline=12,
+		lastline=12,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/subtraction_function_euclid.py}
+
+
+\begin{itemize}
+	\item You may \emc{apply} any parameters to a function to \emc{call} it.
+	\item \emc{Parameters are expressions} that are evaluated before the function is called.
+	\item The function call itself is an expression that results in the \emc{value returned} or \emc{None}. 
+\end{itemize}
+
+\vspace{3mm}
+Functions are key to supporting \emc{abstraction} in programs.
+
+\end{frame}
+
 
 \begin{frame}
 \frametitle{The `scope' of variables.}
+
+\begin{block}{Why Scope variables?}
+Scope ensures that the names of variables from different parts of the program do not clash and 
+confuse the programmer, by ensuring a degree of `locality'. 
+\end{block}
+
+LEGB Rule defines when variables are available to a block (scope):
+\begin{itemize}
+\item \emc{L, Local}: Names assigned in any way within a function.
+\item \emc{E, Enclosing-function locals}: Name in the local scope of any and all statically enclosing functions, from inner to outer.
+\item \emc{G, Global (module)}: Names assigned at the top-level of a module file, or by executing a global statement.
+\item \emc{B, Built-in (Python)}: Names in the built-in names module.
+\end{itemize}
 \end{frame}
 
-
 \begin{frame}
-\frametitle{The DRY principle.}
+\frametitle{The Abstraction and DRY principles.}
+
+Benjamin C. Pierce in \emph{Types and Programming Languages} (2002):
+\begin{block}{The Abstraction Principle}
+Each significant piece of functionality in a program should be implemented in \emc{just one place} in the source code. Where similar functions are carried out by distinct pieces of code, it is \emc{generally beneficial} to combine them into one by \emc{abstracting out} the varying parts.
+\end{block}
+
+ Andy Hunt and Dave Thomas in \emph{The Pragmatic Programmer} (1999)
+\begin{block}{Don't Repeat Yourself (DRY) Principle}
+Every piece of knowledge must have a \emc{single, unambiguous, authoritative representation} within a system.
+\end{block}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Euclid as a function and unit test} 
 
+Refactor the Euclid Example with \texttt{ax,bx = 42,30} as a test.
 	\inputminted[
 		xleftmargin=1.4em,
 		frame=lines,
@@ -582,20 +736,82 @@ while (condition):
 
 
 \begin{frame}
-\frametitle{What makes a good test?}
+\frametitle{What makes a good test? (I)}
+
+Brian W. Kernighan and Rob Pike in  \emph{The Practice of programming} (1999), provide some advice:
+\begin{itemize}
+	\item \emc{Coverage}, make sure all lines, and code paths are tested.
+	\item \emc{Compare} different implementations to check refactoring and refinement.
+	\item Test for \emc{boundary conditions}, values and special cases.
+	\item Identify and test that \emc{pre- and post- conditions} hold.
+	\item Identify and check for \emc{conservation properties}.
+	\item Check \emc{error} returns and exceptional paths.
+\end{itemize}
+
+\vspace{3mm}
+Tests cannot check all possible paths of large programs, but \emc{model checkers} can be used to test paths more efficiently.
+
 \end{frame}
 
 \begin{frame}
-\frametitle{When to write the test?}
+\frametitle{What makes a good test? (II)}
+
+Robert C. Martin in \emph{Clean Code} (2008), states the FIRST principles. Tests should be:
+\begin{itemize}
+	\item \emc{Fast}, since you will run it many times per minute.
+	\item \emc{Independent} of each other, to isolate errors easily. 
+	\item \emc{Repeatable} in any environment, for production to QA or your laptop.
+	\item \emc{Self-Validating} in that they have a boolean output: success or fail.
+	\item \emc{Timely}, written \emph{just before} the production code.
+\end{itemize}
+
+\vspace{5mm}
+What a second, you said \emc{just before} the production code?
+
+\end{frame}
+
+\begin{frame}
+\frametitle{When to write the tests? \& Test Driven Development}
+
+\emc{Test Driven Development}: write tests \emc{just before} the production code.
+
+\vspace{2mm}
+Robert C. Martin in \emph{Clean Code} (2008), states the \emc{3 laws of TDD}:
+\begin{enumerate}
+	\item You may not write production code until you code a failing test.
+	\item You may not write more of a unit test than is sufficient to fail.
+	\item You may not write more production code than is sufficient to pass the currently failing test.
+\end{enumerate}
+
+\vspace{2mm}
+\begin{block}{The practice of Test Driven Development (TDD)}
+\emc{Think} of the problem $\rightarrow$ \emc{Write minimal test} for feature $\rightarrow$ Run \emc{all} tests and see one fail $\rightarrow$ \emc{Minimal code} for feature (2-5 lines) $\rightarrow$ Fix until \emc{all tests pass} $\rightarrow$ Think \ldots
+\end{block}
+
 \end{frame}
 
 
 \begin{frame}
 \frametitle{The `happy path', errors and exceptions.}
+
+Users of your code will use it in \emc{invalid ways}, and \emc{exceptional circumstances} will occur.
+
+\vspace{3mm}
+Handling errors and exceptions:
+\begin{itemize}
+	\item Upon an error code should \emc{fail fast}, and \emc{never fail silently}.
+	\item Your \emc{code should handle errors and exceptions} that are the result of external factors.
+	\item An external factor is \emc{your future self}, using your own code in an unexpected manner.
+	\item Handling exceptional paths must not obscure the intent of your program (the \emc{happy path}).
+	\item Use \emc{language facilities} to handle errors and exceptions.
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Raising an exception upon error.} 
+
+Refactor Euclid to ensure that inputs are positive integers.
 
 	\inputminted[
 		highlightlines={3-4},
@@ -610,11 +826,38 @@ while (condition):
 		linenos
 	]{python}{src/subtraction_function_euclid_exc.py}
 
+The \emc{raise} keyword \emc{interrupts the flow of the program}, and exits the block with an exception immediately.
+
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The \texttt{try / except / finally} control structure.}
+
+To \emc{handle an exception raised} by a block of code we use:
+\begin{Verbatim}[fontsize=\scriptsize]
+try:
+    Block that may `raise' exception ExceptionName.
+except ExceptionName as VariableName:
+    Block that handles the exception.
+finally:
+    Block that is always executed.
+\end{Verbatim}
+
+\begin{itemize}
+	\item The program executes the block in \emc{try} until the block ends.
+	\item If the block raises an exception, the execution end, 
+	and it is matched to the exception name in the \emc{except} handler.
+	\item If the exception matches the block of the exception handler is executed, otherwise the exception is raised further.
+	\item In all cases the \emc{finally} block of code is executed.
+\end{itemize}
+
+\end{frame}
+
 
 \begin{frame}
 \frametitle{How to test \& handle exceptions.}
 
+A test that ensures the exception handler is activated for invalid input.
 	\inputminted[
 		firstline=19,
 		lastline=29,
@@ -627,21 +870,32 @@ while (condition):
 		linenos
 	]{python}{src/subtraction_function_euclid_exc.py}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{The try / except / finally control structure.}
+Note that multiple, including generic, \emc{except} blocks may be present.
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Detect errors at a low level, handle them at a high level.}
+
+The Python raise mechanism interrupts the flow, and bubbles up the exception to outer calling blocks. Why?
+\begin{itemize}
+\item Errors are often detected \emc{deep within programs}. Eg.\ a file name does not exist when you are about to open it.
+\item At such a low-level when it is \emc{not known how to handle} them.
+\item Thus error handling happens at a higher level, when \emc{options for recovery} are known.
+\item Use the \emc{finally} for local clean-up upon an error.
+\item Do not use exceptions as part of the happy path, and vice versa.
+\end{itemize}
+
+\vspace{3mm}
+Only \emc{handle errors at a level where you know how to recover}, otherwise raise them up further.
+
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Idiomatic pytest.}
+\frametitle{Advanced: Idiomatic pytest.}
 
+The \texttt{pytest} framework provides facilities for testing multiple inputs, and checking that the correct exceptions are raise.
 	\inputminted[
 		firstline=31,
 		xleftmargin=1.4em,
@@ -653,23 +907,119 @@ while (condition):
 		linenos
 	]{python}{src/subtraction_function_euclid_exc.py}
 
+It uses advanced Python constructs, such as module \texttt{import}, decorators (\texttt{\@}), lists (\texttt{[\ldots]}), and the \texttt{with} control structure. We will study them later in the course.
+
 \end{frame}
 
 
 \begin{frame}
 \frametitle{The practice of refactoring.}
+
+Programs are living things that \emc{evolve}.
+\begin{itemize}
+\item Programming is a \emc{dynamic activity}: a program is \emc{re-written and re-tested} many times per minute.
+\item Evolving the program to increase its quality is called \emc{refactoring}.
+\item \emc{Good design} (abtraction and DRY) \& the existence of \emc{good tests} ensure refactoring does \emc{not introduce new errors} in existing code.
+\end{itemize}
+
+\begin{block}{Version Control enables fearless refactoring}
+What if refactoring breaks your working program? Tests will detect this, but how can you go back to the working previous version? The solution is to use a version control system, such as \texttt{git}, which we will study later.
+\end{block}
+
 \end{frame}
 
-\section{Algorithmic complexity}
+\begin{frame}
+\frametitle{Give a command-line interface to Euclid.}
+
+One more step of evolution:
+	\inputminted[
+		firstline=40,
+		lastline=52,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/euclid.py}
+
+Take it on faith that \texttt{sys.argv[1 / 2]} are the command line arguments.
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{A few notes on the interface}
+
+How to \emc{run the program}:
+\begin{center}
+\begin{Verbatim}[fontsize=\scriptsize]
+$ python euclid.py 45 5
+5
+$ python euclid.py 45 -5
+Euclid requires positive integers.
+\end{Verbatim}
+\end{center}
+You have written your very first \emc{real complete program}!
+
+\vspace{3mm}
+However:
+\begin{itemize}
+	\item Hard to \emc{test of interface} we built. Use a function.
+	\item Prefer to \emc{use a library} to provide command line interfaces.
+	\item Anything that is user facing needs \emc{user experience testing}.
+\end{itemize}
+
+\end{frame}
+
+
+\section{The cost of algorithms}
 
 \begin{frame}
 \frametitle{How many iterations does the GCD algorithm take?}
+
+Computer Science applies logic and mathematics to reason about the cost of programs.
+\begin{itemize}
+	\item Consider the computation of \texttt{GCD(2,000,000, 2) = 2}.
+	\item At each iteration of the \texttt{while} loop, the second argument (\texttt{2}) will be subtracted from the larger one, until they are equal to the result (\texttt{2}).
+	\item How many times do you need to subtract that number? \\ 
+	\texttt{2,000,000 / 2}.
+	\item The operation is in effect \emc{equivalent to taking the remainder} between the larger and the smaller number. 
+\end{itemize}
+
+\vspace{3mm}
+Our version of Euclid relies on a very simple minded (and slow) variant of division.
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Experimental evaluation of programs.}
+
+A \emc{profiler}, tells you the time spent within functions:
+\begin{Verbatim}[fontsize=\scriptsize]
+$ python -m cProfile euclid.py 2000000 2 | grep "calls\|GCD"
+         50028 function calls (48802 primitive calls) in 0.619 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.295    0.295    0.295    0.295 euclid.py:1(GCD)
+\end{Verbatim}
+
+A \emc{trace} of the program displays all statements executed:
+\begin{Verbatim}[fontsize=\scriptsize]
+$ python -m trace -t euclid.py 200000 2 | grep -c "while (a != b)"
+100000
+\end{Verbatim}
+
+\begin{block}{Use Unix commands}
+The examples above make use of UNIX command line tools, such as pipes (\texttt{|}) to route data from one application to another, and \texttt{grep} to pattern match and count occurrences. Learn how to make effective use of such commands to solve problems.
+\end{block}
+
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Euclid's algorithm using modulo operation (\%).}
+\frametitle{Euclid's algorithm using remainder operation (\%).}
 
+Refactor Euclid to use the remainder operation.
 	\inputminted[
 		lastline=14,
 		xleftmargin=1.4em,
@@ -683,13 +1033,57 @@ while (condition):
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Cost of modulo and multiple assignment?}
+\begin{frame}[fragile]
+\frametitle{Evaluate the optimized code.}
+
+In theory only a single iteration should do, which we confirm:
+\begin{Verbatim}[fontsize=\scriptsize]
+$ python -m cProfile mod_function_euclid_exc.py 2000000 2 | grep "calls\|GCD"
+         50028 function calls (48802 primitive calls) in 0.314 seconds
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 mod_function_euclid_exc.py:1(GCD)
+$ python -m trace -t mod_function_euclid_exc.py 200000 2 | grep -c "while (b != 0)"
+2
+\end{Verbatim}
+
+\begin{block}{What is an optimization?}
+An optimization of some program, transforms the program into another one, that is in every way correct, but somewhat more performant than the original one. This could be in terms of speed, resources needed such as memory and storage, or volume of external interactions (such as network traffic).
+\end{block}
+
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Understanding the int type.}
+\frametitle{When to optimize for performance.}
+
+\begin{block}{Premature optimization is the root of all evil (Donald Knuth).}
+\footnotesize
+Programmers \emc{waste time} thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have \emc{a strong negative impact on debugging and maintenance}. We should forget about small efficiencies: \emc{premature optimization is the root of all evil}. Yet we should not pass up our opportunities for big ones.
+\end{block}
+
+\begin{itemize}
+\item Only optimize code that is within the \emc{critical part} of the program, namely actually affects performance significantly.
+\item Only optimize based on \emc{evidence of the problem}, and \emc{evidence of the benefit} from the solution.
+\item Keep other code \emc{simple and easy to understand and maintain}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The KISS and YAGNI principles.}
+
+Two key engineering and programming principles.
+
+\begin{block}{Keep it simple, stupid (KISS) Principle}
+Most systems work best if they are kept simple rather than made complicated; therefore simplicity should be a key goal in design and unnecessary complexity should be avoided.
+\end{block}
+
+\begin{block}{You Arent Gonna Need It (YAGNI) Principle}
+Always implement things when you actually need them, never when you just foresee that you need them.
+\end{block}
+
+Counterbalance to the `abstraction principle': Only abstract a function when you have more that one concrete example where you need to use it. It is \emc{hard to abstract from a single, let alone no, example}.
+
 \end{frame}
 
 \section{Algorithms on `real' numbers}

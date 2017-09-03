@@ -33,3 +33,17 @@ def test_euclid_exc_raises(test_inputs):
     with pytest.raises(Exception) as excinfo:
         GCD(ax, bx)  
     assert "Must be positive int." in str(excinfo.value)
+
+import sys
+if __name__ == "__main__":
+    try:
+        # Take the two first command-line args, as integers.
+        ax = int(sys.argv[1])
+        bx = int(sys.argv[2])
+        print(GCD(ax, bx))
+    except IndexError:
+        print("Euclid requires two arguments.")
+    except ValueError:
+        print("Euclid requires two integers.")
+    except ArithmeticError:
+        print("Euclid requires positive integers.")
