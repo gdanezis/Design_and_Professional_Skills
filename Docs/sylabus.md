@@ -48,6 +48,12 @@
       * _A sequential search algorithm and its unit tests._
          * Bisection search on a sorted array.
          * The big-O notation and asymptotic costs of algorithms.
+      * The art of debugging
+         * Understand your program: the 'bug' is in your head.
+         * Logging: observing the values of variables.
+         * Using a debugger to interactivelly step through code.
+         * Tracing a program execution.
+         * Assert the invariants.
       * _The quicksort algorithm and its unit tests_
          * Sorting Algorithms, stable sorting. 
          * Understanding recursion.
