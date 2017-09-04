@@ -161,7 +161,7 @@ The interactive interpreter is only good for quick experimentation.
 }
 
 \frame{
-\frametitle{Well being.} 
+\frametitle{Your well being.} 
 
 \begin{itemize}
 \item Approach the physical activity of programming with \emc{professionalism}.
@@ -377,6 +377,46 @@ Let's build a Python program where we execute the concrete steps of the algorith
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Why Euclid's algorithm works? (I)}
+
+Consider the positive integers $a$ and $b$; express using $a'$ and $b'$:
+\begin{align}
+a &= a' \cdot gcd(a,b), \\
+b &= b' \cdot gcd(a,b),
+\end{align}
+where $gcd(a',b') = 1.$
+
+Without loss of generality, consider $a > b$. After a single step:
+\begin{align}
+a'' &= a - b \\ 
+    &= (a' - b') \cdot gcd(a,b).
+\end{align}
+
+Note that $a''$ is always strictly positive.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Why Euclid's algorithm works? (II)}
+
+We can show that $gcd(a'', b) = gcd(a,b)$.
+
+Proof by contradiction: 
+
+\begin{itemize}
+\item We know that gcd(a,b) is a factor of both a'' and b. 
+\item So if $gcd(a'', b) > gcd(a,b)$ it must be that:
+$gcd(a' - b', b') = c > 1$. 
+\item Thus we can rewrite $b' = r \cdot c$ and $a' - b' = r' \cdot c \Leftrightarrow a' = (r' - r) \cdot c $. 
+\item However that means that $a'$ and $b'$ are both divisible by $c$. Which contradicts $gcd(a',b') = 1$.
+\end{itemize}
+
+Thus by repeatedly applying the steps of the algorithm we keep the gcd in each step constant while reducing the size of $a$ and $b$. Until they are equal to the gcd.
+
+\end{frame}
+
+
 
 \begin{frame}
 
@@ -425,7 +465,6 @@ Eg.\ \mint{python}{a = 42} assigns $42$ to the named variable \texttt{a}.
 \end{itemize}
 
 \end{frame}
-
 
 \begin{frame}
 \frametitle{Types \& Programming Languages. (I)}
@@ -601,7 +640,7 @@ In Python blocks are defined as a set of statements with the same degree of inde
 
 	
 \begin{frame}
-\frametitle{Euclid as a function} 
+\frametitle{Euclid as a function.} 
 
 Refactor Euclid's algorithm as a function with two parameters.
 	\inputminted[
@@ -1074,26 +1113,48 @@ Programmers \emc{waste time} thinking about, or worrying about, the speed of non
 
 Two key engineering and programming principles.
 
-\begin{block}{Keep it simple, stupid (KISS) Principle}
+\begin{block}{Keep it simple, stupid (KISS) Principle (US Navy)}
 Most systems work best if they are kept simple rather than made complicated; therefore simplicity should be a key goal in design and unnecessary complexity should be avoided.
 \end{block}
 
-\begin{block}{You Arent Gonna Need It (YAGNI) Principle}
+\begin{block}{You Arent Gonna Need It (YAGNI) Principle (XP \& Agile)}
 Always implement things when you actually need them, never when you just foresee that you need them.
 \end{block}
 
-Counterbalance to the `abstraction principle': Only abstract a function when you have more that one concrete example where you need to use it. It is \emc{hard to abstract from a single, let alone no, example}.
+\emc{Counterbalance} to the `abstraction principle': Only abstract a function when you have more that one concrete example of. It is \emc{hard to abstract from a single, let alone no, example}.
 
 \end{frame}
 
 \section{Algorithms on `real' numbers}
 
 \begin{frame}
-\frametitle{The float type and float variables}
+\frametitle{The \texttt{float} type and real valued variables.}
+
+\emc{Real numbers cannot all be represented exactly} within a computer, since irrationals may not be represented by integers (think of $\pi$). Instead they use a \emc{floating point notation}.
+
+%>>> import sys
+%>>> sys.float_info
+%sys.float_info(max=1.7976931348623157e+308, max_exp=1024, max_10_exp=308, min=2.
+%2250738585072014e-308, min_exp=-1021, min_10_exp=-307, dig=15, mant_dig=53, epsi
+%lon=2.220446049250313e-16, radix=2, rounds=1)
+
+\begin{itemize}
+	\item Values can be denoted as \texttt{float} by using a decimal point:
+	\mint{python}{a = 2.0}
+	\item An alternative notation specifies the number in exponential form:
+	\mint{python}{a = 4e-2}
+	denotes $4 \cdot 10^{-2} = 0.04$.
+	\item Floats can have a minimum value of $2.2250738585072014e-308$ and a maximum value of $1.7976931348623157e+308$.
+	\item The smallest number greater than $1.0$ is $1.0 + 2.220446049250313e-16$.
+	\item All computations are therefore \emc{approximate}.
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{How to test a square root function.}
+
+We want to write an algorithm to compute the \emc{square root} of a number.
 
 	\inputminted[
 		lastline=14,
@@ -1106,10 +1167,29 @@ Counterbalance to the `abstraction principle': Only abstract a function when you
 		linenos
 	]{python}{src/sqrt_dummy.py}
 
+\begin{itemize}
+	\item Note we \emc{write the test first}, following the TDD principle.
+	\item We assert that the result of \texttt{sqrt} is close, but not equal by some precision. Equality is not reliable to test floats.
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Heron's method for computing square roots}
+\frametitle{Heron's method for computing square roots.}
+
+Hero of Alexandria (c. 10 AD -- c. 70 AD) proposed an an algorithm for computing square roots of positive numbers.
+
+\begin{block}{Heron's Method}
+\begin{itemize}
+\item Take the number $x$ for which you wish to compute the square root.
+\item Assign $r_0 = x$.
+\item Repeatedly compute $r_{i+1} = \frac{1}{2} \left( r_i + \frac{x}{r_i} \right)$.
+\item Stop after a certain precision is achieved, and return $r_{i+1}$.
+\end{itemize}
+\end{block}
+
+Note this is a special case of the Newton-Raphson (1690) algorithm for computing zeros of function $f(x) = 0$.
+
 \end{frame}
 
 \begin{frame}
@@ -1126,31 +1206,73 @@ Counterbalance to the `abstraction principle': Only abstract a function when you
 		linenos
 	]{python}{src/sqrt.py}
 
+\begin{itemize}
+	\item Note we compute, and remember the values of \emc{two consecutive steps}, in \texttt{guess} and \texttt{old\_guess} to compute the gain in precision (line 21--23).
+	\item We use a \emc{range test} to terminate the process (line 22).
+	\item Other tricks include \emc{bounding on both sides} (line 22), and \emc{double assignment} (line 23).
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{The problem of termination \& infinite loops.}
+
+How can you convince yourself that \emc{the condition will eventually become False} as a result of performing the body of the loop?
+
+\vspace{5mm}
+In general, can we write a program, that takes as input any program, and decides whether it ever going to terminate or not? (The \emc{Halting Problem}).
+
+\begin{block}{The Halting Problem}
+Alan Turing proved in 1936 that a general algorithm to solve the halting problem for all possible program-input pairs cannot exist. A key part of the proof was a mathematical definition of a computer and program, which became known as \emc{a Turing machine}; the halting problem is \emc{undecidable over Turing machines}. % It is one of the first examples of a decision problem.
+\end{block}
+
+However, we can analyze specific programs for termination.
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Will Heron's method terminate?}
+\frametitle{Will Heron's method terminate? (I)}
 
-Lemma 1. Heron's approximation to the square root bounds the square root from above. Namely, $\forall x, g. \qquad \frac{1}{2}(g + \frac{x}{g}) \geq \sqrt{x}$.
-Proof. $\Rightarrow g^2 - 2g\sqrt{x}+(\sqrt{x})^2 \geq 0$ 
-$\Rightarrow (\sqrt{x} - g)^2 \geq 0$. QED.
+We will prove that every step, after the first step the approximation can only get better, and eventually get within the precision required.
 
-Theorem 1. Subsequent approximations $g_{i+1} = \frac{1}{2} (g_i + \frac{x}{g_i})$ approximate $\sqrt{x}$ increasingly better. Namely, $|g_{i+1} - \sqrt{x}| < |g_{i} - \sqrt{x}|$. (Where $g_0 = \frac{1}{2}(x + 1)$).
-Proof. (Due to lemma 1.) 
-$\Rightarrow g_{i+1} - \sqrt{x} < g_{i} - \sqrt{x}$
-$\Rightarrow g_{i+1} < g_{i}$
-$\Rightarrow \frac{1}{2} (g_i + \frac{x}{g_i}) < g_{i}$
-$\Rightarrow g_i^2 + (\sqrt{x})^2 < 2g_i^2$
-$\Rightarrow 0 < g_i^2 - (\sqrt{x})^2$
-$\Rightarrow 0 < (g_i - \sqrt{x})(g_i + \sqrt{x})$. True by lemma 1. QED.
+\vspace{3mm}
+Lemma 1. Heron's approximation to the square root bounds the square root from above. Namely, 
+\[\forall x,g > 0. \quad \frac{1}{2}(g + \frac{x}{g}) \geq \sqrt{x}.\]
+
+Proof. 
+\begin{align}
+\frac{1}{2}(g + \frac{x}{g}) \geq \sqrt{x} \Leftrightarrow
+g^2 - 2g\sqrt{x}+(\sqrt{x})^2 &\geq 0 \Leftrightarrow \\ 
+(\sqrt{x} - g)^2 &\geq 0 \qquad \text{QED}.
+\end{align}
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Ensure progress.}
+\frametitle{Will Heron's method terminate? (II)}
+
+Theorem 1. Subsequent approximations $g_{i+1} = \frac{1}{2} (g_i + \frac{x}{g_i})$ approximate $\sqrt{x}$ increasingly better. (Where $g_0 = \frac{1}{2}(x + 1)$). Namely, 
+\[|g_{i+1} - \sqrt{x}| < |g_{i} - \sqrt{x}|.\]
+
+
+Proof.
+\begin{align}
+|g_{i+1} - \sqrt{x}| < |g_{i} - \sqrt{x}| &\Leftrightarrow \\
+g_{i+1} - \sqrt{x} < g_{i} - \sqrt{x} &\Leftrightarrow \quad \text{(Due to lemma 1.)} \\
+g_{i+1} < g_{i} \Leftrightarrow 
+\frac{1}{2} (g_i + \frac{x}{g_i}) < g_{i} &\Leftrightarrow \\
+g_i^2 + (\sqrt{x})^2 < 2g_i^2 \Leftrightarrow
+0 < g_i^2 - (\sqrt{x})^2 &\Leftrightarrow \\
+0 < (g_i - \sqrt{x})(g_i + \sqrt{x}) &\quad \text{(True by lemma 1). QED.}
+\end{align}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Engineering approach to checking progress.}
+
+Ensure your \texttt{while} loops \emc{make progress}, using an \texttt{assert} in the code.
 
 	\inputminted[
 		firstline=31,
@@ -1163,17 +1285,28 @@ $\Rightarrow 0 < (g_i - \sqrt{x})(g_i + \sqrt{x})$. True by lemma 1. QED.
 		linenos
 	]{python}{src/sqrt_assert.py}
 
+In general, \emc{while loops are dangerous} since it is error prone to ensure termination. We will study a better control structure for most cases, the \emc{for} loop.
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Check invariants within your program.}
+\frametitle{Check invariants within your program, with \texttt{assert}.}
 
-Different from runtime exceptions.
+\begin{definition}\emc{Invariants} are properties of the program, or parts of the program that must always hold true. \emc{Loop invariants} must be true just before and just after each iteration of the loop.
+\end{definition}
+
+\begin{itemize}
+	\item Eg.\ within the \texttt{while} the new guess for $\sqrt{x}$ is smaller than the previous guess.
+	\item Identify such variants and code them within the program using the \emc{assert} keyword, so that they are constantly checked.
+	\item Asserts are \emc{different from exceptions}, they catch problems internal to your program (bugs), not due to the environment -- those cannot be handled at runtime.
+	\item You can \emc{disable asserts} through the \texttt{-O} Python option.
+\end{itemize}
+
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Understanding float precision.}
+\frametitle{Tests \& understanding float precision.}
 
 	\inputminted[
 		firstline=12,
@@ -1192,55 +1325,53 @@ Different from runtime exceptions.
 \begin{frame}
 \frametitle{Always prefer built in functions and standard libraries.}
 
-Do \mint{python}{x ** 0.5}
+Writing the \texttt{sqrt} function was an exercise. Prefer to \emc{re-use well-tested code}, eg.  for square roots \texttt{x ** 0.5}.
+\begin{itemize}
+	\item Study the Python standard library: \url{https://docs.python.org/3/library/}.
+	\item Study 3rd party (awesome) libraries: \url{https://github.com/vinta/awesome-python}.
+	\item Understand how to use \texttt{pip} and Pypi to download libraries: 
+	\url{https://pypi.python.org/pypi}.
+\end{itemize}
+
+\begin{block}{Keep your code as small as possible (Dan Mayer)}
+``The more development I do the more I feel like increased Lines Of Code (LOC), nearly always results in increased bugs.''
+\end{block}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Understanding functions.}
+\frametitle{Functions good practices.}
+
+Functions help you modularize and re-use your code, if \emc{done right}!
+\begin{itemize}
+	\item Give your function and their parameters \emc{good names}.
+	\item \emc{Only rely on the function parameters} to perform the computation. \emc{Avoid using global variables} since it lowers modularity.
+	\item When possible, the result of the computation should only affect the returned value. This property, is called \emc{no side-effect}.
+	\item It is `ok' to \emc{affect the state of parameters}, but never affect the global state.
+	\item Keep functions \emc{short} (max 20-40 lines), and ensure they each do only \emc{one key thing}. 
+	\item All \emc{concepts} within a functions should be at the \emc{same level of abstraction}.
+\end{itemize}
+
 \end{frame}
 
+\begin{frame}
+\frametitle{What makes a good variable name?}
+
+Programming us about \emc{expressing ideas}, and \emc{good names} help a lot.
+
+\begin{itemize}
+	\item Chose \emc{long descriptive names} to be used far from where they are defined.
+	\item Chose \emc{short names} when they are used locally only.
+	\item Chose a consistent way of expressing \texttt{long\_names} or \texttt{LongNames}.
+	\item Use the same name to \emc{consistently} refer to the same concept.
+	\item Use names that \emc{accurately reflect the purpose} of the variable.
+	\item Use \emc{active names} for function, that perform \emc{actions}.
+\end{itemize}
+
+\end{frame}
 
 
 % ---------------------------------
-
-\section{Cruft}
-
-\begin{frame}[fragile]
-\frametitle{Verbatim environments} 
-
-How to run tests:
-\begin{minted}{bash}
-$ pytest -vs --doctest-modules
-\end{minted}
-
-\vspace{5mm}  
-
-The example of a Verbatim fragment:
-\scriptsize %change the font size. You can \scriptsize to get a smaller font.
-\begin{verbatim}
-============================= test session starts =============================
-platform win32 -- Python 3.5.3, pytest-3.2.1, py-1.4.34, pluggy-0.4.0 -- 
-c:\users\george\appdata\local\programs\python\python35\python.exe
-cachedir: .cache
-rootdir: C:\Users\george\Desktop\projects\Design_and_Professional_Skills\
-Docs\pipeline, inifile:
-collecting ... collected 2 items
-
-hello_world_doc.py::hello_world_doc.hello_world PASSED
-test_hello_world.py::test_hello_world PASSED
-
-========================== 2 passed in 0.26 seconds ===========================
-\end{verbatim}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Inline references}
-
-\bibentry{kernighan1999practice}
-
-\end{frame}
 
 \bibliographystyle{alpha}
 \nobibliography{references}
