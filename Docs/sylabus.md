@@ -187,65 +187,67 @@
          * Blockchains and Smart contracts.
          * Tensions with privacy.
 
-
- 7. _Web Technologies, Security and Usability._
-       * _Basics of client Server technologies._
-         * HTML, CSS, JS, and web client technologies.
-         * Modern back-end architectures: MVC, and micro-services.
-         * Cookies and other client state.
-         * The Python Flask micro-services framework.
-       * _Building a web app: Rating Pubs._
-         * Capturing user input through forms.
-         * Displaying information using SVG.
-         * Testing web applications, with Selenium.
-         * Measuring the performance of a network service.         
-         * Malformed input and security concerns.
-         * Cross side scripting, and untrusted input.
-         * Solution: sanitization. 
-       * _Security in Computer Systems._
-         * Computer Misuse and Cybercrime.
+ 7. _Networked Applications._
+       * _Basics of client-server applications._
+         * Application example: remote chat.
+         * Main architectural components: client, server, network.
+         * Data packets and layers in network.
+         * Capture of sent and received packets with Wireshark.
+         * Network-provided services: resilient and efficient Internet-wide communication.
+         * Interface between applications and the network layer: IP addresses and ports.
+       * _Designing and implementing clients._
+         * Remote chat client side code and tests.
+         * Malformed input packets and security concerns.
+         * Exploiting vulnerabilities and attacks.
+         * Attack demonstration using scapy.
+         * Solution: input sanitization.
+       * _Security in Computer Systems and Networks (mention)._
+         * Computer misuse, abuse and cybercrime.
          * Basic concepts of software security and information security.
          * Security policy, threat model, security mechanisms. 
          * Access control, Cryptography and sanitization.
-         * Key attacks: CWE top-20 / OWASP top-10.
-         * Exploiting and attack.
          * Testing for Security: fuzzing, red teams.
          * Professional obligations to produce safe & secure systems.
-         * Computer misuse and abuse.
-       * _User interfaces and User Interactions._
-         * How can you tell that your system is usable?
-         * UX and Design.
-         * Techniques to test usability of a system.
-         * Accesibility and human dignity in design.
+       * _Power, and saving power (mention)._
+         * The new clients and the Internet of Things.
+         * Introducing the RaspberryPi Zero W.
+         * Understanding power consumption.
+         * Sustainability and computing.
+       * _Ethical concerns of an inter-connected world._
+         * Interoperability and its regulation.
+         * The politics of standards.
+         * Network privacy: user tracking and mass surveillance.
+         * Net neutrality
 
- 8. _Concurrency, Scalability and Performance._
-       * _Representing and processing graphs._
-         * Matrix vs adjacency list representation.
-         * Summary statistics of graphs.
-         * Finding connected components.
-         * Searching, and finding paths: depth/breath first search.
-         * The A* algorithm.
-       * _Understanding performance bottle necks._
-         * Finding shortest paths between pubs & unit tests.
+ 8. _Towards Real Systems._
+       * _Why systems are needed._
+         * Server requirements: performance, scalability and availability.
+         * Performance, scalability and stress tests for the remote chat application.
+         * Problems with using the remote chat client side code in a server.
+         * Understanding performance bottlenecks: I/O, CPU, network (don't give the latter for granted!).
+       * _Dealing with I/O bottlenecks._
          * Measuring the impact of blocking I/O.
-         * Ensuring we do not block on I/O. The `reactor' pattern.
-         * CPU Bottlenecks. Using the multiprocessing package.
-         * Mention network bottlenecks, and their detection.
-       * _Using a data-center._
+         * Exploring the solution design space: How to ensure not to block on I/O? 
+         * Solution: The `reactor' pattern.
+         * The concept of thread and the threading package.
+         * Concurrency: benefits, risks and limitations of multi-thread applications.
+         * Checking for (latent) errors in a multi-thread application.
+       * _Dealing with CPU bottlenecks._
+         * Assessing CPU Bottlenecks.
+         * Example of the remote chat server having to store messages as encrypted text.
+         * Opportunity: most CPUs nowadays are multi-core.
+         * Solution:  multi-core.
+         * Using the multiprocessing package.
+       * _Dealing with CPU Bottlenecks with code binding (mention)_
+         * Compilers, linkers and object code libraries.
+         * Introducing CFFI.
+         * Binding C or Rust code to Python.
+       * _Networked Systems (mention)._
+         * Server clusters, server farms and data centers.
+         * Adding another layer of scalability with an in-network load balancer
          * SSH access to remote machines.
          * Automation & DevOps with Python fabric.
          * Distributing the computation: code and data.
          * Requesting computations, and fetching results.
-         * Is that always quicker?  
-       * _Binding to low-level code_
-         * Compilers, linkers and object code libraries.
-         * Introducing CFFI, with an example.
-         * Binding C or Rust code to Python.
-         * Test & Evaluate performance.
-       * _Power, and saving power._
-         * Introducing the RaspberryPi Zero W.
-         * Understanding power consumption.
-         * Sustainability and computing.
-
-
+         * Is that always quicker?
 
