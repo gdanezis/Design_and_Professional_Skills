@@ -54,7 +54,7 @@
          * Using a debugger to interactivelly step through code.
          * Tracing a program execution.
          * Assert the invariants.
-      * _The quicksort algorithm and its unit tests_
+      * _The merge sort algorithm and its unit tests_
          * Sorting Algorithms, stable sorting. 
          * Understanding recursion.
          * Divide and conquer strategy.
