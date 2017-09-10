@@ -322,10 +322,6 @@ A step by step example of searching the value \texttt{17} within a sorted array.
 		linenos
 	]{python}{src/binarysearch.py}
 
-\begin{itemize}
-	\item 
-\end{itemize}
-
 \end{frame}
 
 \begin{frame}
@@ -346,10 +342,61 @@ After how many steps $i$ will $n_i$ become $1$, and the algorithm end?
 i \log \alpha + \log n_{0} &= 0 \Leftrightarrow i = \left( - \frac{1}{\log \alpha} \right) \cdot \log n = \mathcal{O}(\log n).
 \end{align}
 
+\end{frame}
 
+
+\begin{frame}
+\frametitle{The intimate link between data structures and algorithms.}
+
+Sequential search works on any sequence, but takes time $\mathcal{O}(n)$.
+
+\vspace{5mm}
+Binary search takes time $\mathcal{O}(\log n)$, but requires a sorted sequence. The data structure (sorted sequence) and the algorithm (binary search) work together and depend on each other.
+
+\vspace{5mm}
+\begin{block}{Is $\mathcal{O}(\log n)$ really much better than $\mathcal{O}(n)$?}
+Remember $\mathcal{O}(\log n)$ is proportional to the number of binary digits in $n$ (up to a constant). So if $n=1000000$ then sequential search will take about a million steps, while binary search will take about 20. That is a big difference, and it grows as $n$ grows.
+\end{block}
 
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Functions \& Recursion.}
+
+A function is called \emc{recursive}, or \emc{using recursion}, if it is \emc{calling itself}!
+\begin{itemize}
+	\item A way of expressing a computation, possibly more naturally.
+	\item Anything that can be done with recursion can be done with loops, and vice versa.
+\end{itemize}
+
+\begin{block}{What is recursion good for?}
+A number of problems are naturally expressed by dividing them into \emc{sub-problems of the same form} as the initial problem. This algorithmic strategy is called \emc{divide-and-conquer} and recursion is well suited to expressing a solution.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The code.}
+
+	\inputminted[
+		firstline=10,
+		lastline=20,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/binarysearch_recurse.py}
+
+\begin{itemize}
+	\item Recursion at line 18 and 20.
+	\item Other tricks: default parameters (line 10) and conditional expression (line 11).
+\end{itemize}
+
+\end{frame}
 
 
 \section{Stuff}

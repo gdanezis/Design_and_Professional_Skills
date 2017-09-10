@@ -23,7 +23,7 @@ def isin_bisect(seq, val):
 
     return (seq[range_start] == val)
         
-def test_isin():
+def test_isin_tikz():
     array = [1,1,2,5,5,10,10,11,17,17,100,110,112,117]
     assert isin_bisect_tikz(array, 17, r"assets/binarysearch.tex")
 
