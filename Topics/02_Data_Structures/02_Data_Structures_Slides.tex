@@ -16,6 +16,9 @@
 \usepackage{bibentry}
 \usepackage{url}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
 \newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
 
 \AtBeginSection[]{
@@ -257,6 +260,96 @@ Sequential search has time complexity in the order of $\mathcal{O}(n).$
 \end{block}
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Can we search a sequence in fewer steps?}
+
+An arbitrary sequnence cannot be searched in time less than $\mathcal{O}(n)$.
+
+\vspace{3mm}
+However, we can \emc{pre-compute an index} on the sequence:
+\begin{itemize}
+	\item An index is \emc{a sorted view} of a sequence that allows fast \emc{isin} operations.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Bisection or binary search algorithm} 
+
+\begin{itemize}
+\item Define two variables \texttt{range\_start} and \texttt{range\_end} initialized with the indexes of the first and last element of the sequence + 1. 
+\item Pick the middle element of the range: if it is larger than the value sought, assign its index to \texttt{range\_end}, otherwise assign it to \texttt{range\_start}. 
+\item Repeat until the range is of size one.
+\item If the element at the start of the range value sought return \texttt{True}. 
+\item Otherwise, return \texttt{False}.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Binary search illustrated.}
+
+A step by step example of searching the value \texttt{17} within a sorted array.
+
+\begin{center}
+\input{assets/binarysearch.tex}
+\end{center}
+
+\vspace{5mm}
+\begin{itemize}
+	\item Invariants: $s$ is smaller or equal, and $e$ always beyond the index of the target.
+\item Note that the last occurence of the value is found.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The code.}
+
+	\inputminted[
+		firstline=8,
+		lastline=24,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/binarysearch.py}
+
+\begin{itemize}
+	\item 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The time complexity of binary search.}
+
+\begin{block}{}
+Binary search has time complexity in the order of $\mathcal{O}(\log n)$.
+\end{block}
+
+\vspace{3mm}
+Proof. Consider the size of the variable \texttt{diff} $=n =n_0$ at step 0. We note that at each step the size of \texttt{diff} is a fraction $0 < \alpha (\approx 0.5) < 1$ of its previous size, namely $n_i = \alpha \cdot n_{i-1}$.
+\begin{align}
+n_i = \alpha \cdot n_{i-1} \Leftrightarrow n_i = \alpha^i \cdot n_{0}
+\end{align}
+After how many steps $i$ will $n_i$ become $1$, and the algorithm end?
+\begin{align}
+\alpha^i \cdot n_{0} = 1 \Leftrightarrow \log (\alpha^i \cdot n_{0}) &= 0 \\
+i \log \alpha + \log n_{0} &= 0 \Leftrightarrow i = \left( - \frac{1}{\log \alpha} \right) \cdot \log n = \mathcal{O}(\log n).
+\end{align}
+
+
+
+\end{frame}
+
 
 
 \section{Stuff}
