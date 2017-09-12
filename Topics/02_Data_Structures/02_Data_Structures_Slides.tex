@@ -1,0 +1,433 @@
+\documentclass{beamer} % [aspectratio=169]
+\usetheme{ucl}
+\setbeamercolor{banner}{bg=brightblue}
+\setbeamersize{description width=2em}
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
+
+\usepackage[T1]{fontenc} % Turn £ into $
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{url}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\author{Prof.\ George Danezis \\ University College London, UK}
+\title{Introduction to Data Structures and Algorithms.}
+\subtitle{ENGS102P: Design and Professional Skills }
+% \institute{}
+\date{Term 1, 2017}
+
+
+\begin{document}
+\nobibliography*
+
+
+\frame{
+\titlepage
+}
+
+\section{Understanding Sequence Types}
+
+
+\begin{frame}
+\frametitle{Storing many things within a single named variable.} 
+
+A \texttt{tuple} variable can represent a \emc{sequence of values}:
+
+	\inputminted[
+		firstline=5,
+		lastline=9,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/core.py}
+
+
+\begin{itemize}
+	\item The special function \texttt{len} returns the \emc{number} of items stored.
+	\item Retrive the $i^{th}$ value using \emc{indexing}: \texttt{variable[i]}.
+	\item In computer science indexes start at \texttt{0}, not \texttt{1}.
+	\item If the index is larger or equal to the length raises an exception.
+	\item Indexing with negative numbers returns items from the end of the sequence, 
+	ie.\ \texttt{numbers[-1] == 9}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Immutable, and mutable data types \& \texttt{list}.} 
+
+A \texttt{tuple} variable is \emc{immutable}: it cannot be change after it is initialized.
+
+\vspace{3mm}
+A variable of type \texttt{list}, is a \emc{mutable} sequence:
+	\inputminted[
+		firstline=13,
+		lastline=16,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/core.py}
+
+
+\begin{block}{Why have immutable data types?}
+It is easier to reason about programs in which data does not change after initialization, both for correctness; when multiple processes share the same data; and also when trying to optimize.
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The perils of mutability.} 
+
+Mutable variables may have \emc{unexpected side effects}:
+
+	\inputminted[
+		firstline=24,
+		lastline=30,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/core.py}
+
+\vspace{3mm}
+Line 30 includes into the \texttt{KL} list a \emc{reference} to the structure pointed to by \texttt{L}. It does \emc{not copy} it. When \texttt{L} changes, so does \texttt{KL}. Ummutable data types cannot surprise you in this manner.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Heterogenous vs. Homogenous data types.}
+
+Python allows us to include values of any \emc{mixture of types} in a sequence:
+	\inputminted[
+		firstline=20,
+		lastline=20,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/core.py}
+
+This is called a \emc{heterogenous} data structure, as compared with a \emc{homogenous} one (of a single type.)
+
+\vspace{7mm}
+Do not rely on indexing to refer to particular parts of a logical \emc{record}, it is prone to errors. Use a \texttt{NamedTuple} instead to \emc{give them good names}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Iterating trough sequences \& \texttt{for} control structures.}
+
+The \texttt{for} control structure executes a block of code \emc{for all values} in a sequence in order.
+
+	\inputminted[
+		firstline=34,
+		lastline=39,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/core.py}
+
+For loops are \emc{safer than while} loops, since they are easier to check for termination!
+
+\end{frame}
+
+\section{Algorithms \& computational complexity}
+
+\begin{frame}
+\frametitle{Is a value within a sequence?}
+
+We wish to define an algorithm \texttt{isin} to test whether a sequence contains a value.
+\begin{itemize}
+\item Return \texttt{True} if it is, and \texttt{False} otherwise.
+\end{itemize}
+
+\vspace{3mm}
+Some \emc{simple tests} for \texttt{isin} would be:
+	\inputminted[
+		firstline=1,
+		lastline=3,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/isin.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sequential search.}
+
+	\inputminted[
+		firstline=5,
+		lastline=9,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/isin.py}
+
+\begin{itemize}
+	\item We construct a function that takes as parameters a sequence (\texttt{seq}) and value (\texttt{val}).
+	\item It uses a \texttt{for} loop to sequentially go through all the values of \texttt{seq}.
+	\item Within the loop each value is tested. If they match return \texttt{True}.
+	\item If the loop completes, it returns \texttt{False}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How efficient is the \texttt{isin} algorithm?}
+
+Assume the sequence has $n$ elements:
+\begin{itemize}
+\item The algorithm will iterate over $n$ elements if it returns \texttt{False}.
+\item If the value is at a random position it will iterate on average over $\frac{1}{2} n$ elements.
+\end{itemize}
+
+\vspace{5mm}
+The number of specific steps executed, as a function of the size of its inputs is a key measure of the \emc{time complexity} of an algorithm.
+
+\vspace{5mm}
+However, we often only care about time complexity increases (1) \emc{up to a constant} and (2) for \emc{large enough parameter sizes}.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The $\mathcal{O}$ (Big Oh) notation.}
+
+Lets call the average number of steps an algorithm takes $f(n)$. We define as the \emc{order of} relation between functions.
+
+\vspace{3mm}
+We say that $f(n) = \mathcal{O}(g(n))$ as $n \rightarrow \infty$ if
+
+\[ \exists n_0, c > 0. \quad |f(n)| \leq c \cdot |g(n)| \quad \text{ for } n \geq n_0. \]
+
+\begin{itemize}
+\item In words, there exists a value $n_0$ after which the function $f(n)$ is always smaller than $g(x)$ up to a constant $c$.
+\item Note that the notation \emc{hides lower order terms and constant}, \\ eg. $3n^2 + 10n + 5 = \mathcal{O}(n^2)$.
+\end{itemize}
+
+\begin{block}{}
+Sequential search has time complexity in the order of $\mathcal{O}(n).$
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Can we search a sequence in fewer steps?}
+
+An arbitrary sequnence cannot be searched in time less than $\mathcal{O}(n)$.
+
+\vspace{3mm}
+However, we can \emc{pre-compute an index} on the sequence:
+\begin{itemize}
+	\item An index is \emc{a sorted view} of a sequence that allows fast \emc{isin} operations.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Bisection or binary search algorithm} 
+
+\begin{itemize}
+\item Define two variables \texttt{range\_start} and \texttt{range\_end} initialized with the indexes of the first and last element of the sequence + 1. 
+\item Pick the middle element of the range: if it is larger than the value sought, assign its index to \texttt{range\_end}, otherwise assign it to \texttt{range\_start}. 
+\item Repeat until the range is of size one.
+\item If the element at the start of the range value sought return \texttt{True}. 
+\item Otherwise, return \texttt{False}.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Binary search illustrated.}
+
+A step by step example of searching the value \texttt{17} within a sorted array.
+
+\begin{center}
+\input{assets/binarysearch.tex}
+\end{center}
+
+\vspace{5mm}
+\begin{itemize}
+	\item Invariants: $s$ is smaller or equal, and $e$ always beyond the index of the target.
+\item Note that the last occurence of the value is found.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The code.}
+
+	\inputminted[
+		firstline=8,
+		lastline=24,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/binarysearch.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The time complexity of binary search.}
+
+\begin{block}{}
+Binary search has time complexity in the order of $\mathcal{O}(\log n)$.
+\end{block}
+
+\vspace{3mm}
+Proof. Consider the size of the variable \texttt{diff} $=n =n_0$ at step 0. We note that at each step the size of \texttt{diff} is a fraction $0 < \alpha (\approx 0.5) < 1$ of its previous size, namely $n_i = \alpha \cdot n_{i-1}$.
+\begin{align}
+n_i = \alpha \cdot n_{i-1} \Leftrightarrow n_i = \alpha^i \cdot n_{0}
+\end{align}
+After how many steps $i$ will $n_i$ become $1$, and the algorithm end?
+\begin{align}
+\alpha^i \cdot n_{0} = 1 \Leftrightarrow \log (\alpha^i \cdot n_{0}) &= 0 \\
+i \log \alpha + \log n_{0} &= 0 \Leftrightarrow i = \left( - \frac{1}{\log \alpha} \right) \cdot \log n = \mathcal{O}(\log n).
+\end{align}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The intimate link between data structures and algorithms.}
+
+Sequential search works on any sequence, but takes time $\mathcal{O}(n)$.
+
+\vspace{5mm}
+Binary search takes time $\mathcal{O}(\log n)$, but requires a sorted sequence. The data structure (sorted sequence) and the algorithm (binary search) work together and depend on each other.
+
+\vspace{5mm}
+\begin{block}{Is $\mathcal{O}(\log n)$ really much better than $\mathcal{O}(n)$?}
+Remember $\mathcal{O}(\log n)$ is proportional to the number of binary digits in $n$ (up to a constant). So if $n=1000000$ then sequential search will take about a million steps, while binary search will take about 20. That is a big difference, and it grows as $n$ grows.
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Functions \& Recursion.}
+
+A function is called \emc{recursive}, or \emc{using recursion}, if it is \emc{calling itself}!
+\begin{itemize}
+	\item A way of expressing a computation, possibly more naturally.
+	\item Anything that can be done with recursion can be done with loops, and vice versa.
+\end{itemize}
+
+\begin{block}{What is recursion good for?}
+A number of problems are naturally expressed by dividing them into \emc{sub-problems of the same form} as the initial problem. This algorithmic strategy is called \emc{divide-and-conquer} and recursion is well suited to expressing a solution.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The code.}
+
+	\inputminted[
+		firstline=10,
+		lastline=20,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/binarysearch_recurse.py}
+
+\begin{itemize}
+	\item Recursion at line 18 and 20.
+	\item Other tricks: default parameters (line 10) and conditional expression (line 11).
+\end{itemize}
+
+\end{frame}
+
+
+\section{Stuff}
+
+\begin{frame}[fragile]
+\frametitle{Using Python interactively.} 
+
+\begin{itemize}
+	\item Install Python (\url{https://www.python.org/about/gettingstarted/})
+	\item Open a command line console, and run the Python interpreter.
+	\item Type your fist command: \mint{Python}{print("Hello World!")}
+	\item You should see it executing!
+
+\begin{Verbatim}[fontsize=\footnotesize]
+george$ python3
+Python 3.5.2 (default, Nov 17 2016, 17:05:23) 
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print("Hello World!")
+Hello World!
+>>>
+\end{Verbatim}
+
+\end{itemize}
+
+\end{frame}
+
+
+% ---------------------------------
+
+\bibliographystyle{alpha}
+\nobibliography{references}
+
+\end{document}
