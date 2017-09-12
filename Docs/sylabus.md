@@ -190,6 +190,7 @@
  7. _Networked Applications._
        * _Basics of client-server applications._
          * Application example: remote chat.
+         * Design space and architectural options (e.g., mention peer-to-peer).
          * Main architectural components: client, server, network.
          * Data packets and layers in network.
          * Capture of sent and received packets with Wireshark.
@@ -197,21 +198,22 @@
          * Interface between applications and the network layer: IP addresses and ports.
        * _Designing and implementing clients._
          * Remote chat client side code and tests.
-         * Malformed input packets and security concerns.
+         * Malformed input and security concerns.
          * Exploiting vulnerabilities and attacks.
-         * Attack demonstration using scapy.
+         * Attack demonstration.
          * Solution: input sanitization.
-       * _Security in Computer Systems and Networks (mention)._
+       * _Security in Computer Systems and Networks._
          * Computer misuse, abuse and cybercrime.
          * Basic concepts of software security and information security.
-         * Security policy, threat model, security mechanisms. 
-         * Access control, Cryptography and sanitization.
+         * Security policies, threat models, security mechanisms.
+         * A simple authentication protocol for our chat client.
+         * Strengthening security: access control, sandboxes, cryptography.
          * Testing for Security: fuzzing, red teams.
-         * Professional obligations to produce safe & secure systems.
+         * Professional obligations to produce safe and secure systems.
        * _Power, and saving power (mention)._
          * The new clients and the Internet of Things.
          * Introducing the RaspberryPi Zero W.
-         * Understanding power consumption.
+         * Taking into account power consumption.
          * Sustainability and computing.
        * _Ethical concerns of an inter-connected world._
          * Interoperability and its regulation.
@@ -223,7 +225,7 @@
        * _Why systems are needed._
          * Server requirements: performance, scalability and availability.
          * Performance, scalability and stress tests for the remote chat application.
-         * Problems with using the remote chat client side code in a server.
+         * Servers are more complex than clients: Problems with using the remote chat client side code in a server.
          * Understanding performance bottlenecks: I/O, CPU, network (don't give the latter for granted!).
        * _Dealing with I/O bottlenecks._
          * Measuring the impact of blocking I/O.
@@ -234,9 +236,9 @@
          * Checking for (latent) errors in a multi-thread application.
        * _Dealing with CPU bottlenecks._
          * Assessing CPU Bottlenecks.
-         * Example of the remote chat server having to store messages as encrypted text.
-         * Opportunity: most CPUs nowadays are multi-core.
-         * Solution:  multi-core.
+         * Example of a CPU bound task on the remote chat server.
+         * Opportunity: most CPUs nowadays are multicore.
+         * Solution: parallel programming on multicore processors.
          * Using the multiprocessing package.
        * _Dealing with CPU Bottlenecks with code binding (mention)_
          * Compilers, linkers and object code libraries.
