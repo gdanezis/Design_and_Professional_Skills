@@ -308,11 +308,11 @@ A step by step example of searching the value \texttt{17} within a sorted array.
 \end{frame}
 
 \begin{frame}
-\frametitle{The code.}
+\frametitle{The code for binary search.}
 
 	\inputminted[
-		firstline=8,
-		lastline=24,
+		firstline=9,
+		lastline=25,
 		xleftmargin=1.4em,
 		frame=lines,
 		framesep=2mm,
@@ -368,6 +368,7 @@ A function is called \emc{recursive}, or \emc{using recursion}, if it is \emc{ca
 \begin{itemize}
 	\item A way of expressing a computation, possibly more naturally.
 	\item Anything that can be done with recursion can be done with loops, and vice versa.
+	\item Only a limited \emc{resursive depth} is allowed.
 \end{itemize}
 
 \begin{block}{What is recursion good for?}
@@ -377,7 +378,7 @@ A number of problems are naturally expressed by dividing them into \emc{sub-prob
 \end{frame}
 
 \begin{frame}
-\frametitle{The code.}
+\frametitle{The recursive variant of binary search.}
 
 	\inputminted[
 		firstline=10,
@@ -398,6 +399,158 @@ A number of problems are naturally expressed by dividing them into \emc{sub-prob
 
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Sorting.}
+
+Binary search, and a number of other efficient algorithms, rely on sorted sequences. 
+
+\vspace{3mm}
+We next study:
+\begin{itemize}
+	\item A sorting algorithm, \emc{merge sort}.
+	\item The \emc{time complexity} of sorting.
+	\item How to show sorting is \emc{correct}.
+	\item Issues around maintaining \emc{large sorted indexes}.
+	\item How to write \emc{generic} sorting and searching algorithms.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Merge sort.}
+
+Algorithm 1. Merge two sorted sequences into one sorted sequence:
+\begin{itemize}
+\item While both sequence are not empty, consider the first unprocessed item from both.
+\item Add to the front of the new sequence the smaller or available one, and remove it from its sequence. Repeat.
+\item Append remaining elements of one of the lists.
+\end{itemize}
+
+Algorithm 2. Merge Sort.
+\begin{itemize}
+\item Sequences of length up to one are sorted!
+\item Divide into two subsequences of equal length.
+\item Merge Sort both sequences separately.
+\item Merge the two sorted sequences using Algorithm 1.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Tests for sorting.}
+
+	\inputminted[
+		% firstline=10,
+		lastline=14,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Merge two sorted lists (algorithm 1).}
+
+	\inputminted[
+		firstline=25,
+		lastline=41,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{A recursive implementation of mergesort  (algorithm 2).}
+
+	\inputminted[
+		firstline=17,
+		lastline=23,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort.py}
+
+\begin{itemize}
+\item Python \emc{slicing}: \texttt{items[start:end]} returns the list from index \texttt{start} up to, but not including, index \texttt{end}. If omitted from zero to the length of the list.
+\item Use \texttt{items.copy()} to get a new \emc{copy} of the list (remember mutability bugs).
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The art of debugging.}
+
+\begin{block}{What is debugging?}
+Debugging is the \emc{structured and systematic} approach taken to identify the \emc{root cause} of an error in a program, and fix it in the code.
+\end{block}
+
+\begin{itemize}
+	\item Debugging necessitates \emc{having detected} a fault. Ensure great tests and coverage to ensure you detects bugs early, to detect when they are likely fixed.
+	\item Debugging small fragments of code that do one simple thing is easier than large complex programs. \emc{Write and run tests for every few lines of code}, to detect errors early.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Debugging requires understanding.}
+
+What to check for:
+\begin{itemize}
+	\item Do you \emc{understand the algorithm} you are using, and how / why it works?
+	\item Do you \emc{understand why the error} appears?
+	\item Can you \emc{identify the simplest case} in which an erroneous result is returned? (Write a test case!)
+\end{itemize}
+
+\begin{block}{Prof.\ Mark Handley's advice}
+The bug is likely in your head, before it appears in your code. \emc{Do not attempt to modify your program} until the answer to those is `yes'.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{How to understand your program.}
+
+The scientific method, applied:
+\begin{itemize}
+	\item Use the \emc{simplest case} you have observed your program fails on.
+	\item \emc{Predict} the behavior of your program, ie.\ the values of all variables, and control flow to be followed.
+	\item Confirm through \emc{empirical observation} that the variable values and control flow is as predicted.
+\end{itemize}
+
+\vspace{3mm}
+Gaps between your prediction and your observation indicate bugs in either, or both in, your thinking or your program. Both need fixing.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tools to observe programs.}
+
+\begin{itemize}
+\item Write additional simpler or more specific \emc{test cases} and observe how they fail. \url{https://docs.pytest.org/en/latest/}
+\item Use the Python \emc{logging} libraries and facilities to log the values of variables. Do not leave debugging \texttt{print} statements in production code. \url{https://docs.python.org/3/howto/logging.html}.
+\item Use a \emc{tracer} to dump all the steps taken by your program on a simple failing test case. \url{https://docs.python.org/3.0/library/trace.html}
+\item Use the Python \emc{debugger} to single step through the execution of the program, and observe the variable values. \url{https://docs.python.org/3.2/library/pdb.html}
+\end{itemize}
+
+\end{frame}
 
 \section{Stuff}
 

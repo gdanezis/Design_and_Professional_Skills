@@ -1,4 +1,5 @@
 def test_isin():
+    assert not isin_bisect([], 4)
     assert isin_bisect([1,2,3], 3)
     assert isin_bisect([1,2,3], 2)
     assert isin_bisect([1,2,3], 1)
@@ -21,7 +22,7 @@ def isin_bisect(seq, val):
         assert diff > (range_end - range_start) # Ensure progress
         diff = range_end - range_start
 
-    return (seq[range_start] == val)
+    return len(seq)>0 and (seq[range_start] == val)
         
 def test_isin_tikz():
     array = [1,1,2,5,5,10,10,11,17,17,100,110,112,117]
@@ -96,7 +97,7 @@ def isin_bisect_tikz(seq, val,pic_name):
     f.close()
 
 
-    if seq[range_start] == val:
+    if len(seq)>0 and seq[range_start] == val:
         return True
 
     return False
