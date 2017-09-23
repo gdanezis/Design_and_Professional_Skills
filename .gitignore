@@ -26,6 +26,11 @@
 *.pyc
 *.pyo
 
+# Doit files
+*.bak
+*.dat
+*.dir
+
 # Sublime Text Project Files (usually contain absolute paths)
 *.sublime-project
 *.sublime-workspace
