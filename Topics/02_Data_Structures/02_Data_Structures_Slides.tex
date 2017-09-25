@@ -4,6 +4,11 @@
 \setbeamersize{description width=2em}
 \setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
 
+%\usepackage{fontspec}
+\usepackage[utf8]{inputenc}
+% \usepackage[english, greek]{babel}
+
+
 \usepackage[T1]{fontenc} % Turn £ into $
 \usepackage{minted}
 \usemintedstyle{emacs}
@@ -16,8 +21,11 @@
 \usepackage{bibentry}
 \usepackage{url}
 
+
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+
+
 
 \newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
 
@@ -32,7 +40,7 @@
   \end{frame}
 }
 
-\author{Prof.\ George Danezis \\ University College London, UK}
+\author{Prof.\ George Danezis, University College London, UK}
 \title{Introduction to Data Structures and Algorithms.}
 \subtitle{ENGS102P: Design and Professional Skills }
 % \institute{}
@@ -399,6 +407,7 @@ A number of problems are naturally expressed by dividing them into \emc{sub-prob
 
 \end{frame}
 
+\section{Sorting}
 
 \begin{frame}
 \frametitle{Sorting.}
@@ -411,21 +420,29 @@ We next study:
 	\item A sorting algorithm, \emc{merge sort}.
 	\item The \emc{time complexity} of sorting.
 	\item How to show sorting is \emc{correct}.
-	\item Issues around maintaining \emc{large sorted indexes}.
+	% \item Issues around maintaining \emc{large sorted indexes}.
 	\item How to write \emc{generic} sorting and searching algorithms.
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Merge sort.}
+\frametitle{Merge sort (I).}
 
+Mergesort was proposed by John von Neumann in 1945.
+
+\vspace{5mm}
 Algorithm 1. Merge two sorted sequences into one sorted sequence:
 \begin{itemize}
 \item While both sequence are not empty, consider the first unprocessed item from both.
 \item Add to the front of the new sequence the smaller or available one, and remove it from its sequence. Repeat.
 \item Append remaining elements of one of the lists.
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Merge sort (II).}
 
 Algorithm 2. Merge Sort.
 \begin{itemize}
@@ -436,6 +453,7 @@ Algorithm 2. Merge Sort.
 \end{itemize}
 
 \end{frame}
+
 
 
 \begin{frame}
@@ -494,6 +512,39 @@ Algorithm 2. Merge Sort.
 
 \end{frame}
 
+\begin{frame}
+\frametitle{How to argue mergesort is correct.}
+
+Structural induction (verbal reasoning): 
+\begin{itemize}
+	\item Argue that the merge operation is correct: given two sorted lists it produces a sorted list.
+	\item Base case of mergesort: a single element list is sorted.
+	\item Inductive case of mergesort: assume mergesort for a previous step works, prove that the result is sorted. Follows from the properties of merge.
+\end{itemize}
+
+\vspace{3mm}
+Note that the recursive strucutre of the program supports the argument of correctness, through induction.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{What is the cost of mergesort.}
+
+The time complexity of merge (algorithm 1) is $\mathcal{O}(n)$, where $n$ is the sum of the lengths of both lists.
+
+\vspace{3mm}
+
+Mergesort (algorithm 2) can only divide an array of $n$ elements $\mathcal{O}(\log n)$ times. At each level of subdivision the overall costs of the merge operations will be $\mathcal{O}(n)$ (total from algorithm 1).
+
+\vspace{3mm}
+Therefore the overall time complexity of mergesort is of the \emc{order $\mathcal{O}(n \log n)$}. 
+
+\vspace{3mm}
+This is \emc{optimal} for comparison based algorithms (but note that \emc{constant factors may vary}.) Space complexity may also vary.
+
+\end{frame}
+
+\section{A note on debugging}
 
 \begin{frame}
 \frametitle{The art of debugging.}
@@ -548,6 +599,227 @@ Gaps between your prediction and your observation indicate bugs in either, or bo
 \item Use the Python \emc{logging} libraries and facilities to log the values of variables. Do not leave debugging \texttt{print} statements in production code. \url{https://docs.python.org/3/howto/logging.html}.
 \item Use a \emc{tracer} to dump all the steps taken by your program on a simple failing test case. \url{https://docs.python.org/3.0/library/trace.html}
 \item Use the Python \emc{debugger} to single step through the execution of the program, and observe the variable values. \url{https://docs.python.org/3.2/library/pdb.html}
+\end{itemize}
+
+\end{frame}
+
+\section{More sequences and generic programming}
+
+\begin{frame}
+\frametitle{Strings and byte sequences.}
+
+Besides \emc{lists} and \emc{tuples} Python supports a number of other sequence types.
+\begin{itemize}
+	\item \emc{strings} (\texttt{str}): represent sequences of unicode characters.
+	\item \emc{bytes} (\texttt{bytes}): represent a sequences of raw bytes (ie. values from 0 to 255).
+	\item Strings are transformed into and from sequences of bytes through an \emc{encoding} such as \texttt{utf8} or \texttt{ASCII}.
+\end{itemize}
+
+	\inputminted[
+		firstline=3,
+		lastline=5,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/strbytes.py} 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Internationalization (i18n).}
+
+Old encodings such as ASCII only map latin characters to bytes. Others cannot exist!
+
+\vspace{3mm}
+Software and services need to be \emc{accessible to all people in their native languages}. Always use string representations that can represent all languages (and emoji!) such as \emc{unicode}, and encodings into bytes such as \emc{utf-8} to represent those strings as bytes.
+
+\begin{itemize}
+\item Do not be a biggot and assume English as the only possible language.
+\item Plan for internationalization: do not hard code english strings into software, but rather load them from a file that can be localized.
+\item Dates, currency, number representations also vary per locale.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Operations on string.}
+
+Strings support a number of operations:
+	\inputminted[
+		firstline=7,
+		lastline=17,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/strbytes.py} 
+
+For full reference see: \url{https://docs.python.org/3.1/library/string.html}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{String literrals \& formatting.}
+
+\begin{itemize}
+\item String constants in programs can be encosed in single or double quotes.
+\item You can represent special characters in strings using the \texttt{`\textbackslash'} symbol, such as new line as \texttt{{\textbackslash}n} and tab as \texttt{{\textbackslash}t}.
+\item The \texttt{format} method substitutes into the string:
+\end{itemize}
+
+	\inputminted[
+		firstline=19,
+		lastline=25,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/strbytes.py} 
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Generic programming: how to sort a list of strings.}
+
+Do you need to \emc{re-implement mergesort} for lists of strings? Remember the \emc{abstraction principle}.
+
+\vspace{5mm}
+However our implementation of mergesort seems to just work:
+	\inputminted[
+		firstline=29,
+		lastline=33,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/strbytes.py}
+
+\emc{Generic programming} ensures that algorithms are independent of and agnostic about the exact types they are processing.
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Why generic programming works.}
+
+Merge (algorithm 1) only uses `\texttt{<=}' on items within the list to sort:
+	\inputminted[
+		firstline=30,
+		lastline=36,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		highlightlines={31},
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort.py}
+
+If the operation greater-or-equal (compare) is supported correctly by the type of object in the list, mergesort will return the correct result.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sorting strings by length, rather than lexicographically.}
+
+Strategy: allow the programmer to specify a function that performs a comparison. Parametrize mergesort by the comparison function.
+
+	\inputminted[
+		firstline=20,
+		lastline=26,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		highlightlines={20,24-26},
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort_cmp.py}
+
+
+
+\end{frame}
+
+\begin{frame}
+% \frametitle{Sorting strings by length, rather than lexicographically.}
+
+	\inputminted[
+		firstline=28,
+		lastline=44,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		highlightlines={34},
+		%baselinestretch=1.2,
+		% bgcolor=lightgray,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort_cmp.py}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Example of different comparison functions for strings.}
+
+	\inputminted[
+		firstline=46,
+		lastline=55,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort_cmp.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Functions are just variables.}
+
+\begin{block}{Functions are first-class objects.}
+In modern programming languages functions are first-class objects (of type \texttt{function}). They are assigned to names, and they can be passed as arguments to function calls; stored in data structures; etc. 
+\end{block}
+
+The shorthand \texttt{lambda} notation can be used to define functions within expressions.
+	\inputminted[
+		firstline=57,
+		lastline=62,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/mergesort_cmp.py}
+
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Operating on files.}
+
+\begin{itemize}
+\item \emc{File systems} provide persistant storage, and expose it through a hierarchy of \emc{directories} and \emc{files}.
+\item A file is a \emc{sequence of bytes} written to persistant memory (disk or other).
+\item Files support \emc{read} and \emc{write} operations on arbitrary postions of this sequence, as well as \emc{appending} data at the end of files.
 \end{itemize}
 
 \end{frame}
