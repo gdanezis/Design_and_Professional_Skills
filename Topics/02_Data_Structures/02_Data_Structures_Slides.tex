@@ -913,6 +913,60 @@ You can use \emc{seek} and \emc{tell} to select a position in the file.
 
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Standard input and output.}
+
+Programs have a standard input and standard output that act as files for reading and writing data.
+
+	\inputminted[
+		firstline=43,
+		lastline=47,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+	\inputminted[
+		firstline=58,
+		lastline=59,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+
+\begin{Verbatim}
+$ echo "Hello" | python src/open.py
+HELLO
+\end{Verbatim}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{How to test programs that access the environment.}
+
+`\emc{Monkeypatching}' is a test tactic in which you \emc{substitute functions that access the environment} with known `dummy' ones.
+
+	\inputminted[
+		firstline=49,
+		lastline=56,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+You can monkey patch to \emc{inject known data} pretending to be the environment. Or to \emc{test interactions} with the environment. Tests should not access the environment.
+
+\end{frame}
+
+
 \begin{frame}
 \frametitle{Dealing with a lot of data.}
 

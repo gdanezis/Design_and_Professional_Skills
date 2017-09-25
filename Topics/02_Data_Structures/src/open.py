@@ -37,3 +37,23 @@ def test_binary():
         b = f2.read(1)        # read 1 byte
         assert b == b"\x02"
         assert f2.tell() == 3 # new position
+
+import sys
+
+def capitalize_input():
+    import sys
+    line = sys.stdin.readline()
+    cap_line = line.upper() + "\n"
+    sys.stdout.write(cap_line)
+
+def test_stdio(monkeypatch):
+    # Monkeypatch the environment
+    monkeypatch.setattr(sys.stdin, 'readline', lambda: "A line")
+    def mock_write(text):
+        assert text == "A LINE\n"
+    monkeypatch.setattr(sys.stdout, 'write', mock_write)
+
+    capitalize_input()
+
+if __name__ == "__main__":
+    capitalize_input()
