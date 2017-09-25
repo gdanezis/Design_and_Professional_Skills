@@ -811,44 +811,194 @@ The shorthand \texttt{lambda} notation can be used to define functions within ex
 
 \end{frame}
 
-
+\section{Persistent storage}
 
 \begin{frame}
-\frametitle{Operating on files.}
+\frametitle{Persistent storage with files.}
 
 \begin{itemize}
-\item \emc{File systems} provide persistant storage, and expose it through a hierarchy of \emc{directories} and \emc{files}.
-\item A file is a \emc{sequence of bytes} written to persistant memory (disk or other).
-\item Files support \emc{read} and \emc{write} operations on arbitrary postions of this sequence, as well as \emc{appending} data at the end of files.
+\item \emc{File systems} provide persistent storage, and expose it through a hierarchy of \emc{directories} and \emc{files}.
+\item A file is a \emc{sequence of bytes} written to persistent memory (disk or other).
+\item Files support \emc{read} and \emc{write} operations on arbitrary positions of this sequence, as well as \emc{updating} and \emc{appending} data at the end of files.
 \end{itemize}
+
+Python supports handling files in \texttt{text mode} or \texttt{binary mode}. The first takes care of encoding of stings semi-automatically, while the second is more flexible but requires manual conversion of everything to bytes.
 
 \end{frame}
 
-\section{Stuff}
+\begin{frame}
+\frametitle{The open function.}
 
-\begin{frame}[fragile]
-\frametitle{Using Python interactively.} 
+The \texttt{open} function takes as parameters a file path and a mode, and returns a file object that may be used to \texttt{read} or \texttt{write}. All files should be \emc{closed} after processing.
 
-\begin{itemize}
-	\item Install Python (\url{https://www.python.org/about/gettingstarted/})
-	\item Open a command line console, and run the Python interpreter.
-	\item Type your fist command: \mint{Python}{print("Hello World!")}
-	\item You should see it executing!
+\vspace{3mm}
+Modes include a combination of text (`t') or binary (`b'); read (`r'), write and truncate (`w') or append (`a'); and optionally update (`+').
 
-\begin{Verbatim}[fontsize=\footnotesize]
-george$ python3
-Python 3.5.2 (default, Nov 17 2016, 17:05:23) 
-[GCC 5.4.0 20160609] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> print("Hello World!")
-Hello World!
->>>
-\end{Verbatim}
-
-\end{itemize}
+\vspace{3mm}
+The full documentation for \texttt{open}: \url{https://docs.python.org/3/library/functions.html\#open}
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Reading all data from a text file.}
+
+	\inputminted[
+		firstline=3,
+		lastline=7,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+Calling \texttt{read()} reads the full contents of the file into memory. Remember to \emc{close files} to free system resources.
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Reading and writing text files.}
+
+	\inputminted[
+		firstline=11,
+		lastline=20,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+\begin{itemize}
+	\item Opening a file with `w' \emc{truncates} the file. (`r+' to update; `a' to append.)
+	\item A file is an \emc{iterator}. The \texttt{for} loop reads each line in turn.
+	\item Closing files can get tedious.
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The `with' control structure.}
+
+\emc{Acquiring and freeing} resources is a very common pattern. The with control structure removes the need for manual closing of files, or freeing resources.
+
+	\inputminted[
+		firstline=22,
+		lastline=29,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Working with binary files.}
+
+You can use \emc{seek} and \emc{tell} to select a position in the file. 
+	\inputminted[
+		firstline=31,
+		lastline=39,
+		xleftmargin=1.4em,
+		frame=lines,
+		framesep=2mm,
+		fontsize=\footnotesize,
+		linenos
+	]{python}{src/open.py}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Dealing with a lot of data.}
+
+\emc{Big data}: Some processing tasks involve datasets that are \emc{larger than the working memory} of a single computer.
+\begin{itemize}
+\item Reading the full file in memory is not possible.
+\item Instead \emc{on-line algorithms} must be implemented to \emc{work incrementally}.
+\item Read small chunks of data; process; write small chunks of output.
+\end{itemize}
+
+\begin{block}{Sorting files on disk}
+Early computers had a tiny amount of working memory, and used tapes as persistent storage. Mergesort was especially important since it may be used to sort files in an incremental way with access to very little memory (see Exercise 2-3).
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The social importance of sorting and indexing.}
+
+Modern search engines, need to find information within milliseconds!
+
+\vspace{3mm}
+Fast information retrieval is achieved through \emc{indexing}:
+\begin{itemize}
+	\item The file to be indexed is scanned linearly, and a list of tuples of (word, byte position) are extracted.
+	\item The tuples are then sorted to produce an \emc{inverted index}.
+	\item The inverted index is stored to disk alongside the file.
+	\item To find all instances of a term binary search is used on the inverted index to \emc{retrieve the positions} in the file, if any, the term appears.
+\end{itemize}
+
+The second ingredient of search engines is \emc{ranking}, that selects which files are most relevant for a search term.
+\end{frame}
+
+
+
+
+\section{Exercises}
+
+\begin{frame}
+\frametitle{Exercise 2-1 Removing recursion.}
+
+Recursion is one strategy for implementing algorithms. However, it might be useful to implement algorithms without recursion in some cases.
+\begin{description}
+	\item[2-1.1] What resources does recursion use, and in what cases would the use of recursion exhaust them.
+	\item[2-1.2] Refactor the \texttt{mergesort} algorithm provided to remove recursion (hint: use while loop, and a list to store tasks that would otherwise be deal with a recursive call.)
+	\item[2-1.3] Use a profiler to observe the differences between the recursive implementation and your implementation. What are the differences?
+\end{description}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Exercise 2-2 Adding in recursion.}
+
+The implementation of \texttt{isin\_bisect} presented does not use recursion. However it could.
+\begin{description}
+	\item[2-2.1] Refactor the \texttt{isin\_bisect} function to use recursion.
+	\item[2-2.2] Argue why your implementation is correct.
+	\item[2-3.2] Discuss whether the existing tests for the function are appropriate for the recursive implementation, and justify any modifications necessary.
+\end{description}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Exercise 2-3 Sorting large files.}
+
+Download the classic novel `War and Peace' by Leo Tolstoy from Project Gutenberg: \url{https://www.gutenberg.org/files/2600/2600-0.txt}
+\begin{description}
+	\item[2-3.1] Write a variant of the \texttt{merge} function that given two files, with lines sorted lexicographically, creates a new file containing the sorted lines of both files.
+	\item[2-3.2] Ensure and argue that the working memory your \texttt{merge} function uses is constant in relation to the size of any files involved (ie.\ $\mathcal{O}(1)$).
+	\item[2-3.3] Implement a variant of \texttt{mergesort} that takes a text file, and produces another text file containing the sorted lines of the first one. (Hint: Split the file into multiple ones and use \texttt{merge}).
+	\item[2-3.4] Ensure and argue that the total working memory of your \texttt{mergesort} is $\mathcal{O}(1)$, and produce a sorted version of `War and Peace'.
+\end{description}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Exercise 2-4 Searching large sorted files.}
+
+We studied binary search on an array. However if a data file is too large, you cannot read all contents in the working memory.
+\begin{description}
+	\item[2-4.1] Write a function that takes a file and a byte position, and returns the string that is contained in this byte position. (Hint: careful about encodings.)
+	\item[2-4.2] Refactor the \texttt{isin\_bisect} function to take a text file parameter and string, and return the whether the string appears as a line in the file using $\mathcal{O}(1)$ working memory only.
+	\item[2-4.3] Discuss the complexities in the implementation, and possible strategies with regards to storing sorted files to overcome them.
+\end{description}
+
+\end{frame}
 
 % ---------------------------------
 
