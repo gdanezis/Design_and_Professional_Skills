@@ -18,4 +18,4 @@ Alternativelly, if you are a student at UCL we will be posting the lecture notes
 
 ## How to report typos and errors, or propose enhancements
 
-Github comes with a handly bug tracker, which we invite students and other users of the material to use to report bugs. You can open an issue here: https://github.com/gdanezis/Design_and_Professional_Skills/issues
+Github comes with a handly bug tracker, which we invite students and other users of the material to use to report bugs. You can open an issue here: https://github.com/gdanezis/Design_and_Professional_Skills/issues . Pull requests earn you an honorable mention as a contributor.
