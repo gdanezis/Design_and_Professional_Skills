@@ -9,7 +9,7 @@ a = v
 # Now, b > a, pick b
 b = b - a     # b == 18
 
-# Stll, b > a, pick b
+# Still, b > a, pick b
 b = b - a     # b == 6
 
 # Now, a > b, pick a

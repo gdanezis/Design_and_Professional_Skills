@@ -96,7 +96,7 @@ Programming \& Programmability:
 Programming Languages:
 \begin{itemize}
 	\item The \emc{information describing the program} (code), is expressed in a programming language.
-	\item \emc{Trivial} programming languages: button presses to program an alarm clock. They are very \emc{low-level ways}, and lead to errors and inflexibility.
+	\item \emc{Trivial} programming languages: button pressed to program an alarm clock. They are very \emc{low-level ways}, and lead to errors and inflexibility.
 	\item Full computers are programmed in \emc{higher-level formal languages}. Programmers may express their intent directly, build complex abstractions, and compose programs from smaller fragments.
 	\item Programming languages are formal languages but also \emc{human languages}. Programmers, use them to \emc{express and communicate their intent}.
 \end{itemize}
@@ -215,7 +215,7 @@ Python is \emc{sensitive to indentation} using whitespace. Use 3 or 4 spaces (no
 \begin{frame}
 \frametitle{How do we know a program does what it should?}
 
-\emc{Correctness is most important problem} in software engineering and computer science!
+\emc{Correctness is the most important problem} in software engineering and computer science!
 
 \vspace{3mm}
 \emc{Testing is the key technique} to produce high quality, correct programs. It is an activity that is continuous, and performed in parallel with programming.
@@ -484,7 +484,7 @@ In contract \emc{statically typed} languages run this check before the program e
 \frametitle{Types \& Programming Languages. (II)}
 
 \begin{block}{Types and formal methods}
-Type systems are the most popular \emc{formal methods} that aid program correctness. They ensure only permissible operations are executed eliminate a large number of potential trivial bugs. But are \emc{not a substitute for testing} or further \emc{verification} for correctness.
+Type systems are the most popular \emc{formal methods} that aid program correctness. They ensure only permissible operations are executed, and eliminate a large number of potential trivial bugs. But are \emc{not a substitute for testing} or further \emc{verification} for correctness.
 \end{block}
 
 \end{frame}
@@ -568,7 +568,7 @@ Refactoring the euclid algorithm to take advantage of \texttt{while} and \texttt
 
 \frametitle{Conditions and the \texttt{bool} type.} 
 
-What is the nature of conditions in Pyhton programs?
+What is the nature of conditions in Python programs?
 \begin{itemize}
 \item Conditions are just \emc{expressions}, that return a result of type \emc{bool}.
 \item A variable of type \texttt{bool} takes one of two values, \emc{True} or \emc{False}.
@@ -603,7 +603,7 @@ Keep re-executing a block until a condition stops holding.
 	\item If the condition is \emc{True} it starts executing the statements in the block.
 	\item When the block ends, it \emc{continues} back to the \texttt{while} (line 5).
 	\item if \emc{False} it skips the block and \emc{breaks} to line 10.
-	\item You can explicitely use \texttt{continue} and \texttt{break} in the program.
+	\item You can explicitly use \texttt{continue} and \texttt{break} in the program.
 \end{itemize}
 
 \end{frame}
@@ -805,7 +805,7 @@ Robert C. Martin in \emph{Clean Code} (2008), states the FIRST principles. Tests
 \end{itemize}
 
 \vspace{5mm}
-What a second, you said \emc{just before} the production code?
+Wait a second, you said \emc{just before} the production code?
 
 \end{frame}
 
@@ -859,7 +859,7 @@ Refactor Euclid to ensure that inputs are positive integers.
 		xleftmargin=1.4em,
 		frame=lines,
 		framesep=2mm,
-		%baselinestretch=1.2,
+		% baselinestretch=1.2,
 		% bgcolor=lightgray,
 		fontsize=\footnotesize,
 		linenos
@@ -919,7 +919,7 @@ Note that multiple, including generic, \emc{except} blocks may be present.
 The Python raise mechanism interrupts the flow, and bubbles up the exception to outer calling blocks. Why?
 \begin{itemize}
 \item Errors are often detected \emc{deep within programs}. Eg.\ a file name does not exist when you are about to open it.
-\item At such a low-level when it is \emc{not known how to handle} them.
+\item At such a low-level, it is \emc{not known how to handle} them.
 \item Thus error handling happens at a higher level, when \emc{options for recovery} are known.
 \item Use the \emc{finally} for local clean-up upon an error.
 \item Do not use exceptions as part of the happy path, and vice versa.
@@ -958,7 +958,7 @@ Programs are living things that \emc{evolve}.
 \begin{itemize}
 \item Programming is a \emc{dynamic activity}: a program is \emc{re-written and re-tested} many times per minute.
 \item Evolving the program to increase its quality is called \emc{refactoring}.
-\item \emc{Good design} (abtraction and DRY) \& the existence of \emc{good tests} ensure refactoring does \emc{not introduce new errors} in existing code.
+\item \emc{Good design} (abstraction and DRY) \& the existence of \emc{good tests} ensure refactoring does \emc{not introduce new errors} in existing code.
 \end{itemize}
 
 \begin{block}{Version Control enables fearless refactoring}
@@ -1086,7 +1086,7 @@ $ python -m trace -t mod_function_euclid_exc.py 200000 2 | grep -c "while (b != 
 \end{Verbatim}
 
 \begin{block}{What is an optimization?}
-An optimization of some program, transforms the program into another one, that is in every way correct, but somewhat more performant than the original one. This could be in terms of speed, resources needed such as memory and storage, or volume of external interactions (such as network traffic).
+An optimization of some program transforms the program into another one, that is in every way correct, but somewhat more performant than the original one. This could be in terms of speed, resources needed such as memory and storage, or volume of external interactions (such as network traffic).
 \end{block}
 
 \end{frame}
@@ -1177,7 +1177,7 @@ We want to write an algorithm to compute the \emc{square root} of a number.
 \begin{frame}
 \frametitle{Heron's method for computing square roots.}
 
-Hero of Alexandria (c. 10 AD -- c. 70 AD) proposed an an algorithm for computing square roots of positive numbers.
+Hero of Alexandria (c. 10 AD -- c. 70 AD) proposed an algorithm for computing square roots of positive numbers.
 
 \begin{block}{Heron's Method}
 \begin{itemize}
@@ -1207,7 +1207,7 @@ Note this is a special case of the Newton-Raphson (1690) algorithm for computing
 	]{python}{src/sqrt.py}
 
 \begin{itemize}
-	\item Note we compute, and remember the values of \emc{two consecutive steps}, in \texttt{guess} and \texttt{old\_guess} to compute the gain in precision (line 21--23).
+	\item Note: we compute and remember the values of \emc{two consecutive steps}, in \texttt{guess} and \texttt{old\_guess} to compute the gain in precision (line 21--23).
 	\item We use a \emc{range test} to terminate the process (line 22).
 	\item Other tricks include \emc{bounding on both sides} (line 22), and \emc{double assignment} (line 23).
 \end{itemize}
@@ -1220,7 +1220,7 @@ Note this is a special case of the Newton-Raphson (1690) algorithm for computing
 How can you convince yourself that \emc{the condition will eventually become False} as a result of performing the body of the loop?
 
 \vspace{5mm}
-In general, can we write a program, that takes as input any program, and decides whether it ever going to terminate or not? (The \emc{Halting Problem}).
+In general, can we write a program, that takes as input any program, and decides whether it will ever terminate? (The \emc{Halting Problem}).
 
 \begin{block}{The Halting Problem}
 Alan Turing proved in 1936 that a general algorithm to solve the halting problem for all possible program-input pairs cannot exist. A key part of the proof was a mathematical definition of a computer and program, which became known as \emc{a Turing machine}; the halting problem is \emc{undecidable over Turing machines}. % It is one of the first examples of a decision problem.
@@ -1348,7 +1348,7 @@ Functions help you modularize and re-use your code, if \emc{done right}!
 	\item \emc{Only rely on the function parameters} to perform the computation. \emc{Avoid using global variables} since it lowers modularity.
 	\item When possible, the result of the computation should only affect the returned value. This property, is called \emc{no side-effect}.
 	\item It is `ok' to \emc{affect the state of parameters}, but never affect the global state.
-	\item Keep functions \emc{short} (max 20-40 lines), and ensure they each do only \emc{one key thing}. 
+	\item Keep functions \emc{short} (max 20-40 lines), and ensure each of them does only \emc{one key thing}. 
 	\item All \emc{concepts} within a functions should be at the \emc{same level of abstraction}.
 \end{itemize}
 
@@ -1360,9 +1360,9 @@ Functions help you modularize and re-use your code, if \emc{done right}!
 Programming us about \emc{expressing ideas}, and \emc{good names} help a lot.
 
 \begin{itemize}
-	\item Chose \emc{long descriptive names} to be used far from where they are defined.
-	\item Chose \emc{short names} when they are used locally only.
-	\item Chose a consistent way of expressing \texttt{long\_names} or \texttt{LongNames}.
+	\item Choose \emc{long descriptive names} to be used far from where they are defined.
+	\item Choose \emc{short names} when they are used locally only.
+	\item Choose a consistent way of expressing \texttt{long\_names} or \texttt{LongNames}.
 	\item Use the same name to \emc{consistently} refer to the same concept.
 	\item Use names that \emc{accurately reflect the purpose} of the variable.
 	\item Use \emc{active names} for function, that perform \emc{actions}.
