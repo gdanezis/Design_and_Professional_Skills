@@ -1393,7 +1393,14 @@ For more advice, read Robert C. Martin in \emph{Clean Code} (2008)
 \begin{frame}
 \frametitle{Exercise 1-1 Compute logarithms}
 
+A general method for computing non-linear functions is the Newton-Raphson algorithm.
+\begin{description}
+	\item[Research.] Research a description of the Newton-Raphson algorithm, and understand how and why it works.
+	\item[Maths.] Specialize the Newton-Raphson algorithm to compute the natural logarithm function $x = \ln v$. Note that the natural logarithm function represents the solution to the equation $e^x = v$.
+	\item[Code.] Implement a function in Python to compute natural logarithms using the Newton-Raphson method. Allow your function to take as a parameter a \texttt{precision} up to which the result should be correct.
+	\item[Test \& Measure.] What tests should to define for the natural logarithm function, and how many steps does your algorithm takes for different values of $v$.
 
+\end{description}
 
 \end{frame}
 
