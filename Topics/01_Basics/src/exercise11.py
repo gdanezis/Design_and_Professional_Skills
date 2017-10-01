@@ -5,7 +5,7 @@ def NR_ln(v, tolerance = 0.001):
     if v <= 0.0:
         raise ArithmeticError("Negative or zero logarithms are undefined: %s" % v)
 
-    x_old = v
+    x_old = v  # TODO: chose a better initial value
     expon = e ** x_old
     x = x_old - (expon - v) / expon
     while not (- tolerance <= x_old - x <= tolerance): 
