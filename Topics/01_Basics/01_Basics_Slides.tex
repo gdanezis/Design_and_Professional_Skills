@@ -47,19 +47,6 @@
 \section{Introduction}
 
 \frame{
-\frametitle{Introducing ENGS102P.}
-
-The Computer Science part of ENGS102P `Design and Professional Skills' course objectives:
-\begin{itemize}
-\item Teach the basics of \emc{programming in Python}.
-\item Introduce basic \emc{Computer Science} concepts.
-\item Accustom you to basic \emc{Software Engineering} practices.
-\item Expose you to key \emc{ethical and social debates} surrounding computing.
-\end{itemize}
-
-} 
-
-\frame{
 \frametitle{Introducing Basics.}
 
 In the `Basics' topic we will:
@@ -120,12 +107,20 @@ Programming Languages:
 \frame{
 \frametitle{Why Python?} 
 \begin{itemize}
-	\item \emc{Real-world}, widely used programming language (5th in TIOBE ranking.)
+	\item \emc{Real-world}, widely used programming language \\(5th in TIOBE ranking.)
 	\item \emc{Multi-paradigm}: scripting, procedural, functional elements, object oriented, generics.
 	\item Extensive \emc{eco-system} of tools and libraries. Great documentation.
 	\item Significant \emc{industrial uses}.
 	\item \emc{High-productivity}, and perfect for rapid prototyping.
 \end{itemize}
+
+\vspace{3mm}
+A \emc{weakness} we will turn to a strenth:
+\begin{itemize}
+	\item It does not force you to adopt \emc{good programming practices}.
+	\item It \emc{supports them}, but you must learn them!
+\end{itemize}
+
 
 }
 
@@ -133,19 +128,24 @@ Programming Languages:
 	
 \frametitle{Other languages you might want to learn.}
 
+\emc{Different problems} may require \emc{different tools}:
 \begin{itemize}
 \item Lower-level: Rust (Hip!), C++, \emc{C} --- COMP101P.
 \item Static typing: Go (Hip!), \emc{Java}, C\# --- COMP103P.
 \item Web: Javascript (Hip!).
 \item Functional: \emc{Haskell}, Scala (Hip!) --- COMP101P.
 \end{itemize}
+
+\vspace{3mm}
+All programming languages mix and match a few principles. \\
+Good computer scientists \emc{know those principles},\\ and can \emc{work in any language}.
 }
 
 \begin{frame}[fragile]
 \frametitle{Using Python interactively.} 
 
 \begin{itemize}
-	\item Install Python (\url{https://www.python.org/about/gettingstarted/})
+	\item Install Python 3.6 or higher. (\url{https://www.python.org/about/gettingstarted/})
 	\item Open a command line console, and run the Python interpreter.
 	\item Type your fist command: \mint{Python}{print("Hello World!")}
 	\item You should see it executing!
@@ -170,15 +170,16 @@ Hello World!
 
 The interactive interpreter is only good for quick experimentation.
 \begin{itemize}
-	\item \emc{Code editor}: atom (hip!), Sublime (hip last year!), Visual Studio Code. Must haves: Good syntax highlighting, good handling of files \& folders, whitespace, looks very cool.
-	\item Browser with \emc{Python Documentation}: \url{https://docs.python.org/3/}. \\ (including \emc{Python tutorial} and \emc{Library reference}.)
+	\item \emc{Code editor}: atom (hip!), Sublime (hip!), Visual Studio Code. \\ Must haves: Good syntax highlighting, good handling of files \& folders, whitespace, looks very cool.
+	\item \emc{Browser} with Python \emc{Documentation}: \url{https://docs.python.org/3/}. \\ (including Python \emc{tutorial} and \emc{Library reference}.)
 	\item \emc{Command line} \& learn how to use it. \url{https://www.lynda.com/Linux-tutorials/Learn-Linux-Command-Line-Basics/435539-2.html}
-	\item Q\&A in browser: \emc{Stack Overflow}. \url{https://stackoverflow.com/}
+	\item \emc{Stack Overflow} for Q\&A. \\ \url{https://stackoverflow.com/}
+	\item \emc{Install pytest}. \url{https://docs.pytest.org/}
 \end{itemize}
 }
 
 \frame{
-\frametitle{Your well being.} 
+\frametitle{Your physical \& mental well being.} 
 
 \begin{itemize}
 \item Approach the physical activity of programming with \emc{professionalism}.
@@ -222,7 +223,8 @@ Comments are not executed by Python, but form part of your program.
 \item Express in comments concepts you cannot directly express in code.
 \item Prefer to express concepts directly in code!
 \item Keep comments local to the relevant code.
-\item Do not overcomment, and avoid duplicate, redundant or wrong comments. Every line of comment will have to be maintained in the future.
+\item Do not overcomment; avoid duplicate, redundant or wrong comments. 
+\item Every comment will have to be maintained in the future.
 \end{itemize}
 
 Python is \emc{sensitive to indentation} using whitespace. Use 3 or 4 spaces (not a tab) to indent blocks of code. More about this later \ldots.
@@ -253,7 +255,7 @@ Finally, formal periodic \emc{code reviews}, or continuous reflection through \e
 \begin{itemize}
 	\item Unit Test every 2-5 lines of code you write. Think how to \emc{test every snippet of code} just before, while, or just after you write it.
 	\item Use a mature \emc{tool for testing} your programs. We will use \texttt{pytest}. \url{https://docs.pytest.org/}.
-	\item Different testing techniques for code correctness, integration, security, performance and user experience.
+	\item \emc{Different testing techniques} for code correctness, integration, security, performance and user experience.
 	\item Shortcomings of testing: \emc{lack of completeness}.
 \end{itemize}
 
@@ -262,7 +264,7 @@ Finally, formal periodic \emc{code reviews}, or continuous reflection through \e
 \frame{
 \frametitle{Testing the `Hello World!' program.} 
 
-\emc{Tests are snippets of code} executing parts of your program. Eg.\ the test of the simple Python program is:
+\emc{Tests are snippets of code} executing parts of your program. \\ Eg.\ the test of the simple Python program is:
 
 	\inputminted[
 		xleftmargin=1.4em,
@@ -274,7 +276,7 @@ Finally, formal periodic \emc{code reviews}, or continuous reflection through \e
 		linenos
 	]{python}{src/test_hello_world.py}
 
-We run the \emc{test suit}, by executing \texttt{pytest test\_hello\_world.py} on the command line.
+We run the \emc{test suite}, by executing \texttt{pytest test\_hello\_world.py} on the command line.
 
 
 }
@@ -295,7 +297,7 @@ We run the \emc{test suit}, by executing \texttt{pytest test\_hello\_world.py} o
 		linenos
 	]{python}{src/hello_world_doc.py}
 
-You must \emc{test code in documentation}. Through \texttt{pytest -vs --doctest-modules test\_hello\_world.py}.
+You must \emc{test code in documentation}. \\ \texttt{pytest -vs --doctest-modules test\_hello\_world.py}.
 
 }
 
@@ -399,34 +401,34 @@ Let's build a Python program where we execute the concrete steps of the algorith
 
 Consider the positive integers $a$ and $b$; express using $a'$ and $b'$:
 \begin{align}
-a &= a' \cdot gcd(a,b), \\
-b &= b' \cdot gcd(a,b),
+a &= \alpha \cdot gcd(a,b), \\
+b &= \beta \cdot gcd(a,b),
 \end{align}
-where $gcd(a',b') = 1.$
+where $gcd(\alpha, \beta) = 1.$
 
 Without loss of generality, consider $a > b$. After a single step:
 \begin{align}
-a'' &= a - b \\ 
-    &= (a' - b') \cdot gcd(a,b).
+a' &= a - b \\ 
+    &= (\alpha - \beta) \cdot gcd(a,b).
 \end{align}
 
-Note that $a''$ is always strictly positive.
+Note that $a'$ is always strictly positive.
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Why Euclid's algorithm works? (II)}
 
-We can show that $gcd(a'', b) = gcd(a,b)$.
+We can show that $gcd(a', b) = gcd(a,b)$.
 
 Proof by contradiction: 
 
 \begin{itemize}
-\item We know that gcd(a,b) is a factor of both a'' and b. 
-\item So if $gcd(a'', b) > gcd(a,b)$ it must be that:
-$gcd(a' - b', b') = c > 1$. 
-\item Thus we can rewrite $b' = r \cdot c$ and $a' - b' = r' \cdot c \Leftrightarrow a' = (r' - r) \cdot c $. 
-\item However that means that $a'$ and $b'$ are both divisible by $c$. Which contradicts $gcd(a',b') = 1$.
+\item We know that gcd(a,b) is a factor of both a and b. 
+\item So if $gcd(a', b) > gcd(a,b)$ it must be that:
+$gcd(\alpha - \beta, \beta) = c > 1$. 
+\item Thus we can rewrite $\beta = r \cdot c$ and $\alpha - \beta = r' \cdot c \Leftrightarrow \alpha = (r' - r) \cdot c $. 
+\item However that means that $\alpha$ and $\beta$ are both divisible by $c > 1$. \\ Which contradicts $gcd(\alpha, \beta) = 1$.
 \end{itemize}
 
 Thus by repeatedly applying the steps of the algorithm we keep the gcd in each step constant while reducing the size of $a$ and $b$. Until they are equal to the gcd.
@@ -458,8 +460,7 @@ Thus by repeatedly applying the steps of the algorithm we keep the gcd in each s
 Let's understand all aspects of the Python code in this example.
 \begin{itemize}
 \item \emc{Statements} perform an action within the program. In this example all code lines are statements.
-\item \emc{Assignments} are statements that assign an expression (right hand side of $=$) to a variable with a number in the program (left hand side of $=$). 
-Eg.\ \mint{python}{a = 42} assigns $42$ to the named variable \texttt{a}.
+\item \emc{Assignments} are statements that assign an expression (right hand side of $=$) to a variable with a number in the program (left hand side of $=$). Eg.\ \mint{python}{a = 42} assigns $42$ to the named variable \texttt{a}.
 \item \emc{Expressions} are fragments of code that return a computed quantity.
 \item \emc{Values} are expressions that return a constant, eg.\ \texttt{42} and \texttt{30.}
 \item More generally \emc{arithmetic expressions} such as \texttt{b - a} perform a computation and return its result. They can be nested arbitrarily.
@@ -935,9 +936,9 @@ Note that multiple, including generic, \emc{except} blocks may be present.
 
 The Python raise mechanism interrupts the flow, and bubbles up the exception to outer calling blocks. Why?
 \begin{itemize}
-\item Errors are often detected \emc{deep within programs}. Eg.\ a file name does not exist when you are about to open it.
+\item Errors are often detected \emc{deep within programs}. \\ Eg.\ a file name does not exist when you are about to open it.
 \item At such a low-level, it is \emc{not known how to handle} them.
-\item Thus error handling happens at a higher level, when \emc{options for recovery} are known.
+\item Thus error handling happens at a higher level, \\ when \emc{options for recovery} are known.
 \item Use the \emc{finally} for local clean-up upon an error.
 \item Do not use exceptions as part of the happy path, and vice versa.
 \end{itemize}
@@ -1138,7 +1139,7 @@ Most systems work best if they are kept simple rather than made complicated; the
 Always implement things when you actually need them, never when you just foresee that you need them.
 \end{block}
 
-\emc{Counterbalance} to the `abstraction principle': Only abstract a function when you have more that one concrete example of. It is \emc{hard to abstract from a single, let alone no, example}.
+\emc{Counterbalance} to the `abstraction principle': Only abstract a function when you have more that one concrete example of.\\ It is \emc{hard to abstract from a single, let alone no, example}.
 
 \end{frame}
 
@@ -1296,6 +1297,7 @@ Ensure your \texttt{while} loops \emc{make progress}, using an \texttt{assert} i
 		xleftmargin=1.4em,
 		frame=lines,
 		framesep=2mm,
+		highlightlines={33,37},
 		%baselinestretch=1.2,
 		% bgcolor=lightgray,
 		fontsize=\footnotesize,
@@ -1342,7 +1344,7 @@ In general, \emc{while loops are dangerous} since it is error prone to ensure te
 \begin{frame}
 \frametitle{Always prefer built in functions and standard libraries.}
 
-Writing the \texttt{sqrt} function was an exercise. Prefer to \emc{re-use well-tested code}, eg.  for square roots \texttt{x ** 0.5}.
+Writing the \texttt{sqrt} function was an exercise. \\ Prefer to \emc{re-use well-tested code}, eg.  for square roots \texttt{x ** 0.5}.
 \begin{itemize}
 	\item Study the Python standard library: \url{https://docs.python.org/3/library/}.
 	\item Study 3rd party (awesome) libraries: \url{https://github.com/vinta/awesome-python}.
