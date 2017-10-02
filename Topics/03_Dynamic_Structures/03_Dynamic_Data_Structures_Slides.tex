@@ -1,0 +1,192 @@
+\documentclass{beamer} % [aspectratio=169]
+\usetheme{ucl}
+\setbeamercolor{banner}{bg=brightblue}
+\setbeamersize{description width=2em}
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
+
+%\usepackage{fontspec}
+\usepackage[utf8]{inputenc}
+% \usepackage[english, greek]{babel}
+
+
+\usepackage[T1]{fontenc} % Turn £ into $
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{url}
+
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+
+
+\newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\author{Prof.\ George Danezis, University College London, UK}
+\title{Dynamic Data Structures \& Objects Oriented Concepts.}
+\subtitle{ENGS102P: Design and Professional Skills }
+% \institute{}
+\date{Term 1, 2017}
+
+
+\begin{document}
+\nobibliography*
+
+
+\frame{
+\titlepage
+}
+
+\begin{frame}
+\frametitle{How are the python dynamic data types implemented?}
+
+Dynamic data types are those, like \emc{list}, that can grow and shrink in the number of elements that contain, and maintain some \emc{invariants}, such as being sorted.
+
+\vspace{3mm}
+But \emc{how can you implement} lists or other such datatypes?
+
+\vspace{3mm}
+\begin{block}{Understand how things work!}
+Great computer scientists use the \emc{best available libraries and native types}, but understand how they work sufficiently to make \emc{informed decisions} about their applicability to problems. When they are not applicable they know how to \emc{build their own}.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Aims for this topic}
+
+\begin{itemize}
+	\item Understand how \emc{dynamic data types are implemented} \\ under the hood.
+	\item Explore in details how to implement \emc{linked lists}.
+	\item Introduce \emc{Object Oriented Programming} \\ to make your own data types look and feel like native ones.
+	\item Implement a data type that maintains a \emc{sorted multi-set} \\ of items using a tree.
+	\item Discuss the native \emc{dictionary type} (\texttt{dict}).
+	\item Introduce the concept of \emc{Machine learning}, \\ and implement a decision forest for a task.
+\end{itemize}
+
+\end{frame}
+
+
+\section{Defining your own data types}
+
+\begin{frame}
+\frametitle{The linked list data type.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Simple operations on linked list.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Linked list algorithms.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Testing linked lists.}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The structure of the linked list code.}
+
+ Sources of error.
+\end{frame}
+
+\section{Object Oriented Programming}
+
+\begin{frame}
+\frametitle{Objects = Data + Algorithms.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Classes, objects / instances and methods.}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Class LinkedList.}
+\end{frame}
+
+\begin{frame}
+\frametitle{The concept of Encapsulation and Hiding.}
+\end{frame}
+
+\begin{frame}
+\frametitle{The importance of immutability.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overloading operators for seamless coding.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Iterators.}
+\end{frame}
+
+\section{Keeping a multi-set sorted.}
+
+\begin{frame}
+\frametitle{Motivation: keeping indexes for dynamic data structures.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Trees and sorted trees.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Trees as branches and Leaves.}
+\end{frame}
+
+\begin{frame}
+\frametitle{The TreeNode Class.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adding items.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Removing items.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Searching.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Traversing in order.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Computational complexity.}
+\end{frame}
+
+\section{The Python \texttt{dict} type.}
+
+\section{From programming to learning.}
+
+\section{Ethics, Machine Learning and Artificial Intelligence.}
+
+% ---------------------------------
+
+\bibliographystyle{alpha}
+\nobibliography{references}
+
+\end{document}
