@@ -61,6 +61,13 @@ class LinkedList:
             else:
                 return self.tail().isin(item)
 
+    # ------------------------------
+    # Make the Linked List Pythonnic
+
+    def __ror__(self, other):
+        return self.cons(other)
+
+
 def test_List():
     # Check construction
     empty = LinkedList()
@@ -81,3 +88,7 @@ def test_List():
     L2 = L.cons("ZZ")
     assert L2.isin("ZZ")
     assert not L2.isin("YY")
+
+def test_pythonic_methods():
+    empty = LinkedList()
+    L = "Hello" | ("World" | empty)
