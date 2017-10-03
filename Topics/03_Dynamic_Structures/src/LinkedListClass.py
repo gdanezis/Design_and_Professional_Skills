@@ -35,7 +35,7 @@ class LinkedList:
         """ Returns the item at a specific position in the list
         or throws an exception if it is out of bounds """
         if self.empty():
-            raise Exception("Out of bounds.")
+            raise IndexError("Out of bounds.")
         else:
             if position == 0:
                 return self.head()
@@ -52,7 +52,7 @@ class LinkedList:
             return new_list
 
     def isin(self, item):
-        """ Tests if an element is in the list """
+        """ Tests if an element is in the linked list """
         if self.empty():
             return False
         else:
@@ -61,12 +61,54 @@ class LinkedList:
             else:
                 return self.tail().isin(item)
 
+    def equal(self, other):
+        """ Tests equality of two liked lists """
+        if (self.empty() != other.empty()): # XOR operation
+            return False
+        if (self.empty() and other.empty()):
+            return True
+        return (self.head() == other.head()) and (self.tail() == other.tail())
+
     # ------------------------------
     # Make the Linked List Pythonnic
 
     def __ror__(self, other):
         return self.cons(other)
 
+    def __add__(self, other):
+        return self.append(other)
+
+    def __len__(self):
+        return self.length()
+
+    def __contains__ (self, item):
+        return self.isin(item)
+
+    def __getitem__ (self, key):
+        return self.index(key)
+
+    def __repr__(self):
+        if self.empty():
+            return "_"
+        else:
+            return "%s -> %s" % (self.head(), self.tail().__str__())
+
+    def __eq__(self, other):
+        return self.equal(other)
+
+    def iter(self):
+        """ Iterate over the elements in the linked list """
+        current = self
+        while not current.empty():
+            head = current.head()
+            current = current.tail()
+            yield head
+        
+
+
+# ----------- TESTS --------------
+
+import pytest
 
 def test_List():
     # Check construction
@@ -92,3 +134,30 @@ def test_List():
 def test_pythonic_methods():
     empty = LinkedList()
     L = "Hello" | ("World" | empty)
+    L2 = L + L
+    assert len(L) == 2
+    assert len(L2) == 4
+    assert "World" in L
+    assert "Fridge" not in L
+    assert str(L2) == "Hello -> World -> Hello -> World -> _"
+    assert L[0] == "Hello"
+    assert L2[2] == "Hello"
+    assert L2 == ("Hello" | ("World" | L ))
+    assert not L2 == L
+
+    # Test iteration
+    for i in L2:
+        assert i in L2
+
+    for i in L2.iter():
+        assert i in L2
+
+def test_Limits():
+    # Make large Linked list:
+    L = LinkedList()
+    for i in range(1000):
+        L = "Blah" | L
+
+    # Recursion limit is reached.
+    with pytest.raises(RecursionError) as excinfo:   
+        v = L[999]
