@@ -10,7 +10,7 @@ The structure of the material is as follows:
 
 ## Building the lecture notes
 
-Since we are computer scientists we have integrated the production of lecture notes into a proper build system and a sophisticated tool chain to avoid errors in code fragments. In order to compile the lecture notes you will need: latex (with the beamer class, tikz and the UCL templates); python3; the doit and pytest packages.
+Since we are computer scientists we have integrated the production of lecture notes into a proper build system and a sophisticated tool chain to avoid errors in code fragments. In order to compile the lecture notes you will need: latex (with the beamer class, tikz and the UCL beamer templates); python3; the doit, pytest and Pygments packages.
 
 You will need git, and to clone this repository locally. When all the dependencies are installed you may simply type `doit' in each topic folder to build the slides into a pdf. Under the hood this runs all unit tests and doctests, produces figures from running code, and finally compiles the latex into a pdf file.
 
