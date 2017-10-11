@@ -10,4 +10,4 @@ def GCD(a,b):
 ax = 42                 
 bx = 30                 
 result = GCD(ax, bx) # Call the GCD function
-print(ax)  
+print(result)  
