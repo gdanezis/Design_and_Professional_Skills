@@ -1036,6 +1036,22 @@ UK Data Protection Act and the new General Data Protection Regulations:
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Afterword: use standard libraries for \texttt{find} and \texttt{sort}.}
+
+We present here the algorithms for find and sort, because you need to know how those work `under the hood'.
+
+\vspace{3mm}
+\begin{itemize}
+	\item Python sequences offer facilities for finding and testing whether an item is in a sequence, through the \texttt{in} operator.
+	\item Python provides the \texttt{sorted} function that sorts a sequence, and can be paramterized by a custom function to determine the keys or the comparison operator.
+\end{itemize}
+
+\vspace{3mm}
+Always prefer using standard facilities and function over your own, unless you have a compelling case to re-implement them.
+
+\end{frame}
+
 \section{Exercises}
 
 \begin{frame}
