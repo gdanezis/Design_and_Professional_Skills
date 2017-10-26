@@ -26,55 +26,80 @@ class LinkedList:
 
     def length(self):
         """ Returns the number of items in the list """
-        if self.empty():
-            return 0
-        else:
-            return 1 + self.tail().length()
+        current = self
+        list_len = 0
+        while not current.empty():
+            list_len += 1
+            current = current.tail()
+        return list_len
 
     def index(self, position):
         """ Returns the item at a specific position in the list
         or throws an exception if it is out of bounds """
-        if self.empty():
-            raise IndexError("Out of bounds.")
-        else:
+        current = self
+        while not current.empty():
             if position == 0:
-                return self.head()
-            else:
-                return self.tail().index(position-1)
-
+                return current.head()
+            current = current.tail()
+            position -= 1
+        raise IndexError("Out of bounds.")
+        
     def append(self, otherlList):
         """ Appends two Linked lists together """
-        if self.empty():
-            return otherlList
-        else:
-            new_tail_list = self.tail().append(otherlList)
-            new_list = new_tail_list.cons(self.head())
-            return new_list
+
+        current = self
+        new_list = LinkedList()
+        end_list = new_list
+        while not current.empty():
+            # Look ahead one
+            if current.tail().empty():
+                # Attach the other list directly, since it is immutable.
+                new_end = otherlList
+            else:
+                new_end = LinkedList()
+
+            # Access the new end_list -- this respects encapsulation within the class
+            end_list._representation = (current.head(), new_end)
+            end_list = new_end
+            current = current.tail()
+            
+        return new_list
+
 
     def copy(self):
-        if self.empty():
-            return LinkedList()     
-        else:
-            return self.tail().copy().cons(self.head())
+        """ Copies the object."""
+        current = self
+        new_list = LinkedList()
+        end_list = new_list
+        while not current.empty():
+            new_end = LinkedList()
+            end_list._representation = (current.head(), new_end)
+            end_list = new_end
+            current = current.tail()
 
+        return new_list
 
     def isin(self, item):
         """ Tests if an element is in the linked list """
-        if self.empty():
-            return False
-        else:
-            if item == self.head():
+        current = self
+        while not current.empty():
+            if item == current.head():
                 return True
-            else:
-                return self.tail().isin(item)
+            current = current.tail()
+        return False
 
     def equal(self, other):
         """ Tests equality of two liked lists """
-        if (self.empty() != other.empty()): # XOR operation
+        L1 = self
+        L2 = other
+        while not L1.empty() and not L2.empty():
+            if not L1.head() == L2.head():
+                return False
+            L1, L2 = L1.tail(), L2.tail()
+
+        if (L1.empty() != L2.empty()): # XOR operation
             return False
-        if (self.empty() and other.empty()):
-            return True
-        return (self.head() == other.head()) and (self.tail() == other.tail())
+        return True
 
     # ------------------------------
     # Make the Linked List Pythonnic
@@ -169,5 +194,5 @@ def test_Limits():
         L = "Blah" | L
 
     # Recursion limit is reached.
-    with pytest.raises(RecursionError) as excinfo:   
-        v = L[999]
+    #with pytest.raises(RecursionError) as excinfo:   
+    #    v = L[999]
