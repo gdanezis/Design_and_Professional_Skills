@@ -595,7 +595,7 @@ Gaps between your prediction and your observation indicate bugs in either, or bo
 \frametitle{Tools to observe programs.}
 
 \begin{itemize}
-\item Write additional simpler or more specific \emc{test cases} and observe how they fail. \url{https://docs.pytest.org/en/latest/}
+\item Write additional simpler or more specific \emc{test cases} and observe how they fail. \url{https://docs.pytest.org/en/latest/} \\ (Those act as \emc{regression tests}.)
 \item Use the Python \emc{logging} libraries and facilities to log the values of variables. Do not leave debugging \texttt{print} statements in production code. \url{https://docs.python.org/3/howto/logging.html}.
 \item Use a \emc{tracer} to dump all the steps taken by your program on a simple failing test case. \url{https://docs.python.org/3.0/library/trace.html}
 \item Use the Python \emc{debugger} to single step through the execution of the program, and observe the variable values. \url{https://docs.python.org/3.2/library/pdb.html}
@@ -1069,11 +1069,12 @@ Recursion is one strategy for implementing algorithms. However, it might be usef
 \begin{frame}
 \frametitle{Exercise 2-2 Adding in recursion.}
 
-The implementation of \texttt{isin\_bisect} presented does not use recursion. However it could.
+The implementation of \texttt{mergelists} presented does not use recursion. However it could.
 \begin{description}
-	\item[2-2.1] Refactor the \texttt{isin\_bisect} function to use recursion.
+	\item[2-2.1] Refactor the \texttt{mergelists} function to use recursion.
 	\item[2-2.2] Argue why your implementation is correct.
-	\item[2-3.2] Discuss whether the existing tests for the function are appropriate for the recursive implementation, and justify any modifications necessary.
+	\item[2-2.3] Discuss whether the existing tests for the function are appropriate for the recursive implementation, and justify any modifications necessary.
+	\item[2-2.4] Is it a good idea to use the recursive variant of this function? Compare and contract with the use of recursion in \texttt{mergesort}.
 \end{description}
 
 \end{frame}

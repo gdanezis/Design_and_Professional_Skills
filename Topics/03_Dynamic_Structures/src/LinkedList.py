@@ -39,7 +39,7 @@ def append(lList, otherlList2):
     if lList == empty():
         return otherlList2
     else:
-        return (head(lList), append(tail(lList), otherlList2))
+        return cons(append(tail(lList), otherlList2), head(lList))
 
 def isin(lList, item):
     if lList == empty():
@@ -50,16 +50,19 @@ def isin(lList, item):
         else:
             return isin(tail(lList), item)
 
-def test_List():
-    L = ("Hello", ("World", None))
+def test_lList_basic():
     Lx = cons(cons(empty(), "World"), "Hello",)
-    assert L == Lx
-    assert length(L) == 2
+    assert head(Lx) == "Hello"
+    assert tail(tail(Lx)) == empty()
+    # Works due to the impl. of the llist.
+    assert Lx == ("Hello", ("World", None))
 
+def test_lList_algs():
+    L = ("Hello", ("World", None))
     L2 = ("I", ("am", ("Here", None)))
+    assert length(L) == 2
     A = append(L, L2)
     assert length(A) == 5
     assert index(A, 3) == "am"
-
     assert isin(A, "Here")
     assert not isin(A, "Not there")

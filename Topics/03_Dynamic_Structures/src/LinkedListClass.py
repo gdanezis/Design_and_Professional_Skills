@@ -79,29 +79,29 @@ class LinkedList:
     # ------------------------------
     # Make the Linked List Pythonnic
 
-    def __ror__(self, other):
+    def __ror__(self, other):    # The right | operator
         return self.cons(other)
 
-    def __add__(self, other):
+    def __add__(self, other):    # The + operator
         return self.append(other)
 
-    def __len__(self):
+    def __len__(self):           # The len() function
         return self.length()
 
-    def __contains__ (self, item):
+    def __contains__ (self, item): # The in operator
         return self.isin(item)
 
-    def __getitem__ (self, key):
+    def __getitem__ (self, key): # Indexing []
         return self.index(key)
 
-    def __repr__(self):
+    def __eq__(self, other):     # The == operator
+        return self.equal(other)
+
+    def __repr__(self):          # The str() function
         if self.empty():
             return "_"
         else:
             return "%s -> %s" % (self.head(), self.tail().__str__())
-
-    def __eq__(self, other):
-        return self.equal(other)
 
     def iter(self):
         """ Iterate over the elements in the linked list """
@@ -132,7 +132,7 @@ def test_List():
     assert empty.empty()
     assert L.index(1) == "Hello"
     assert L.append(L).length() == 4
-
+    
     # Check is in
     L2 = L.cons("ZZ")
     assert L2.isin("ZZ")
@@ -143,20 +143,19 @@ def test_List():
 
 def test_pythonic_methods():
     empty = LinkedList()
-    L = "Hello" | ("World" | empty)
-    L2 = L + L
-    assert len(L) == 2
+    L = "Hello" | ("World" | empty) # Cons
+    L2 = L + L                      # Append
+    assert len(L) == 2              # len()
     assert len(L2) == 4
-    assert "World" in L
+    assert "World" in L             # in operator
     assert "Fridge" not in L
     assert str(L2) == "Hello -> World -> Hello -> World -> _"
-    assert L[0] == "Hello"
+    assert L[0] == "Hello"          # Indexing
     assert L2[2] == "Hello"
-    assert L2 == ("Hello" | ("World" | L ))
-    assert not L2 == L
+    assert L2 == ("Hello" | ("World" | L )) # Equality
+    assert not L2 == L              # Inequality
 
-    # Test iteration
-    for i in L2:
+    for i in L2:                    # Iteration
         assert i in L2
 
     for i in L2.iter():
