@@ -54,7 +54,7 @@
 }
 
 \author{Prof.\ George Danezis, University College London, UK}
-\title{Dynamic Data Structures \& Objects Oriented Concepts.}
+\title{Dynamic Data Structures \\ \& Objects Oriented Concepts.}
 \subtitle{ENGS102P: Design and Professional Skills }
 % \institute{}
 \date{Term 1, 2017}
@@ -1044,7 +1044,7 @@ Set and get all items from the fixture.
 The Python dictionary type provides a very efficient key-value store.
 \begin{itemize}
   \item the \texttt{dict} function takes a sequence of tuples and returns a dictionary mapping them as key values.
-  \item There is a shorthand for dict constants, eg. \texttt{\{k1:v1, k2:v2\}}
+  \item There is a shorthand for dict literals, eg. \texttt{\{k1:v1, k2:v2\}}
   \item Get and set operations are as in minimap, eg. \texttt{m[k] = v} for set, and \texttt{m[k]} for get.
   \item the \texttt{len} function returns the number of items, and an iterator returns an unordered sequence of keys.
 \end{itemize}
@@ -1056,7 +1056,311 @@ For a full list of operations see \url{https://docs.python.org/3.6/library/stdty
 
 \section{From programming to learning.}
 
+\begin{frame}
+
+\frametitle{The machine learning paradigm}
+
+\begin{itemize}
+  \item Some problems do not have a \emc{suitable logical structure} to easily program an algorithm to solve them.
+  \item Usually they deal with \emc{raw unstructured data}: natural language, images, raw sensor inputs, etc. 
+  \item Humans are very good at some of them. Eg. recognizing faces, understanding language, classifying cats versus dogs in pictures.
+  \item But humans are very bad at understanding why, and how they make those decisions.
+\end{itemize}
+
+\vspace{3mm}
+Machine learning algorithms instead learn by example from a training set, and can then perform the task required.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Sample task: recognizing French vs. German fragments of text}
+
+Problem statement: I give you a fragment of 200 characters of text. Is it in French or in German?
+
+\begin{itemize}
+  \item Approach 1 --- Expert system: \emc{employ expert linguists} to tell you all, or the best ways, to differentiate the two languages in a small fragment.
+  \item Approach 2 --- Machine learning: use a set of known French and German fragment to \emc{train a model to differentiate} between the languages.
+\end{itemize}
+
+\vspace{3mm}
+The model we consider here is a \emc{Random Decision Forrest}, which is a collection of \emc{Decision Trees} -- linking to our current material.
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Decision Trees.}
+
+Branches contain a \emc{weak classifier}, eg.\ whether the item to be classified \emc{contains a specific substring}, branching left (`yes') or right (`no'). Leafs contain \emc{classification decisions}.
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1,
+  level distance = 1cm}] 
+\node [arn_n] {le\_} 
+            child{ node [arn_n] {cho} 
+              child{ node [arn_n] {FR}} %edge from parent node[above left]
+                         %{$x$}} %for a named pointer
+              child{ node [arn_n] {DE}}
+            }
+            child{ node [arn_n] {zie}
+              child{ node [arn_n] {DE}}
+              child{ node [arn_n] {FR}}
+            }                            
+; 
+\end{tikzpicture}
+\end{center}
+
+To classify an item, follow the path to a decision leaf.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Training Decision Trees.}
+
+Given: a training set of text fragment with known language labels.
+\begin{itemize}
+  \item Start with a 1 branch tree: select a number of random features, and pick the one that separates the two classes best.
+  \item Separate items left and right, according to the selected feature.
+  \item Recursively, train the left and right branch until a maximum depth.
+\end{itemize}
+
+\vspace{3mm}
+What is the criterium to select the best feature: the one that minimizes the \emc{mean Gini impurity}:
+$gini = 1 - p_0^2 - p_1^2$,
+where $p_0$ and $p_1$ are the fraction of items belonging to each class.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Preparing training and evaluation datasets (1).}
+
+\inputminted[
+    firstline=87,
+    lastline=102,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Preparing training and evaluation datasets (2).}
+
+\inputminted[
+    firstline=104,
+    lastline=113,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+Note that the format of each item to be trained on or be evaluated is (label, feature set, original item). The variable features gathers all features in the training set, ie.\ all substrings of length 3.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The decision tree class.}
+
+\inputminted[
+    firstline=39,
+    lastline=47,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+An instance may be either a branch (if feature is not None) including a feature and a left and right decision tree; or a final binary decision.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Training a decision tree.}
+
+\inputminted[
+    firstline=49,
+    lastline=66,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+Steps represents the number of features tried per branch.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Measuring impurity for a candidate feature.}
+
+\inputminted[
+    firstline=19,
+    lastline=35,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+The gini function computes the gini coefficient on the items' labels.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Classification using a decision tree.}
+
+\inputminted[
+    firstline=68,
+    lastline=80,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+Decision leafs store the most likely 0 or 1 label. Classification routes the item given the the leaf according to all intermediate features.
+\end{frame}
+
+\begin{frame}
+\frametitle{The evaluation of machine learning systems.}
+
+\begin{itemize}
+  \item You must evaluate the accuracy, true positive and false positive rate for classifiers.
+  \item Train and evaluate on a separate subset of labeled data.
+  \item Accuracy: the fraction of correct decisions.
+  \item Key visualization for TP/FP: the ROC curve.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation pipeline, using a Random Forest.}
+
+\inputminted[
+    firstline=115,
+    lastline=133,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/randomforest.py}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Results setup}
+
+Setup:
+\begin{itemize}
+  \item Use `Faust' for DE and `The Mysterious island' for FR.
+  \item Extract fragments of 200 characters.
+  \item Train using 400 fragments for each language.
+  \item Test 100 random features per branch for training.
+  \item Evaluate with 200 fragments for each language.
+\end{itemize}
+
+For a single tree of level 1 depth, accuracy is about 50\%--60\%. That is pretty poor -- and close to random guessing.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Results for 40 decision trees}
+
+Accuracy: over 98\%.
+
+\vspace{3mm}
+Where are the errors? 
+\begin{itemize}
+  \item ``The text strictly follows the original. Corrections made in later print editions have been denoted in square brackets. \ldots''
+  \item ``is agreement violates the law of the state applicable to this agreement, the agreement shall be interpreted to make the maximum \ldots''
+  \item \ldots
+\end{itemize}
+
+These are fragments of neither FR or DE text! Lesson: \emc{compare the performance of ML systems with the performance of humans}, not just ground truth!
+
+\end{frame}
+
+\begin{frame}
+\frametitle{True / False positive rates}
+
+As an ML system designer you can tune your classifier. However, any tuning leads to a trade off between the \emc{True Positive Rate} (TPR) and the \emc{False Positive Rate} (FPR).
+
+\begin{itemize}
+  \item \emc{True Positive Rate}: The number of items that are positive, classified as positive.
+  \item \emc{False Positive Rate}: The number of items that are negative, classified as positive.
+\end{itemize}
+
+\vspace{3mm}
+The trade-off between TPR / FPR is captured in the ROC curve visualization.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Receiver Operating Characteristic Curves}
+
+\begin{center}
+\includegraphics[scale=0.5]{assets/ROC}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{ More on Machine Learning \ldots }
+
+Great tutorial on Random Decision Forests:
+\begin{itemize}
+  \item Criminisi, A., Shotton, J., \& Konukoglu, E. (2011). Decision forests for classification, regression, density estimation, manifold learning and semi-supervised learning. Microsoft Research Cambridge, Tech. Rep. MSRTR-2011-114, 5(6), 12.
+  \item Fundamentals of Deep Learning by Nikhil Buduma and Nicholas Lacascio. O'Reilly, June 2017.
+\end{itemize}
+
+\vspace{3mm}
+You may find some of those on-line.
+\end{frame}
+
+
 \section{Ethics, Machine Learning and Artificial Intelligence.}
+
+\begin{frame}
+\frametitle{ Ethical issues around machine learning }
+
+\begin{itemize}
+  \item Privacy concerns, related to training and classification.
+  \item Understandability of classification -- and the difficulty of explaining why a decision was reached.
+  \item Issues around algorithmic discrimination.
+  \item Liability and responsibility: who is to blame if ML systems take the wrong decision, or take a wrong action.
+  \item Potential for ethical reasoning, and harm.
+  \item Autonomous weapons and warfare.
+\end{itemize}
+
+\end{frame}
 
 \section{Exercises.}
 
@@ -1109,6 +1413,14 @@ For a full list of operations see \url{https://docs.python.org/3.6/library/stdty
   \item[3-4.3] Study the \texttt{Counter} type from \texttt{collections} and refactor once more your code to use it. 
   \item[3-4.3] Implement a \texttt{Counter} data type using a \texttt{dict} datatype, and no types from collections.
 \end{description}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Exercise 3-5. From languages to styles.}
+
+The Random Decision Forest example distinguishes between languages. Adapt the algorithm, to attempt to distinguish between fragments from two novels written in English by different authors. Report on the performance of your classifier using standard evaluation measures for fragments of different lengths.
 
 \end{frame}
 
