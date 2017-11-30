@@ -11,7 +11,7 @@ setup(
     license='BSD',
 
     packages=['euclid'],          # The package directories
-    install_requires=['pytest==3.2.1'],  # Dependencies
+    install_requires=['pytest==3.3.0'],  # Dependencies
 
     entry_points={                # Entry function
         'console_scripts': ['euclid=euclid:main'] },

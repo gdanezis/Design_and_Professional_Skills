@@ -1,0 +1,1109 @@
+\documentclass{beamer} % [aspectratio=169]
+\usetheme{ucl}
+\setbeamercolor{banner}{bg=brightblue}
+\setbeamersize{description width=2em}
+\setbeamertemplate{navigation symbols}{\vspace{-2ex}} 
+\usepackage{soul}
+
+%\usepackage{fontspec}
+\usepackage[utf8]{inputenc}
+% \usepackage[english, greek]{babel}
+
+
+\usepackage[T1]{fontenc} % Turn £ into $
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{url}
+
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc,shapes.multipart,chains,arrows}
+\usetikzlibrary{shapes,snakes}
+
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode, circle, draw=black,
+     text width=1.5em},% arbre rouge noir, noeud noir
+  arn_r/.style = {treenode, circle, red, draw=red, 
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_d/.style = {treenode, star, star points=10, red, draw=red, 
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_x/.style = {treenode, rectangle, draw=black}% arbre rouge noir, nil
+}
+
+\newcommand\emc[1]{\textcolor{brightblue}{\textbf{#1}}}
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\author{Prof.\ George Danezis, University College London, UK}
+\title{Develpment Practices, Modules, Tools \& Releases.}
+\subtitle{ENGS102P: Design and Professional Skills }
+% \institute{}
+\date{Term 1, 2017}
+
+
+\begin{document}
+\nobibliography*
+
+
+\frame{
+\titlepage
+}
+
+\begin{frame}
+\frametitle{Outline}
+
+This topic is all about \emc{scaling up} the development process, while maintaining \emc{feasibility and quality}.
+
+\begin{itemize}
+  \item Traditional software \emc{development methods \& disasters}.
+  \item The \emc{Agile} software development framework.
+  \item \emc{Tools} to support development teams.
+  \item From \emc{modules} to \emc{libraries}.
+  \item \emc{Release} management \& maintenance.
+\end{itemize}
+
+\end{frame}
+
+\section{Traditional software development.}
+
+\begin{frame}
+\frametitle{Software development methods \& project management.}
+
+Different than traditional engineering management:
+\begin{itemize}
+  \item Recent discipline, immature processes and tools \\ (\emc{incidental complexity}).
+  \item \emc{Intrinsic complexity} increased through \emc{no physical constraints}.
+  \item Tight integration between requirements, specification, implementation, operation -- no \emc{manufacturing} stage.
+  \item Complexity increased through \emc{flexibility} -- ever changing \& evolving requirements.
+  \item Difficult to \emc{estimate} time to completion \& defect rate.
+  \item Orders of magnitude differences in \emc{programmer productivity}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Anti-pattern: The Waterfall model.}
+
+Adapted from other engineering (construction). The \emc{Waterfall model} structures a project as a sequence of:
+\begin{itemize}
+\item \emc{Requirements gathering}
+\item \emc{System Design \& Specification}. \\ Also known as `Big Design Up Front'.
+\item \emc{Implementation}
+\item \emc{Testing \& Validation}
+\item \emc{Deployment \& Maintenance}
+\end{itemize}
+
+\begin{block}{}
+\small Winston Royce (Director at Lockheed Software Technology Center) in 1970 presents the model as a `bad idea'. It is later (1985) formalized -- in terms of auditing steps -- as a methodology in US Dept.\ of Defense `Defense Systems Software Development' (DOD-STD-2167A). Subsequent MIL-STD-498 in 1994 states a preference for `Iterative and incremental development'.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Problems with the Waterfall model.}
+
+All activities included in the model need to take place at some point. However, a linear end sequential application is not appropriate, because:
+\begin{itemize}
+  \item \emc{Users do not know} or cannot formulate requirements, until they see working software (prototypes, early versions, \ldots)
+  \item \emc{Designers may not foresee} all issues related to the implementation, or be able to chose between design options, without prototyping and testing.
+  \item In case \emc{different people} are employed in different phases, \emc{communication breakdown} may occur; and only a \emc{fraction of the team is engaged} at any point.
+\end{itemize}
+
+Poorly adapted to \emc{`brown-field' development}, where existing software needs to be extended, rather than `green-field' new projects.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The tar pit (Brooks 1975)}
+
+\begin{center}
+\includegraphics[scale=0.5]{assets/tar-pit}
+\end{center}
+
+{\small The Mythical Man-Month. Essays on Software Engineering by Frederick Brooks Jr. Anniversary Edition  Paperback, 322 pages Published by Addison-Wesley Pub Co in July 1995. (First edition 1975.)}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Lessons from `The Mythical Man-Month' (1)}
+
+Brooks was an architect on the IBM OS/360 -- delivered epically late in the 1970s.
+\begin{itemize}
+  \item  \emc{Brooks's law}: `\emph{Adding manpower to a late software project makes it later}'. The communication channels increase as $\mathcal{O}(n^2)$ in the number $n$ of developers.
+  \item \emc{No silver Bullet}: No single development method, language or tool can reduce software dev. by an order of magnitude, since they may only reduce incidental not intrinsic complexity.
+  \item \emc{The Second-System effect}: Be aware of the second version of a system, since the architects will try to include all options they did not include in the first.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Lessons from `The Mythical Man-Month' (2)}
+
+\begin{itemize}
+  \item \emc{The Pilot system}: when designing a new system, plan for an initial pilot (prototype) which will help you learn. Throw it away, and deliver the second one.
+  \item \emc{Project estimation}: programming products take much longer to build, than internal tools; a lot of time is taken by communications, `stand-ups' and `all-hands'.
+  \item \emc{The surgical team}: Build small teams around and supporting experienced programmers.
+  \item \emc{Code freeze}: freeze features at some point, and only increase the quality of code, until next release.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Spiral model to manage risk.}
+
+\begin{center}
+\includegraphics[scale=0.27]{assets/spiral}
+\end{center}
+
+{\small Boehm ``A Spiral Model of Software Development and Enhancement'', ACM SIGSOFT Software Engineering Notes, ACM, 11(4):14-24, August 1986}
+
+\end{frame}
+
+\section{Agile development and practices.}
+
+\begin{frame}
+\frametitle{The Manifesto for Agile Software Development (2001).}
+
+Radical: Re-focus on \emc{software as working code}: `The need for an \emc{alternative to documentation driven, heavyweight} software development processes.'
+
+\vspace{5mm}
+Why the crisis? Traditional software \emc{project failures} in 1995:
+\begin{itemize}
+  \item 16.2\% -- Project Success: on time, budget, features.
+  \item 52.7\% -- Project Challenged: overrun time, budget, fewer features.
+  \item 31.1\% -- Project Impaired: canceled at some point.
+\end{itemize}
+ (Standish Group, CHAOS Report, 1995)
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The Manifesto (1--6).}
+
+
+\begin{itemize}
+\item Our highest priority is to satisfy the customer
+through \emc{early and continuous delivery
+of valuable software}.
+
+\item Welcome \emc{changing requirements, even late} in 
+development. 
+
+\item Deliver \emc{working software} frequently, from \emc{a 
+couple of weeks to a couple of months}, with a 
+preference to the shorter timescale.
+
+\item \emc{Business people} and \emc{developers must work 
+together} daily throughout the project.
+
+\item Build projects around \emc{motivated individuals}. 
+Give them the support they need, 
+and \emc{trust them} to get the job done.
+
+\item The most efficient and effective method of 
+conveying information to and within a development 
+team is \emc{face-to-face conversation}.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The Manifesto (7--12).}
+
+\begin{itemize}
+
+
+\item \emc{Working software is the primary measure of progress}.
+
+\item Agile processes promote \emc{sustainable development}. 
+The sponsors, developers, and users should be able 
+to maintain a \emc{constant pace indefinitely}.
+
+\item Continuous attention to \emc{technical excellence 
+and good design enhances agility}.
+
+\item Simplicity--the art of \emc{maximizing the amount 
+of work not done}--is essential.
+
+\item The best architectures, requirements, and designs 
+emerge from \emc{self-organizing teams}.
+
+\item At regular intervals, the team \emc{reflects on how 
+to become more effective}, then tunes and adjusts 
+its behavior accordingly.
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Composition of an Agile team}
+
+\begin{itemize}
+\item \emc{The product manager / owner} -- Maintain and promote the product vision. Part management, part people coordination, part marketing.
+
+\item \emc{On-site customers} -- team members representing customers, continuously capturing and discussing requirements, and discussing with programmers. \\ Can be business people. Incl. 2 per 3 programmers!
+
+\item \emc{Programmers} -- Bulk of the team, no distinction between `architects', `developers', `testers'. Incl.\ one senior, hands-on, person and overall teams of 4--9 programmers. Although some members may have a focus.
+
+\item \emc{Domain experts, Interaction Designers, Security, Design, and Business Analysts} -- experts in their respective domains, are on-call to help on-demand. Work with both users and team.
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Ratio of on-site customers to programmers}
+
+Do you think the ratio is too high or too low?
+
+\vspace{5mm}
+What processes do user representatives speed up?
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{The rhythm of an Agile project -- Sprints}
+
+``You can eliminate requirements, design, and testing phases as well as the formal documents that go with them.''
+
+\begin{center}
+\includegraphics[scale=0.35]{assets/agile} \\
+Agile (XP) Lifecycle. Sprints are typically 1-2 weeks.
+\end{center}
+
+{\small The Art of Agile Development by James Shore. Wiley 2007.}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{User Stories}
+
+Stories represent \emc{self-contained, individual elements} of the project: 
+\begin{itemize}
+\item Individual features.
+\item Typically represent one or two days of work.
+\item Customer-centric, in terms of business results.
+\item No implementation details, or full requirements / specifications.
+\end{itemize}
+
+\vspace{5mm}
+Good user stories have the form: \\ \emc{As a \_role\_ I want to do \_action\_ in order to \_activity\_.}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Backlogs: Product, Release \& Sprint}
+
+All stories are stored in the \emc{product backlog}:
+\begin{itemize}
+  \item When a new release is planned / discussed with customers some stories are moved to the \emc{release backlog}. They are augmented by \emc{acceptance criteria}.
+  \item At the start of every sprint, some stories are moved into the \emc{sprint backlog}, along with noted on \emc{how to design \& implement} them.
+  \end{itemize}
+
+Programmers are asked to `cost stories' in `days', as stories progress through backlogs:
+\begin{itemize}
+  \item Programmers are bad at estimating, but their estimates are \emc{off by a fixed multiplicative constant}.
+  \item \emc{Velocity}: the number of story `days' the project executes (Done Done!) in a day. Base \emc{project estimation} on velocity.
+\end{itemize} 
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Backlogs \& stories: just a bunch of post-its or cards}
+
+\begin{center}
+\includegraphics[scale=0.50]{assets/backlog} 
+\end{center}
+
+
+`Kanban' board. From \url{https://dzone.com/articles/product-backlogs-practice/}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{On-line tools for Agile project management.}
+
+A number of tools can \emc{replace physical post-it notes}:
+\begin{itemize}
+  \item Trello (hip) -- \url{http://trello.com}.
+  \item Github projects -- see `Projects' tab on your project page.
+\end{itemize}
+
+\vspace{5mm}
+Related but different tool: \emc{Issue / Bug tracker.}
+\begin{itemize}
+  \item Allow users, internal and external developers to \emc{report issues}.
+  \item Allows \emc{discussion} on the issue and the development of a \emc{minimal test case to reproduce the error}.
+  \item Allows for \emc{triage}, and \emc{assignment} of issues to team members.
+  \item Can be `abused' to report feature requests, and simulate a story board.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Agile practices: Pair programming}
+
+Two programmers work together on a \emc{single workstation}. 
+\begin{itemize}
+\item One \emc{driver / codes} the other \emc{navigator / reviews \& thinks}.
+\item They \emc{switch roles} frequently.
+\end{itemize}
+
+Why pair?
+\begin{itemize}
+  \item Navigator has opportunity to think about \emc{strategic design} choices. Driver can focus on  \emc{code tactics}. Higher quality code.
+  \item Reinforces, and shares \emc{good programming habits}. Continuous testing and refinement result from \emc{peer pressure}.
+  \item Resilient to \emc{interruptions}. When interrupted one person can handle interrupt, while other codes.
+  \item Its \emc{more fun} to not work alone. Can take \emc{physical breaks}.
+\end{itemize}
+Focus on sustaining, rather than peaks of high production.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Pair programming or code reviews?}
+
+What do the practices have in common?
+
+\vspace{5mm}
+What are their advantages and disadvantages?
+
+\end{frame}
+
+
+
+\begin{frame}
+
+\frametitle{Agile practices: Documentation \& Agile Modeling.}
+
+Keep the non-code project documentation to a minimum.
+\begin{itemize}
+\item \emc{Document continuously}: \emc{Minimal} stories, design notes and meeting notes.
+\item \emc{Document late}: Do now write anything that will not be read or acted upon. Minimize speculation.
+\item \emc{Single Source Information}: All project \emc{documentation} has to be \emc{kept under version control}.
+\item \emc{Prefer Executable specifications}: Write as \emc{customer tests} that can execute against the code. (TDD at the requirements level.)
+\end{itemize}
+
+\vspace{5mm}
+All code and docs is kept in version control.
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Agile practices: Distributed Version Control.}
+
+Use Distributed Version Control for \emc{fearless refactoring} and \emc{collaborative coding}:
+\begin{itemize}
+  \item Tool of choice: \texttt{git} and \texttt{github}.
+  \item Code lives in \emc{repositories}, \emc{remote} and \emc{local}.
+  \item A repository can have multiple \emc{branches}. 
+  \item You may \emc{branch} and \emc{merge}, or \emc{commit} code to a branch.
+\end{itemize}
+
+\vspace{5mm}
+\emc{Learn git!} \url{https://git-scm.com/documentation/external-links} 
+
+\vspace{5mm}
+Gitflow illustrations by Vincent Driessen \url{http://nvie.com}.
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Agile practices: Gitflow \& version control.}
+
+A \emc{branch} in a git repository contains a `variant' of your repository. You can \emc{merge} a branch into another, after a number of \emc{commits}.
+
+\vspace{5mm}
+Gitflow basic organization for a repository:
+\begin{itemize}
+  \item The \emc{master} branch only contains tagged releases.
+  \item A \emc{develop} branch is used to continuously update the software.
+  \item New features are developed in separate \emc{feature} branches.
+  \item A \emc{release branch} captures the features for a new release, and from there on only accepts \emc{bug fixes}.
+  \item Eventually a release branch is merged into master to make a new release.
+  \item \emc{Hotfixes} are applied to master and merged into develop. 
+  \end{itemize}
+
+Good programmers use it even when they work on their own!
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+\includegraphics<1>[scale=0.33]{assets/flow00} 
+\includegraphics<2>[scale=0.33]{assets/flow0} 
+\includegraphics<3>[scale=0.33]{assets/flow1} 
+\includegraphics<4>[scale=0.33]{assets/flow2} 
+\includegraphics<5>[scale=0.33]{assets/flow3} 
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Why different feature branches?}
+
+Why develop different user stories on different feature branches?
+
+\vspace{5mm}
+What is the cost of diverging too much from the develop branch?
+
+\vspace{5mm}
+How do you ensure you do not diverge too much from the develop branch?
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Agile practices:`Done Done'.}
+
+Each feature branch represents a user story, and it is merged into develop when it is `\emc{done done}.':
+\begin{itemize}
+  \item Fully Designed, Coded, Integrated (from UI to Database), Tested (unit, integration, and customer tests finished).
+  \item Builds, Installs (incl. auto install \& devops), Migrates past state.
+  \item Fixed all bugs, Reviewed by customers and accepted as finished.
+\end{itemize}
+
+\begin{block}{From working software to working software}
+Executing each user story until it is `done done' takes working software and produces working software, end-to-end. This way users can see progress and provide early feedback.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Agile practices:Continuous Integration.}
+
+\begin{block}{The `build' engineer}
+Merging branches that are a lot of different commits apart, is time consuming. At traditional software firms this is the job of the `build' engineer. `Integration' and testing of different branches can take months.
+\end{block}
+
+\vspace{3mm}
+\emc{Continuous Integration}: be technically ready to release, even if you are not functionally ready.
+\begin{itemize}
+  \item Create automated pipeline for testing integration, packaging, installers, deployment in servers, and data migration.
+  \item Run those tests on every commit to develop branch.
+  \end{itemize}
+
+\vspace{5mm}
+Services pull from github as Travis-CI (\url{https://travis-ci.org/}).
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Why testing continuously?}
+
+Integration, Install, Deployment, Migration: even when the features are not entirely finished or there?
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+\includegraphics<1>[scale=0.50]{assets/travis} 
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Other Agile practices}
+
+Other tricks of the trade:
+\begin{itemize}
+  \item Test driven development.
+  \item Agile testing \\ (specification by example.)
+  \item Refactoring.
+  \item Cross-functional teams.
+  \item Information Radiators.
+  \item Planning poker.
+  \item Scrum events \\ (planning, daily Stand-up meetings).
+  \item Timeboxing.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion: `No silver bullet'.}
+
+\begin{center}
+\includegraphics<1>[scale=0.90]{assets/agilewaterfall} \\
+{\tiny from \url{https://www.infoq.com/articles/standish-chaos-2015}}
+\end{center}
+
+
+\end{frame}
+
+\section{Python packages, libraries, and deployment.}
+
+
+\begin{frame}
+
+\frametitle{Import Python libraries}
+
+
+Import a library by name:
+  \inputminted[
+    firstline=3,
+    lastline=5,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/example_import.py}
+
+Import specific names within the library:
+  \inputminted[
+    firstline=7,
+    lastline=8,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/example_import.py}
+
+Import and rename a library:
+  \inputminted[
+    firstline=11,
+    lastline=12,
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/example_import.py}
+
+Look for library in the folders \texttt{sys.path}.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The Python Standard Library}
+
+The standard libraries are available with any full python installation. You can \emc{rely on them}!
+\begin{itemize}
+  \item \emc{Basic programming}: Built-in types, text processing, binary data, dates, calendars, maths, functional tools, \ldots
+  \item \emc{System}: Files, directories, data formats, compression, cryptography, operating system functions, \ldots
+  \item \emc{Communications}: Inter-process communications, internet protocols, markup, multimedia, i19n, \ldots
+  \item \emc{Language}: Debug / profile, distrbute, runtime, interpreters, import, language, \ldots
+  \end{itemize}
+
+Always \emc{prefer to use the standard library} over your own types.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Non-standard libraries}
+
+Third party libraries require \emc{additional installation}. \emc{Crucial ones}:
+\begin{description}
+  \item[numpy,scipy] Numeric \& scientific libraries and linear algebra.
+  \item[matplotlib] Scientific graphs and plots.
+  \item[pandas] Manipulation of tabular data.
+  \item[OpenCV,scikit-learn,Pytorch,Theano,TensorFlow] Machine learning.
+  \item[tox, pytest, sphinx] Tests, documentation.
+  \item[requests,django,flask] Web requests and web app servers.
+  \item[fabric,doit] DevOps.
+  \item[cffi] Bind to low-level C code.
+\end{description}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Should you take a dependency?}
+
+Issues to consider before relying on a 3rd party library:
+\begin{itemize}
+\item \emc{Quality}: is it going to be any good? Good Documentation; No Bugs.
+\item \emc{Community}: is it being used by many? is it being maintained? Release schedule, responsivness to bug reports, and breaking downstreams.
+\item \emc{Trust}: do you believe maintainers will attack your software?
+\item \emc{License}? Are you allowed to use it?
+\end{itemize}
+
+\begin{block}{}
+If you are the biggest user of a library by far, yo umay end up having to also be the maintainer.
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Understanding Intellectual Property}
+
+The state is protecting creators to incentivise investment in new inventions.
+\begin{itemize}
+  \item \emc{Copyright}: protects authors of artistic or literary works, including software! if you write something you (or employer) own the copyright -- can transfer it, or license it.
+  \item \emc{Trade marks}: protect your trading image, name, logos, etc. to avoid brand and consumer confusion. You might have to register them.
+  \item \emc{Patents}: apply and get issued one for an invention. Disclose the invention, but get protection for a limited time. Status of software patents is problematic.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Licensing your own software, or using licensed software.}
+
+A software license is an agreement between a creator and a user of a work, about the conditions under which the user may use the creations. 
+
+\begin{itemize}
+  \item \emc{Commercial}: creator gets some money, and allow user to use software. Usually no other rights are transfered.
+  \item \emc{Free Software}: creator allows user all rights, including modifying software. But does not allow endorsement, or liability. May or not grant \emc{rights to patents}. \\
+  eg.\ BSD, MIT, Apache.
+  \item \emc{Gnu Public Licenses}: like free software, but \emc{viral}. Requires any modifications to also become free software under the same license. \\ eg.\ GPLv2, GPLv3, LGPL.
+\end{itemize}
+
+\emc{Check license} before using libraries!
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Philosophical discussion: what is more `free'?}
+
+Question 1. Viral licenses impose more restrictions on users, but guarantee the resulting software is also free. Are they more or less in line with ideas of software freedom?
+
+\vspace{5mm}
+
+Question 2. Discuss the statement `A good non-viral library will inevitably end up being extended commercially and become closed source / non-free as a result.'
+
+\vspace{5mm}
+
+Question 3. What incentives are there for commercial entities to contribute to free software?
+
+\vspace{5mm}
+Also, study controversies around software patents: \url{http://endsoftpatents.org/}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Installing 3rd party modules}
+
+List of great Python modules: \url{https://github.com/vinta/awesome-python}
+
+Python Package repository, \emc{Pypi}: \url{https://pypi.python.org/pypi}
+
+\vspace{3mm}
+Python comes with \texttt{pip} as a package manager:
+\begin{verbatim}
+$ pip install <modulename>
+\end{verbatim}
+Full \texttt{pip} documentation: \url{https://pip.pypa.io/en/stable/}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Clashing versions of modules}
+
+What to do if you need two different (clashing) versions of the same library?
+
+What about testing your program or library using different library versions?
+
+\vspace{5mm}
+Solution: use \texttt{virtualenv} to create a clean virtual environment:
+\begin{small}
+\begin{verbatim}
+$ virtualenv ENV           # Create in dir ENV
+$ source ENV/bin/activate  # Activate environment
+(ENV)$ pip install ...     # Install in ENV
+(ENV)$ python ...          # Run in ENV
+(ENV)$ deactivate          # Exit ENV
+$
+\end{verbatim}
+\end{small}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Make your own libraries and modules}
+
+Why think of programs in terms of modules?
+\begin{itemize}
+  \item Most programs are too big to live in a single file.
+  \item Clean, well defined interfaces between modules, reduce communication overheads. 
+  \item Information Hiding behind modules allows for abstraction and maintainability.
+  \item Controlled interactions allow decoupling of modules.
+  \item High-quality, reusable code -- can be used across projects.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Lightweight libraries and modules}
+
+Python allows a program to be \emc{split across many files}. 
+
+\vspace{3mm}
+Consider the two files:
+\begin{verbatim}
+branch.py
+minimap.py
+\end{verbatim}
+
+\vspace{3mm}
+Each creates a \emc{name space available to the other} through \texttt{import}. \\ Eg. in \texttt{minimap.py}:
+\begin{minted}{python}
+from branch import branch
+\end{minted}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{From many files, to libraries, to modules \ldots}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{The structure of a module}
+
+All user-facing libraries, and Python end-user programs are usually packaged as \emc{modules}.
+
+\vspace{3mm}
+Module \texttt{<mymodule>} is a directory of files:
+\begin{small}
+\begin{Verbatim}[fontsize=\footnotesize]
+README.rst                # Basic help on github
+LICENSE                   # License
+setup.py                  # Packaging & dependencies information
+tox.ini                   # Test setup
+euclid/__init__.py        # Modules code
+euclid>/gcd.py
+docs/conf.py              # Module Sphinx documentation
+docs/index.rst
+tests/test_gcd.py         # Module tests
+\end{Verbatim}
+\end{small}
+
+See The Hitchhiker’s Guide to Python \url{http://docs.python-guide.org/en/latest/}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{The GCD function -- as before}  
+
+
+We define our GCD function in \texttt{euclid/gcd.py}
+  \inputminted[
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/euclid/euclid/gcd.py}
+
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The module \texttt{\_\_init\_\_.py} file}
+
+A \texttt{euclid/\_\_init\_\_.py} file indicates the directory defines a module.
+
+\vspace{5mm}
+The code in the file defines names within the module.
+
+\vspace{5mm}
+The variable \texttt{\_\_all\_\_} restricts the names exported, \\ by eg. \texttt{from euclid import *}.
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The module \texttt{\_\_init\_\_.py} file}
+  
+  \inputminted[
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/euclid/euclid/__init__.py}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The module \texttt{setup.py}}
+
+  \inputminted[
+    xleftmargin=1.4em,
+    frame=lines,
+    framesep=2mm,
+    %baselinestretch=1.2,
+    % bgcolor=lightgray,
+    fontsize=\scriptsize,
+    linenos
+  ]{python}{src/euclid/setup.py}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{The \texttt{setup.py} meta-data}
+
+\begin{itemize}
+  \item The \emc{name} and \emc{version} are used by pip / pypi to index your package.
+  \item The \emc{packages} point to what is included in the module. \\ (Note that tests are not included in this case.)
+  \item The \emc{install\_requires} lists packages required. \\ Can specify \emc{version range}. 
+  \item The \emc{entry\_points} list the function that starts an application.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{Packaging the module}
+
+Create a \emc{source distribution} using:
+\begin{verbatim}
+$ python setup.py sdist
+\end{verbatim}
+
+\vspace{3mm}
+Create a \emc{binary distribution} using:
+\begin{verbatim}
+$ python setup.py bdist
+$ python setup.py bdist --format=wininst
+\end{verbatim}
+
+\vspace{3mm}
+\emc{Install manually} a package:
+\begin{verbatim}
+$ python setup.py install
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Testing packaging and installation using \texttt{tox}}
+
+\begin{itemize}
+  \item Need to test packaging.
+  \item Need to test install process.
+  \item Need to test against many Python versions.
+  \item Need to test against many library versions.
+  \end{itemize}
+
+  \vspace{5mm}
+  The tool of choice for this is \texttt{tox}. You can define \emc{environments}, \emc{dependencies}, and \emc{commands} to test in them
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+\frametitle{The \texttt{tox.ini} file}
+
+Test in a Python 3.5 context \ldots 
+\begin{scriptsize}
+\begin{verbatim}
+[tox]
+envlist = py35
+
+[testenv]
+deps = pytest
+       pytest-cov
+
+commands = pytest --doctest-modules -sv euclid
+           pytest --cov={envsitepackagesdir}/euclid --doctest-modules -sv tests
+           euclid 10 2
+\end{verbatim}
+\end{scriptsize}
+\ldots and execute pytest, coverage and the program itself.
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\begin{tiny}
+\begin{verbatim}
+$ tox
+GLOB sdist-make: src\euclid\setup.py
+py35 inst-nodeps: src\euclid\.tox\dist\euclid-0.0.1.zip
+py35 installed: coverage==4.4.2, euclid==0.0.1, pytest==3.3.0, pytest-cov==2.5.1
+py35 runtests: commands[0] | pytest --doctest-modules -sv euclid
+============================= test session starts =============================
+collecting ... collected 1 item
+
+euclid/gcd.py::euclid.gcd.GCD PASSED                                     [100%]
+========================== 1 passed in 0.03 seconds ===========================
+py35 runtests: commands[1] | pytest --cov=site-packages/euclid --doctest-modules -sv tests
+============================= test session starts =============================
+collecting ... collected 5 items
+
+tests/test_gcd.py::test_euclid PASSED                                    [ 20%]
+tests/test_gcd.py::test_euclid_exc PASSED                                [ 40%]
+tests/test_gcd.py::test_euclid_exc_raises[test_inputs0] PASSED           [ 60%]
+tests/test_gcd.py::test_euclid_exc_raises[test_inputs1] PASSED           [ 80%]
+tests/test_gcd.py::test_euclid_exc_raises[test_inputs2] PASSED           [100%]
+----------- coverage: platform win32, python 3.5.3-final-0 -----------
+Name                                             Stmts   Miss  Cover
+--------------------------------------------------------------------
+.tox\py35\Lib\site-packages\euclid\__init__.py      16     11    31%
+.tox\py35\Lib\site-packages\euclid\gcd.py            6      0   100%
+--------------------------------------------------------------------
+TOTAL                                               22     11    50%
+========================== 5 passed in 0.06 seconds ===========================
+py35 runtests: commands[2] | euclid 10 2
+2
+___________________________________ summary ___________________________________
+  py35: commands succeeded
+  congratulations :)
+\end{verbatim}
+\end{tiny}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Documentation}
+
+Use \emc{Sphinx} and \emc{autodoc} to generate documentation. 
+\begin{itemize}
+  \item Include (and test) examples in your documentation!
+  \item Test your examples! (\texttt{pytest --doctest-modules -sv euclid})
+  \item Provide testing documentation -- so that others can hack on your code.
+\end{itemize}
+
+\vspace{3mm}
+Execute \texttt{sphinx-quickstart} to start your Sphinx documentation.
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+\frametitle{Documentation with \texttt{autodoc}}
+
+Write \texttt{index.rst}. Compile with \texttt{docs/make html}:
+\begin{tiny}
+\begin{verbatim}
+Welcome to euclid's documentation!
+==================================
+
+The euclid module provides an implementation of the Greatest Common Denominator (GCD) algorithm. 
+It provides a command line utility to compute the GCD::
+
+    $ euclid 10 2
+    2
+
+The Euclid Python module
+------------------------
+
+.. autofunction:: euclid.GCD
+
+Development
+-----------
+
+To test the Euclid module, use tox::
+
+    $ tox
+
+\end{verbatim}
+\end{tiny}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+\includegraphics[scale=0.5]{assets/docs}
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}
+
+\frametitle{Remember: Done Done!}
+
+The quality installation, packaging, documentation, distinguishes the great engineer:
+\begin{itemize}
+  \item Always fold your projects into one or more modules.
+  \item Provide packaging facilities through \texttt{setup} scrips.
+  \item Allow installation through \texttt{pip}.
+  \item Test in multiple environments using \texttt{tox}.
+  \item Include \texttt{coverage} checking routinely in your QA process.
+  \item Test packaging and deployment.
+  \item Include and test documentation with \texttt{Sphinx}
+  \item Upload into \texttt{pypi}, \texttt{travis}, \texttt{coveralls} and \texttt{readthedocs} \ldots
+\end{itemize}
+
+\vspace{3mm}
+When learning other languages find the equivalent facilities.
+
+\end{frame}
+
+
+
+\bibliographystyle{alpha}
+\nobibliography{references}
+
+\end{document}
