@@ -93,6 +93,18 @@ def test_pythagoras():
 
 # Control structures & conditionals: 'if statement' 
 
+@pytest.mark.parametrize('input', [(-5, False), (3, True), (0, True), (10, True), (11, False)])
+def test_interval(input):
+    "Set variable IN to True if x is within [0, 10] inclusive, otherwise to False. "
+
+    x, sol = input
+    # -- YOUR CODE HERE:
+    z = 0 <= x <= 10
+    # -- ENDS.
+
+    assert z == sol
+
+
 @pytest.mark.parametrize('input', [(1, 2, 1), (4, -5, -5), (-1, 4, -1), (3, 3, 3)])
 def test_smallest(input):
     " Set 'z' to the smallerst of 'a' or 'b' "
@@ -113,11 +125,11 @@ def test_smallest(input):
 def test_quadratic_root(input):
     " Compute 'x0' and possibly 'x1' such that ax^2 + bx + c = 0."
     " If one or more solutions do not exist set x1 or both to 'None'. "
+    " Check https://en.wikipedia.org/wiki/Quadratic_equation for inspiration."
 
     a, b, c, n_roots = input
 
     # -- YOUR CODE HERE:
-
     D = (b*b -4*a*c)
 
     if D < 0.0:
@@ -128,11 +140,29 @@ def test_quadratic_root(input):
     else:
         x0 = (-b + D**0.5) / (2*a)
         x1 = (-b - D**0.5) / (2*a)
-
     # -- ENDS.
+
     assert x0 is None or round(a*x0**2 + b*x0 + c, 5) == 0.0
     assert x1 is None or round(a*x1**2 + b*x1 + c, 5) == 0.0
     assert n_roots == int(x0 is not None) + int(x1 is not None)
+
+# Control structures & conditionals: 'while loop' 
+
+def test_summation():
+    " Compute res = Sum_x 1/x^2 for x in [1, 2, ...] until the terms become smaller than 0.0001. "
+
+    # -- YOUR CODE HERE:
+    res = 0.0
+    dt = None
+    x = 1.0
+    while dt is None or dt > 0.0001:
+        dt = 1.0 / x**2
+        res += dt 
+        x += 1.0
+    # -- ENDS.
+
+    assert round(res,3) == 1.635
+
 
 
 if __name__ == "__main__":
