@@ -667,13 +667,13 @@ Third party libraries require \emc{additional installation}. \emc{Crucial ones}:
 Issues to consider before relying on a 3rd party library:
 \begin{itemize}
 \item \emc{Quality}: is it going to be any good? Good Documentation; No Bugs.
-\item \emc{Community}: is it being used by many? is it being maintained? Release schedule, responsivness to bug reports, and breaking downstreams.
+\item \emc{Community}: is it being used by many? is it being maintained? Release schedule, responsiveness to bug reports, and breaking downstream.
 \item \emc{Trust}: do you believe maintainers will attack your software?
 \item \emc{License}? Are you allowed to use it?
 \end{itemize}
 
 \begin{block}{}
-If you are the biggest user of a library by far, yo umay end up having to also be the maintainer.
+If you are the biggest user of a library by far, you may end up having to also be the maintainer.
 \end{block}
 
 \end{frame}
@@ -724,9 +724,25 @@ Question 2. Discuss the statement `A good non-viral library will inevitably end 
 Question 3. What incentives are there for commercial entities to contribute to free software?
 
 \vspace{5mm}
-Also, study controversies around software patents: \url{http://endsoftpatents.org/}
+
 
 \end{frame}
+
+
+\begin{frame}
+
+\frametitle{The politics of intellectual `property'}
+
+Property implies exclusive ownership, and it associated with the exercise of power, and political controversies.
+
+\begin{itemize}
+\item Is it legitimate to allow intangible `ideas' to be patented, and be owned by one party? Is this even \emc{supporting innovation}? Study controversies around software patents: \url{http://endsoftpatents.org/}
+\item \emc{Digital Rights Management}: is it legitimate to enforce through software property rights? Particularly associated with intellectual property? (Remember: property is not an absolute right.)
+\item Is there a right to know how your stuff works, and a \emc{right to tinker}.
+\end{itemize}
+
+\end{frame}
+
 
 \begin{frame}[fragile]
 
@@ -810,6 +826,14 @@ from branch import branch
 
 \frametitle{From many files, to libraries, to modules \ldots}
 
+\emc{Many files} are necessary to organize your work, within a project. Each file should contain \emc{a single concept or data type}. Directories with \emc{meaningful names} group concepts.
+
+\vspace{3mm}
+Multiple files become \emc{Libraries} once you refine \emc{clean interfaces}, \emc{few well structured dependencies} between them, and they aggressively implement \emc{abstraction and hiding}.
+
+\vspace{3mm}
+Libraries become \emc{Modules}, once you create facilities to test and \emc{distribute them independently} of the rest of your project.
+
 \end{frame}
 
 
@@ -842,7 +866,7 @@ See The Hitchhiker’s Guide to Python \url{http://docs.python-guide.org/en/late
 
 \begin{frame}
 
-\frametitle{The GCD function -- as before}  
+\frametitle{The GCD function -- with a doctest}  
 
 
 We define our GCD function in \texttt{euclid/gcd.py}
@@ -1027,10 +1051,15 @@ ___________________________________ summary ___________________________________
 
 Use \emc{Sphinx} and \emc{autodoc} to generate documentation. 
 \begin{itemize}
-  \item Include (and test) examples in your documentation!
+  \item Include (and test) \emc{examples} in your documentation!
   \item Test your examples! (\texttt{pytest --doctest-modules -sv euclid})
   \item Provide testing documentation -- so that others can hack on your code.
 \end{itemize}
+
+\vspace{3mm}
+If in doubt about documenting your function, use the \emc{Google style guide}:
+\url{http://google.github.io/styleguide/pyguide.html}
+\\(Document arguments, returns, exceptions, yields, examples)
 
 \vspace{3mm}
 Execute \texttt{sphinx-quickstart} to start your Sphinx documentation.
@@ -1079,7 +1108,6 @@ To test the Euclid module, use tox::
 \end{frame}
 
 
-
 \begin{frame}
 
 \frametitle{Remember: Done Done!}
@@ -1097,12 +1125,82 @@ The quality installation, packaging, documentation, distinguishes the great engi
 \end{itemize}
 
 \vspace{3mm}
-When learning other languages find the equivalent facilities.
+When learning \emc{other languages} find the \emc{equivalent facilities}.
 
 \end{frame}
 
+\begin{frame}
 
+\frametitle{A note on automation: DevOps}
 
+The software production process requires a lot of tools: interpreter, testing, building documentation, integration testing, deployment testing, coverage, linter, different environments, \ldots
+
+\vspace{5mm}
+When building network applications further automation is necessary: deploying to servers, migrating live data, complex configuration scripts, managing access control \& authentication, \ldots
+
+\vspace{5mm}
+\begin{block}{If you do it more than once, automate it!}
+Any operation in relation to engineering your software, operating it or deploying it, that you \emc{perform more than once, should be automated} through Python (high-level language) scripts, and tested. \emc{DevOps} is recent tendency to merge operations and development, by \emc{automating operations aggressively}. 
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Key automation tools}
+
+\begin{itemize}
+\item \emc{Build tools}: keep track of changes in files, and update dependencies. Eg. \texttt{doit} library.
+\item \emc{Local automation}: Define sequences of commands, on files and programs. Eg. \texttt{paver}
+\item \emc{Remove management}: Define command sequences that need to be ran on remote machines, files transfered, etc. Eg. \texttt{fabric}, \texttt{ansible}.
+\item \emc{Deploy isolated containers}: easily deploy whole applications, while keeping them isolated from each other. Eg. \texttt{virtualenv}, Docker, virtual machines.
+  \end{itemize}
+
+Write high-level code to automate operations; no shell scripts or repetitive manual work.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Advanced features of the Python language}
+
+You have now covered the basics of Python: 99\% of code is written with constructs you now know.
+\begin{itemize}
+  \item Class inheritance.
+  \item Comprehensions.
+  \item Decorators.
+  \item Async / Await / Coroutines.
+  \item Custom Context managers (with \ldots)
+  \item Metaclasses / descriptors (meta-programming)
+\end{itemize}
+Some of those may change the behavior of Python, and may therefore \emc{surprise} other programmers. See the Python language reference for details: \url{https://docs.python.org/3/reference/index.html}
+
+\end{frame}
+
+\section{The tricky questions}
+
+\begin{frame}
+
+\frametitle{Question 4.1: The endless \texttt{for} loop}
+
+We have mentioned \texttt{for} loops are safer than \texttt{while} loops. Define a name \texttt{everloop} such that the following fragment of code never terminates: 
+
+\texttt{for \_ in everloop: pass}.
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Question 4.2: Functional programming}
+
+\begin{itemize}
+\item Write a function that takes any function. It returns a `memoized' version of it using an LRU cache. The output of the memoization function should be a function. \url{https://en.wikipedia.org/wiki/Memoization}
+\item Solve the above question using a Python Decorator. \url{https://wiki.python.org/moin/PythonDecorators}
+\item Ensure the docstring of the new function is the same as the docstring of the original function.
+\end{itemize}
+
+\end{frame}
+ 
 \bibliographystyle{alpha}
 \nobibliography{references}
 
